@@ -6,8 +6,8 @@ import { ProductCardProps } from '@/types/nav';
 
 export default function ProductCard({ rating, title, image1, image2, price, link }: ProductCardProps) {
     return (
-        <div className='p-6 group relative'>
-            <div className='group/item rounded-lg shadow-md p-4 group-hover:shadow-lg group-hover:scale-110 transition-all duration-300'>
+        <div className='group relative'>
+            <div className='group/item rounded-lg shadow-md p-4 group-hover:shadow-lg'>
                 <Link href={`/product/${link}`}>
                     <div className='flex items-center'>
                         <p className='mr-3'>
@@ -15,31 +15,23 @@ export default function ProductCard({ rating, title, image1, image2, price, link
                         </p>
                         <StarIcon key={Math.random() * 1000} size={15} fill='yellow' className='text-yellow-400' />
                     </div>
-                    <div className='w-[200px] h-[200px] '>
+                    <div className='w-full h-full box-border '>
                         <img src={image2} alt={title}
-                            className='group-hover/item:hidden w-[80%] h-[80%] object-contain rounded-lg' />
+                            className='group-hover/item:hidden w-[80%] h-[80%] object-contain rounded-lg duration-300 transition-all' />
                         <img src={image1} alt={title}
-                            className='hidden group-hover/item:block w-[80%] h-[80%] object-contain rounded-lg' />
+                            className='hidden group-hover/item:block w-full h-[120px] md:h-[200px] lg:h-[210px] object-contain rounded-lg duration-300 transition-all' />
                     </div>
                     <div>
                         <p className='pt-5 text-xs capitalize text-slate-600'>{title}</p>
                         <h1 className='text-lg cursor-pointer hover:text-blue-500 transition-all hover:underline 
                     sm:w-full sm:truncate mt-2 text-black font-semibold'>{title}</h1>
-                        <h2 className='text-base hover:text-red-400'>$ {price}</h2>
                     </div>
                 </Link>
-                <div className='hidden gap-3 group-hover:flex flex-col top-10 right-3 absolute transition-all duration-300 ease-linear
-                transform -translate-y-5 opacity-0 group-hover:translate-y-0 group-hover:opacity-100'>
-                    <Button className=' rounded-full px-2 py-3'>
-                        <ShoppingBag size={16} />
-                    </Button>
-                    <Button className=' rounded-full px-2 py-3'>
-                        <HeartIcon size={16} />
-                    </Button>
-                    <Button className=' rounded-full px-2 py-3'>
-                        <ShoppingCart size={16} />
-                    </Button>
+                <div className='grid grid-cols-2 justify-between items-center '>
+                    <h2 className='col-span-full lg:col-span-1 text-base hover:text-red-400'>$ {price}</h2>
+                    <Button className='col-span-full lg:col-span-1 hover:none bg-transparent border border-slate-600 rounded-full text-black py-0 text-base font-light'> Buy now</Button>
                 </div>
+
             </div>
         </div>
     )

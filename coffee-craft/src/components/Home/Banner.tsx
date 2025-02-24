@@ -3,10 +3,10 @@ import { Button } from '../ui/button'
 
 export default function Banner() {
     return (
-        <section>
-            <div className='bg-[url(/banner/banner1.png)] bg-cover bg-right bg-no-repeat rounded-lg shadow-lg' >
+        <section className=''>
+            <div className='w-full h-full bg-[url(/banner/banner1.png)] bg-no-repeat bg-cover bg-center'>
                 <div className='container max-w-screen-2xl py-20 grid grid-cols-3'>
-                    <div className='col-span-1 flex flex-col gap-20'>
+                    <div className='col-span-3 md:col-span-1 flex flex-col lg:gap-20 gap-5'>
                         <h1 className='text-7xl font-extrabold'>
                             <span className='text-orange-300'>Coffee</span> Cart
                         </h1>

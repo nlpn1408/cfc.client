@@ -22,7 +22,7 @@ export default function SiteHeader() {
                     <Link href='/cart'>
                         <ShoppingBagIcon size={34} />
                     </Link>
-                    <nav hidden>
+                    <nav >
                         <ModeToggle />
                     </nav>
                 </div>

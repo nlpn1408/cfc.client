@@ -26,7 +26,7 @@ export function MobileNav() {
             <DrawerTrigger asChild>
                 <Button
                     variant="ghost"
-                   className="-ml-2 mr-2 h-8 w-8 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+                    className="-ml-2 mr-2 h-8 w-8 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -50,40 +50,17 @@ export function MobileNav() {
                 <div className="overflow-auto p-6">
                     <div className="flex flex-col space-y-3">
                         {/* link content */}
-                        <Link href='#'>
-                            askdl;as;dkladl
+                        <Link href="/" className="hover:text-gray-900 transition">
+                            Home
                         </Link>
-                        <Link href='#'>
-                            askdl;as;dkladl
+                        <Link href="/all-products" className="hover:text-gray-900 transition">
+                            Shop
                         </Link>
-                        <Link href='#'>
-                            askdl;as;dkladl
+                        <Link href="/" className="hover:text-gray-900 transition">
+                            About Us
                         </Link>
-                        <Link href='#'>
-                            askdl;as;dkladl
-                        </Link>
-                        <Link href='#'>
-                            askdl;as;dkladl
-                        </Link>
-                        <Link href='#'>
-                            askdl;as;dkladl
-                        </Link>
-                        <Link href='#'>
-                            askdl;as;dkladl
-                        </Link>
-                        <Link href='#'>
-                            askdl;as;dkladl
-                        </Link><Link href='#'>
-                            askdl;as;dkladl
-                        </Link>
-                        <Link href='#'>
-                            askdl;as;dkladl
-                        </Link>
-                        <Link href='#'>
-                            askdl;as;dkladl
-                        </Link>
-                        <Link href='#'>
-                            askdl;as;dkladl
+                        <Link href="/" className="hover:text-gray-900 transition">
+                            Contact
                         </Link>
                     </div>
                     <div className="flex flex-col space-y-2">

@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { useRouter } from "next/navigation"
-import { type DialogProps } from "@radix-ui/react-dialog"
+import { DialogTitle, type DialogProps } from "@radix-ui/react-dialog"
 import {
     LaptopIcon,
     MoonIcon,
@@ -73,9 +73,15 @@ export function CommandMenu({ ...props }: DialogProps) {
                 </kbd>
             </Button>
             <CommandDialog open={open} onOpenChange={setOpen}>
+                <DialogTitle className="sr-only">Search commands</DialogTitle>
                 <CommandInput placeholder="Type a command or search..." />
                 <CommandList>
                     <CommandEmpty>No results found.</CommandEmpty>
+                    <CommandGroup heading="Suggestions">
+                        <CommandItem onSelect={() => runCommand(() => alert("Hello World!"))}>
+                            Hello World!
+                        </CommandItem>
+                    </CommandGroup>
                     <CommandSeparator />
                     <CommandGroup heading="Theme">
                         <CommandItem onSelect={() => runCommand(() => setTheme("light"))}>
