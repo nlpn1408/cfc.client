@@ -1,88 +1,103 @@
-'use client'
-import Image from "next/image";
-import { useState } from "react";
+'use client';
+
+import { useForm } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
+import TextInput from '@/components/FromInput/TextInput';
+import { AddressForm } from '@/types/types';
+import TextAreaInput from '@/components/FromInput/TextAreaInput';
 
 const AddAddress = () => {
+    // Khởi tạo form với react-hook-form
+    const { register, handleSubmit, formState: { errors } } = useForm<AddressForm>();
 
-    const [address, setAddress] = useState({
-        fullName: '',
-        phoneNumber: '',
-        pincode: '',
-        area: '',
-        city: '',
-        state: '',
-    })
-
-    const onSubmitHandler = async (e) => {
-        e.preventDefault();
-
-    }
+    // Xử lý khi submit form
+    const onSubmit = (data: AddressForm) => {
+        console.log('Dữ liệu được gửi:', data);
+    };
 
     return (
-        <>
-            <div className="px-6 md:px-16 lg:px-32 py-16 flex flex-col md:flex-row justify-between">
-                <form onSubmit={onSubmitHandler} className="w-full">
-                    <p className="text-2xl md:text-3xl text-gray-500">
-                        Add Shipping <span className="font-semibold text-orange-600">Address</span>
-                    </p>
-                    <div className="space-y-3 max-w-sm mt-10">
-                        <input
-                            className="px-2 py-2.5 focus:border-orange-500 transition border border-gray-500/30 rounded outline-none w-full text-gray-500"
-                            type="text"
-                            placeholder="Full name"
-                            onChange={(e) => setAddress({ ...address, fullName: e.target.value })}
-                            value={address.fullName}
-                        />
-                        <input
-                            className="px-2 py-2.5 focus:border-orange-500 transition border border-gray-500/30 rounded outline-none w-full text-gray-500"
-                            type="text"
-                            placeholder="Phone number"
-                            onChange={(e) => setAddress({ ...address, phoneNumber: e.target.value })}
-                            value={address.phoneNumber}
-                        />
-                        <input
-                            className="px-2 py-2.5 focus:border-orange-500 transition border border-gray-500/30 rounded outline-none w-full text-gray-500"
-                            type="text"
-                            placeholder="Pin code"
-                            onChange={(e) => setAddress({ ...address, pincode: e.target.value })}
-                            value={address.pincode}
-                        />
-                        <textarea
-                            className="px-2 py-2.5 focus:border-orange-500 transition border border-gray-500/30 rounded outline-none w-full text-gray-500 resize-none"
-                            type="text"
-                            rows={4}
-                            placeholder="Address (Area and Street)"
-                            onChange={(e) => setAddress({ ...address, area: e.target.value })}
-                            value={address.area}
-                        ></textarea>
-                        <div className="flex space-x-3">
-                            <input
-                                className="px-2 py-2.5 focus:border-orange-500 transition border border-gray-500/30 rounded outline-none w-full text-gray-500"
-                                type="text"
-                                placeholder="City/District/Town"
-                                onChange={(e) => setAddress({ ...address, city: e.target.value })}
-                                value={address.city}
-                            />
-                            <input
-                                className="px-2 py-2.5 focus:border-orange-500 transition border border-gray-500/30 rounded outline-none w-full text-gray-500"
-                                type="text"
-                                placeholder="State"
-                                onChange={(e) => setAddress({ ...address, state: e.target.value })}
-                                value={address.state}
-                            />
-                        </div>
-                    </div>
-                    <button type="submit" className="max-w-sm w-full mt-6 bg-orange-600 text-white py-3 hover:bg-orange-700 uppercase">
-                        Save address
-                    </button>
-                </form>
-                <img
-                    className="md:mr-16 mt-16 md:mt-0"
-                    src="/my_location_image.svg"
-                    alt="my_location_image"
+        <div className="px-6 md:px-16 lg:px-32 py-16 flex flex-col md:flex-row justify-between">
+
+            {/* Form */}
+            <form onSubmit={handleSubmit(onSubmit)} className=" space-y-6">
+                <h2 className="text-3xl font-semibold mb-6">Add Shipping Address</h2>
+                <div className='grid grid-cols-2 gap-5 shadow-xl rounded-lg p-4'>
+
+                {/* Họ và tên */}
+                <TextInput
+                    label="Full Name"
+                    name="fullName"
+                    type="text"
+                    placeholder="Enter your full name"
+                    register={register}
+                    errors={errors}
                 />
-            </div>
-        </>
+
+                {/* Số điện thoại */}
+                <TextInput
+                    label="Phone Number"
+                    name="phoneNumber"
+                    type="text"
+                    placeholder="Enter your phone number"
+                    register={register}
+                    errors={errors}
+                />
+
+                {/* Mã bưu điện */}
+                <TextInput
+                    label="Pin Code"
+                    name="pincode"
+                    type="text"
+                    placeholder="Enter your pin code"
+                    register={register}
+                    errors={errors}
+                />
+
+                {/* Địa chỉ */}
+                <TextAreaInput
+                    label="Address (Area and Street)"
+                    name="area"
+                    type="text"
+                    placeholder="Enter your address"
+                    register={register}
+                    errors={errors}
+                />
+
+                {/* Thành phố */}
+                <TextInput
+                    label="City"
+                    name="city"
+                    type="text"
+                    placeholder="Enter your city"
+                    register={register}
+                    errors={errors}
+                    className='col-span-1'
+                />
+
+                {/* Bang/tiểu bang */}
+                <TextInput
+                    label="State"
+                    name="state"
+                    type="text"
+                    placeholder="Enter your state"
+                    register={register}
+                    errors={errors}
+                    className='col-span-1'
+
+                />
+                </div>
+
+                {/* Nút gửi */}
+                <Button type="submit" className="w-full bg-orange-600 hover:bg-orange-700">
+                    Save Address
+                </Button>
+            </form>
+            <img
+                className="md:mr-16 mt-16 md:mt-0"
+                src="/my_location_image.svg"
+                alt="my_location_image"
+            />
+        </div>
     );
 };
 

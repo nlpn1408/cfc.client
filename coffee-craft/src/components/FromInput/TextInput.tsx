@@ -3,7 +3,7 @@ import { Label } from '../ui/label'
 import { Input } from '../ui/input'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { TextInputProps } from '@/types/nav'
+import { TextInputProps } from '@/types/types'
 
 export default function TextInput({
     label,

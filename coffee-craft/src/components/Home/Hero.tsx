@@ -28,7 +28,7 @@ export const HeroData = [
         description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.'
 
     },
-   
+
 ]
 
 export default function Hero() {
@@ -48,27 +48,29 @@ export default function Hero() {
                                 <p className='text-sm '>
                                     {item?.description}
                                 </p>
-                                <h2  className='flex text-sm '>
+                                <h2 className='flex text-sm '>
                                     Shop now <ArrowRight size={20} />
                                 </h2>
                             </div>
                             <img src={item.image} alt={item?.title} className='w-[200px] h-[200px] object-contain' />
                         </Link>
                     ))}
-                    <Link href='#'  className='col-span-full md:col-span-2 lg:col-span-1 hover:scale-105 transition-all duration-300 ease-in-out bg-[url(/hero/hero2.png)] h-[240px] bg-left bg-no-repeat rounded-lg shadow-lg'>
-                            div
-                            <div className='flex flex-col space-y-4 justify-around text-white px-5 py-5'>
+                    <Link href='#' className='col-span-full md:col-span-2 lg:col-span-2 hover:scale-105 transition-all duration-300 ease-in-out bg-[url(/hero/hero2.png)] h-[240px] bg-left bg-no-repeat rounded-lg shadow-lg'>
+                        <div className='grid grid-cols-3 gap-5'>
+
+                            <div className=' col-span-2 flex flex-col space-y-10 justify-around text-white px-5 py-5'>
                                 <h1 className='text-3xl font-bold '>
-                                Lorem Ipsum
+                                    Lorem Ipsum
                                 </h1>
                                 <p className='text-sm '>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
                                 </p>
-                                <h2  className='flex text-sm '>
+                                <h2 className='flex text-sm '>
                                     Shop now <ArrowRight size={20} />
                                 </h2>
                             </div>
-                        </Link>
+                        </div>
+                    </Link>
 
                 </div>
             </div>

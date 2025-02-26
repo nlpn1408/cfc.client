@@ -18,17 +18,6 @@ export interface ProductCardProps {
   rating: string;
 }
 
-export interface TextInputProps {
-  label: string,
-  register: any,
-  name: string,
-  errors: any,
-  type?: string
-  placeholder: string
-  page?: string
-  className?: string
-  isRequired?: boolean
-}
 
 
 export interface NavItemWithChildren extends NavItem {
