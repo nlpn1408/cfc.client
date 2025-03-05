@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 import { Drawer, DrawerContent, DrawerTitle, DrawerTrigger } from "./ui/drawer"
 import { Button } from "./ui/button"
 import { useMetaColor } from "@/hooks/use.meta-color"
+import { LogIn } from "lucide-react"
 
 
 export function MobileNav() {
@@ -45,7 +46,7 @@ export function MobileNav() {
                     <span className="sr-only">Toggle Menu</span>
                 </Button>
             </DrawerTrigger>
-            <DrawerContent className="max-h-[80svh] p-0">
+            <DrawerContent className="h-[80svh] p-0">
                 <DrawerTitle className="sr-only">Navigation Menu</DrawerTitle>
                 <div className="overflow-auto p-6">
                     <div className="flex flex-col space-y-3">
@@ -63,10 +64,13 @@ export function MobileNav() {
                             Contact
                         </Link>
                     </div>
-                    <div className="flex flex-col space-y-2">
+                    <div className="flex flex-col space-y-2 border-t border-gray-700 mt-3">
                         {/* link content */}
-                        <Link href='#'>
-                            user
+                        <Link href='/login' className="hover:text-gray-900 transition my-3">
+
+                            <Button variant="outline" className="w-full justify-start">
+                                Login <LogIn className="ml-2" />
+                            </Button>
                         </Link>
                     </div>
                 </div>

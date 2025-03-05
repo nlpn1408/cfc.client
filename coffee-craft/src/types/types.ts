@@ -28,3 +28,17 @@ export interface TextAreaInputProps {
     placeholder: string
     className?: string
 }
+
+export type RegisterInputProps = {
+  fullName: string;
+  phone: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  role: any;
+};
+
+export type LoginInputProps = {
+  email: string;
+  password: string;
+};
