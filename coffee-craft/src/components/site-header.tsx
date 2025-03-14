@@ -46,32 +46,33 @@ export default function SiteHeader({ session }: { session: Session | null }) {
                     {/* Login */}
                     {session && session.user && user?.email
                         ? (
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <Button variant="secondary" size="icon" className="rounded-full">
-                                        <Avatar>
-                                            {user.image ? (
-                                                <AvatarFallback>{/*{user.name}*/}</AvatarFallback>
-                                            ) : (
-                                                <AvatarImage src="/avatars/01.png" />
-                                            )}
-                                        </Avatar>
-                                        <span className="sr-only">Toggle user menu</span>
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                    <DropdownMenuItem><Link href='/dashboard'>Dashboard</Link></DropdownMenuItem>
-                                    <DropdownMenuItem>Support</DropdownMenuItem>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem onClick={() => handleLogout()}>Logout <LogOut size={15} className="ml-2" /></DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        ) : (
                             <Button asChild>
                                 <Link href="/login">
                                     Login<LogIn size={16} className="" />
                                 </Link>
                             </Button>
+                        ) : (
+
+                            <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                    <Button variant="secondary" size="icon" className="rounded-full">
+                                        <Avatar>
+                                            {/* {user.image ? (
+                                                <AvatarImage src="/avatars/01.png" />
+                                            ) : (
+                                            )} */}
+                                                <AvatarFallback>{/*{user.name}*/}</AvatarFallback>
+                                        </Avatar>
+                                        <span className="sr-only">Toggle user menu</span>
+                                    </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                    <DropdownMenuItem><Link href='/dashboard/1'>Dashboard</Link></DropdownMenuItem>
+                                    <DropdownMenuItem>Support</DropdownMenuItem>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem onClick={() => handleLogout()}>Logout <LogOut size={15} className="ml-2" /></DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
                         )}
                     <Link href='/cart'>
                         <ShoppingBagIcon size={34} />

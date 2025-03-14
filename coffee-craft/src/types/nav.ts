@@ -11,7 +11,7 @@ export interface NavItem {
 
 export interface ProductCardProps {
   title: string;
-  image1: string;
+  image1: any;
   image2: string;
   price: number;
   link: string;

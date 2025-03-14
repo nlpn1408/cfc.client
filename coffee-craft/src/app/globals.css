@@ -42,8 +42,9 @@ body {
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 240 5% 15%;
     --foreground: 210 40% 98%;
     --card: 222.2 84% 4.9%;
     --card-foreground: 210 40% 98%;
@@ -82,7 +83,155 @@ body {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.hit-the-floor {
+  color: #fff;
+  text-shadow:
+    0 1px 0 #ccc,
+    0 2px 0 #c9c9c9,
+    0 3px 0 #bbb,
+    0 4px 0 #b9b9b9,
+    0 5px 0 #aaa,
+    0 6px 1px rgba(0, 0, 0, .1),
+    0 0 5px rgba(0, 0, 0, .1),
+    0 1px 3px rgba(0, 0, 0, .3),
+    0 3px 5px rgba(0, 0, 0, .2),
+    0 5px 10px rgba(0, 0, 0, .25),
+    0 10px 10px rgba(0, 0, 0, .2),
+    0 20px 20px rgba(0, 0, 0, .15);
+}
+
+.newsletter {
+  background: linear-gradient(137.92deg, rgba(192, 132, 252, 0) 20.43%, rgba(232, 121, 249, 0.26) 49.66%, rgba(204, 171, 238, 0) 92.38%);
+}
+
+:root {
+  --bgColor: #f7f7f7;
+  --jaggedDistance: 32px;
+
+  --booSize: calc(var(--jaggedDistance) * 5);
+  --booBg: var(--bgColor);
+  --booShadow: #e0e0e0; /* darken(#f7f7f7, 5%) */
+
+  --booFaceSize: calc(var(--jaggedDistance) / 1.3333);
+  --booFaceColor: #9b9b9b;
+}
+
+@keyframes floating {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  45% {
+    transform: translate3d(0, -10%, 0);
+  }
+  55% {
+    transform: translate3d(0, -10%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes floatingShadow {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(0.85);
+  }
+  55% {
+    transform: scale(0.85);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.boo-wrapper {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding-top: calc(var(--jaggedDistance) * 2);
+  padding-bottom: calc(var(--jaggedDistance) * 2);
+}
+
+.boo {
+  width: var(--booSize);
+  height: calc(var(--booSize) + (var(--booSize) * 0.15));
+  background-color: var(--booBg);
+  margin-left: auto;
+  margin-right: auto;
+  border: calc((var(--jaggedDistance) / 1.65) - (var(--jaggedDistance) / 2)) solid var(--booFaceColor);
+  border-bottom: 0;
+  overflow: hidden;
+  border-radius: calc(var(--booSize) / 2) calc(var(--booSize) / 2) 0 0;
+  box-shadow: calc(var(--jaggedDistance) / -2) 0 0 2px rgba(224, 224, 224, 0.5) inset;
+  animation: floating 3s ease-in-out infinite;
+  position: relative;
+}
+
+.boo::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: calc(var(--jaggedDistance) / -1.7);
+  bottom: calc(var(--jaggedDistance) / -3.85);
+  width: calc(100% + var(--jaggedDistance));
+  height: var(--jaggedDistance);
+  background-repeat: repeat-x;
+  background-size: var(--jaggedDistance) var(--jaggedDistance);
+  background-position: left bottom;
+  background-image: linear-gradient(-45deg, var(--bgColor) calc(var(--jaggedDistance) / 2), transparent 0),
+                    linear-gradient(45deg, var(--bgColor) calc(var(--jaggedDistance) / 2), transparent 0),
+                    linear-gradient(-45deg, var(--booFaceColor) calc(var(--jaggedDistance) / 1.7), transparent 0),
+                    linear-gradient(45deg, var(--booFaceColor) calc(var(--jaggedDistance) / 1.7), transparent 0);
+}
+
+.boo .face {
+  width: var(--booFaceSize);
+  height: calc(var(--jaggedDistance) / 10);
+  border-radius: 5px;
+  background-color: var(--booFaceColor);
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--jaggedDistance) + var(--booFaceSize));
+  transform: translateX(-50%);
+}
+
+.boo .face::before,
+.boo .face::after {
+  content: '';
+  display: block;
+  width: calc(var(--booFaceSize) / 4);
+  height: calc(var(--booFaceSize) / 4);
+  background-color: var(--booFaceColor);
+  border-radius: 50%;
+  position: absolute;
+  bottom: calc(var(--jaggedDistance) + (var(--booFaceSize) / 3));
+}
+
+.boo .face::before {
+  left: calc(var(--booFaceSize) * -1);
+}
+
+.boo .face::after {
+  right: calc(var(--booFaceSize) * -1);
+}
+
+.shadow1 {
+  width: calc(var(--booSize) - var(--jaggedDistance));
+  height: calc(var(--jaggedDistance) / 2);
+  background-color: rgba(224, 224, 224, 0.75);
+  margin-top: calc(var(--jaggedDistance) * 1.25);
+  margin-right: auto;
+  margin-left: auto;
+  border-radius: 50%;
+  animation: floatingShadow 3s ease-in-out infinite;
 }

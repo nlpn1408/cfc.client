@@ -1,10 +1,10 @@
 export interface AddressForm {
-    fullName: string;
-    phoneNumber: string;
-    pincode: number;
-    area: string;
-    city: string;
-    state: string;
+  fullName: string;
+  phoneNumber: string;
+  pincode: number;
+  area: string;
+  city: string;
+  state: string;
 }
 
 export interface TextInputProps {
@@ -20,13 +20,21 @@ export interface TextInputProps {
 }
 
 export interface TextAreaInputProps {
-    label: string,
-    register: any,
-    name: string,
-    errors: any,
-    type?: string
-    placeholder: string
-    className?: string
+  label: string,
+  register: any,
+  name: string,
+  errors: any,
+  type?: string
+  placeholder: string
+  className?: string
+}
+
+export interface BannerProps {
+  image: string
+  title: string
+  description: string
+  buttonText: string
+  buttonLink: string
 }
 
 export type RegisterInputProps = {
@@ -42,3 +50,4 @@ export type LoginInputProps = {
   email: string;
   password: string;
 };
+
