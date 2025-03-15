@@ -29,7 +29,7 @@ export default function Banner({
                         </Link>
                     </div>
                 </div>
-            </div>
+            </div>  
         </section>
     )
 }
