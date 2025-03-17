@@ -1,5 +1,7 @@
 import React from "react";
 import ProductCard from "./ProductCard";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel";
+import { Card, CardContent } from "./ui/card";
 
 const data = [
   {
@@ -66,20 +68,28 @@ export default function ListProduct() {
       <h1 className="text-center text-3xl font-extrabold underline pb-10">
         Featured
       </h1>
-      <div className="grid grid-cols-6 gap-3 py-4">
-        {data.map((item, index) => (
-          <div key={index} className="lg:col-span-1 md:col-span-2 col-span-3">
-            <ProductCard
-              title={item.title}
-              image1={item.image1}
-              image2={item.image2}
-              price={item.price}
-              link={item.link}
-              rating={item.rating}
-            />
-          </div>
-        ))}
-      </div>
+      <Carousel >
+        <CarouselContent>
+          {data.map((item, index) => (
+            <CarouselItem key={index} className="md:basis-1/3 basis-1/2 lg:basis-1/4 ">
+                <Card>
+                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                    <ProductCard
+                      title={item.title}
+                      image1={item.image1}
+                      image2={item.image2}
+                      price={item.price}
+                      link={item.link}
+                      rating={item.rating}
+                    />
+                  </CardContent>
+                </Card>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
     </section>
   );
 }
