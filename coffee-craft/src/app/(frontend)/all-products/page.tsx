@@ -208,7 +208,7 @@ const AllProducts: React.FC = () => {
             previousLinkClassName="px-4 py-2 bg-white border rounded-lg"
             nextLinkClassName="px-4 py-2 bg-white border rounded-lg"
             disabledClassName="opacity-50 cursor-not-allowed"
-            activeClassName="px-3 py-2 bg-indigo-600 text-gray-600 rounded-lg"
+            activeClassName="px-3 py-2 bg-indigo-600 text-gray-500 rounded-lg"
             forcePage={currentPage}
           />
         </section>
