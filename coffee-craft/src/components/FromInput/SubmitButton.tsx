@@ -20,14 +20,14 @@ export default function SubmitButton({
         <div className='w-full'>
             {isLoading
                 ? (
-                    <Button disabled className='w-full'>
+                    <Button disabled className='w-full bg-[#935027] hover:bg-[#412017]'>
                         <Loader2 className="animate-spin h-5 w-5 mr-3" />
                         {loadingTitle}
                     </Button>
                 )
                 : (
                     <Button 
-                    type={buttonType} className='w-full'>
+                    type={buttonType} className='w-full bg-[#935027] hover:bg-[#412017]'>
                         {title}
                     </Button>
                 )

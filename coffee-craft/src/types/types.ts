@@ -51,3 +51,16 @@ export type LoginInputProps = {
   password: string;
 };
 
+export type UserPageProps = {
+  page: string;
+  title: string;
+  description: string;
+  userId?: string;
+  formId?: string;
+};
+
+export type ChangePasswordProps ={
+  password:string
+  newpassword:string
+  confirmPassword: string;
+}
