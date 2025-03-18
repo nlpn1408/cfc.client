@@ -1,8 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ProductCard from "@/components/ProductCard";
-import * as ToggleGroup from "@radix-ui/react-toggle-group";
-import { Check } from "lucide-react";
+
 import ReactPaginate from "react-paginate";
 import NewsLetter from "../../../components/Home/NewsLetter";
 const AllProducts: React.FC = () => {
@@ -145,24 +144,23 @@ const AllProducts: React.FC = () => {
         <span className="text-sm text-gray-600">
           Trang chủ &gt; Shop &gt; Cà phê nguyên chất
         </span>
-        <ToggleGroup.Root type="single" className="flex space-x-2">
-          {["new", "price-asc", "price-desc", "rating"].map((filter) => (
-            <ToggleGroup.Item
-              key={filter}
-              value={filter}
-              className="flex items-center gap-2 border px-4 py-2 rounded-lg text-sm font-medium transition-all data-[state=on]:bg-gray-800 data-[state=on]:text-white"
-            >
-              {filter === "new" && "Mới nhất"}
-              {filter === "price-asc" && "Giá tăng dần"}
-              {filter === "price-desc" && "Giá giảm dần"}
-              {filter === "rating" && "Đánh giá"}
-              <Check className="w-4 h-4 transition-opacity opacity-0 data-[state=on]:opacity-100" />
-            </ToggleGroup.Item>
-          ))}
-        </ToggleGroup.Root>
+        <select
+          name="orderby"
+          className="orderby bg-white border border-gray-300 text-gray-700 text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2 transition-all duration-300"
+          aria-label="Đơn hàng của cửa hàng"
+        >
+          <option value="menu_order" selected>
+            Thứ tự mặc định
+          </option>
+          <option value="popularity">Thứ tự theo mức độ phổ biến</option>
+          <option value="rating">Thứ tự theo điểm đánh giá</option>
+          <option value="date">Mới nhất</option>
+          <option value="price">Thứ tự theo giá: thấp đến cao</option>
+          <option value="price-desc">Thứ tự theo giá: cao xuống thấp</option>
+        </select>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-3 md:gap-5 p-4">
+      <div className="flex flex-wrap   gap-3 md:gap-5 p-4">
         {["Arabica", "Robusta", "Culi", "Moka"].map((label, index) => (
           <button
             key={index}
@@ -190,7 +188,7 @@ const AllProducts: React.FC = () => {
           )}
         </aside>
         <section className="w-full lg:w-3/4">
-          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-6 ">
             {displayedProducts.map((item, index) => (
               <ProductCard key={index} {...item} />
             ))}
