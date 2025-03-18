@@ -20,45 +20,38 @@ export default function ProductCard({
 }: ProductCardProps) {
   return (
     <div className="group relative">
-      <div className="group/item">
-        <Link href={`/product/${link}`}>
-          <div className="flex items-center">
-            <p className="mr-3">{rating}</p>
+      <div className="group/item rounded-lg shadow-md p-4 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] bg-white">
+        <Link href={`/product/${link}`} className="block">
+          <div className="flex items-center mb-2">
+            <p className="mr-2 text-gray-700 font-medium">{rating}</p>
             <StarIcon
-              key={Math.random() * 1000}
-              size={15}
+              size={16}
               fill="yellow"
-              className="text-yellow-400"
+              className="text-yellow-400 drop-shadow-sm"
             />
           </div>
-          <div className="w-full h-full box-border ">
+          <div className="w-full h-full box-border">
             <img
               src={image2}
               alt={title}
-              className="group-hover/item:hidden w-full object-contain rounded-lg duration-300 transition-all"
+              className="group-hover/item:hidden w-full h-[140px] md:h-[200px] lg:h-[220px] object-contain rounded-lg transition-all duration-300"
             />
             <img
               src={image1}
               alt={title}
-              className="hidden group-hover/item:block w-full object-contain rounded-lg duration-300 transition-all"
+              className="hidden group-hover/item:block w-full h-[140px] md:h-[200px] lg:h-[220px] object-contain rounded-lg transition-all duration-300"
             />
           </div>
-          <div>
-            <p className="pt-5 text-xs capitalize text-slate-600">{title}</p>
-            <h1
-              className="text-lg cursor-pointer hover:text-blue-500 transition-all hover:underline 
-                    sm:w-full sm:truncate mt-2 text-black font-semibold"
-            >
+          <div className="mt-4">
+            <p className="text-sm text-gray-500 capitalize">{title}</p>
+            <h1 className="text-lg font-semibold text-gray-900 hover:text-blue-500 transition-all sm:w-full sm:truncate mt-2">
               {title}
             </h1>
           </div>
         </Link>
-        <div className="grid grid-cols-2 justify-between items-center ">
-          <h2 className="col-span-full lg:col-span-1 text-base hover:text-red-400">
-            $ {price}
-          </h2>
-          <Button className="col-span-full lg:col-span-1 hover:none bg-transparent border border-slate-600 rounded-full text-black py-0 text-base font-light">
-            {" "}
+        <div className="grid grid-cols-2 items-center mt-4">
+          <h2 className="text-lg font-semibold text-red-500">$ {price}</h2>
+          <Button className="bg-indigo-600 text-white border border-indigo-600 rounded-full py-1 px-4 text-sm font-medium transition-all duration-300 hover:bg-indigo-700">
             Buy now
           </Button>
         </div>

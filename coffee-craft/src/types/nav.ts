@@ -18,8 +18,6 @@ export interface ProductCardProps {
   rating: string;
 }
 
-
-
 export interface NavItemWithChildren extends NavItem {
   items: NavItemWithChildren[];
 }
