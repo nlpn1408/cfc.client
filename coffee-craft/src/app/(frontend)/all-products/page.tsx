@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ProductCard from "@/components/ProductCard";
-
+import { Menu, X } from "lucide-react";
 import ReactPaginate from "react-paginate";
 import NewsLetter from "../../../components/Home/NewsLetter";
 const AllProducts: React.FC = () => {
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
   const data = [
     {
       title: "Product 1",
@@ -173,20 +174,34 @@ const AllProducts: React.FC = () => {
 
       <div className="flex flex-col lg:flex-row gap-6">
         <aside className="w-full lg:w-1/4 bg-white shadow-md rounded-lg p-6">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-6">
-            Danh mục
-          </h2>
-          {["Tất cả", "Cafe", "Máy pha Cafe", "Dụng cụ pha Cafe"].map(
-            (item, idx) => (
-              <button
-                key={idx}
-                className="block w-full text-left py-2 px-4 rounded-lg transition duration-300 hover:bg-gray-600"
-              >
-                {item}
-              </button>
-            )
-          )}
+          {/* Nút mở menu trên mobile */}
+          <button
+            className="lg:hidden flex items-center space-x-2 p-3 bg-gray-200 rounded-lg w-full text-left"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            <span className="text-lg font-semibold">Danh mục</span>
+          </button>
+
+          {/* Danh sách danh mục */}
+          <div
+            className={`${
+              isOpen ? "block" : "hidden"
+            } lg:block mt-4 transition-all duration-300`}
+          >
+            {["Tất cả", "Cafe", "Máy pha Cafe", "Dụng cụ pha Cafe"].map(
+              (item, idx) => (
+                <button
+                  key={idx}
+                  className="block w-full text-left py-2 px-4 rounded-lg transition duration-300 hover:bg-gray-600 hover:text-white bg-gray-100 lg:bg-transparent"
+                >
+                  {item}
+                </button>
+              )
+            )}
+          </div>
         </aside>
+
         <section className="w-full lg:w-3/4">
           <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-6 ">
             {displayedProducts.map((item, index) => (
