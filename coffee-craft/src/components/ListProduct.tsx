@@ -73,7 +73,7 @@ export default function ListProduct() {
           {data.map((item, index) => (
             <CarouselItem key={index} className="md:basis-1/3 basis-1/2 lg:basis-1/4 ">
                 <Card>
-                  <CardContent className="flex aspect-square items-center justify-center p-6">
+                  <CardContent className="flex aspect-square items-center justify-center">
                     <ProductCard
                       title={item.title}
                       image1={item.image1}

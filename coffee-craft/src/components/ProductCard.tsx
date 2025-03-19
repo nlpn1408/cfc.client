@@ -20,7 +20,7 @@ export default function ProductCard({
 }: ProductCardProps) {
   return (
     <div className="group relative">
-      <div className="group/item rounded-lg shadow-md p-4 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] bg-white">
+      <div className="group/item rounded-lg transition-all bg-white">
         <Link href={`/product/${link}`} className="block">
           <div className="flex items-center mb-2">
             <p className="mr-2 text-gray-700 font-medium">{rating}</p>
@@ -34,12 +34,12 @@ export default function ProductCard({
             <img
               src={image2}
               alt={title}
-              className="group-hover/item:hidden w-full h-[140px] md:h-[200px] lg:h-[220px] object-contain rounded-lg transition-all duration-300"
+              className="group-hover/item:hidden w-full  object-contain rounded-lg transition-all duration-300"
             />
             <img
               src={image1}
               alt={title}
-              className="hidden group-hover/item:block w-full h-[140px] md:h-[200px] lg:h-[220px] object-contain rounded-lg transition-all duration-300"
+              className="hidden group-hover/item:block w-full object-contain rounded-lg transition-all duration-300"
             />
           </div>
           <div className="mt-4">

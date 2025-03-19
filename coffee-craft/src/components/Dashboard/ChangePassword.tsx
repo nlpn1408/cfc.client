@@ -50,9 +50,9 @@ export default function ChangePassword({ page,
           {description}
         </p>
       </div>
-      <div className='grid grid-cols-2 py-5'>
+      <div className='grid grid-cols-2 '>
         <form action=""
-          onSubmit={handleSubmit(onSubmit)} className='lg:col-span-1 col-span-full  flex flex-col gap-5'>
+          onSubmit={handleSubmit(onSubmit)} className=' lg:col-span-1 p-10 col-span-full  flex flex-col gap-5'>
           <TextInput
             label='Old Password'
             name='Password'
