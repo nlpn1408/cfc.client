@@ -9,7 +9,8 @@ import {
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { ProductCardProps } from "@/types/nav";
-
+// import Image from "next/image";
+// import premium from "@/public/product/premium.webp"; // Change the extension to .jpg
 export default function ProductCard({
   rating,
   title,
@@ -20,40 +21,103 @@ export default function ProductCard({
 }: ProductCardProps) {
   return (
     <div className="group relative">
+<<<<<<< HEAD
       <div className="group/item rounded-lg transition-all bg-white">
         <Link href={`/product/${link}`} className="block">
           <div className="flex items-center mb-2">
             <p className="mr-2 text-gray-700 font-medium">{rating}</p>
+=======
+      <div className="group/item rounded-lg shadow-md p-4 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] bg-white">
+        <Link href={`/product/${link}`} className="block relative">
+          {/* Số lượng đã bán */}
+          <div
+            className="absolute left-[5px] bottom-16 z-2 bg-white text-[#040707] text-[10px] sm:text-[11px] font-bold px-2 py-1 rounded-[4px] shadow-md border-b-2 border-[#a52f21]"
+            style={{ boxShadow: "0 5px 15px 0 rgb(51 51 51 / 10%)" }}
+          >
+            Đã bán 37.6k+
+          </div>
+
+          {/* Badge "100% Arabica Cầu Đất" + Premium Label */}
+          <span className="flex flex-col absolute top-2 right-2 items-center">
+            {/* Badge "100% Arabica Cầu Đất" */}
+            <span
+              className="flex flex-col z-[2] bg-black text-white px-2 py-1 
+                  text-[7px] sm:text-[8px] md:text-[9px] 
+                  items-center justify-center 
+                  rounded-[8px] 
+                  w-[35px] h-[35px] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] 
+                  leading-tight text-center"
+            >
+              <span className="text-[8px] sm:text-[4px] md:text-[5px] font-bold">
+                100%
+              </span>
+              Arabica
+              <br />
+              Cầu Đất
+            </span>
+
+            <img
+              src="https://taynguyensoul.vn/wp-content/uploads/2022/04/premium-label-300.png"
+              alt="Premium"
+              className="w-[35px] sm:w-[30px] md:w-[40px] h-auto mt-1"
+            />
+          </span>
+
+          {/* Rating */}
+          <div className="flex items-center space-x-1 mb-2">
+            <p className="text-gray-700 font-medium text-sm sm:text-base">
+              {rating}
+            </p>
+>>>>>>> 5e1b441d25d61511af37a31ed607464ae4ce6d3e
             <StarIcon
               size={16}
               fill="yellow"
               className="text-yellow-400 drop-shadow-sm"
             />
           </div>
+
+          {/* Hình ảnh sản phẩm */}
           <div className="w-full h-full box-border">
             <img
               src={image2}
               alt={title}
+<<<<<<< HEAD
               className="group-hover/item:hidden w-full  object-contain rounded-lg transition-all duration-300"
+=======
+              className="group-hover/item:hidden w-full h-[120px] sm:h-[140px] md:h-[200px] lg:h-[220px] object-contain rounded-lg transition-all duration-300"
+>>>>>>> 5e1b441d25d61511af37a31ed607464ae4ce6d3e
             />
             <img
               src={image1}
               alt={title}
+<<<<<<< HEAD
               className="hidden group-hover/item:block w-full object-contain rounded-lg transition-all duration-300"
+=======
+              className="hidden group-hover/item:block w-full h-[120px] sm:h-[140px] md:h-[200px] lg:h-[220px] object-contain rounded-lg transition-all duration-300"
+>>>>>>> 5e1b441d25d61511af37a31ed607464ae4ce6d3e
             />
           </div>
+
+          {/* Tên sản phẩm */}
           <div className="mt-4">
-            <p className="text-sm text-gray-500 capitalize">{title}</p>
-            <h1 className="text-lg font-semibold text-gray-900 hover:text-blue-500 transition-all sm:w-full sm:truncate mt-2">
+            <p className="text-xs sm:text-sm text-gray-500 capitalize">
+              {title}
+            </p>
+            <h1 className="text-base sm:text-lg font-semibold text-gray-900 hover:text-blue-500 transition-all sm:w-full sm:truncate mt-2">
               {title}
             </h1>
           </div>
         </Link>
-        <div className="grid grid-cols-2 items-center mt-4">
-          <h2 className="text-lg font-semibold text-red-500">$ {price}</h2>
-          <Button className="bg-indigo-600 text-white border border-indigo-600 rounded-full py-1 px-4 text-sm font-medium transition-all duration-300 hover:bg-indigo-700">
-            Buy now
-          </Button>
+
+        {/* Giá sản phẩm */}
+        <div className="mt-4   flex flex-col items-center">
+          <h2 className="text-sm sm:text-base font-semibold text-gray-400 line-through opacity-60">
+            $ {price}
+          </h2>
+
+          <h2 className="text-base sm:text-lg font-semibold text-red-500">
+            $ {price}
+          </h2>
         </div>
       </div>
     </div>
