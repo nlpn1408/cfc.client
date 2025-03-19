@@ -20,106 +20,82 @@ export default function ProductCard({
   link,
 }: ProductCardProps) {
   return (
-    <div className="group relative">
-<<<<<<< HEAD
-      <div className="group/item rounded-lg transition-all bg-white">
-        <Link href={`/product/${link}`} className="block">
-          <div className="flex items-center mb-2">
-            <p className="mr-2 text-gray-700 font-medium">{rating}</p>
-=======
-      <div className="group/item rounded-lg shadow-md p-4 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] bg-white">
-        <Link href={`/product/${link}`} className="block relative">
-          {/* Số lượng đã bán */}
-          <div
-            className="absolute left-[5px] bottom-16 z-2 bg-white text-[#040707] text-[10px] sm:text-[11px] font-bold px-2 py-1 rounded-[4px] shadow-md border-b-2 border-[#a52f21]"
-            style={{ boxShadow: "0 5px 15px 0 rgb(51 51 51 / 10%)" }}
-          >
-            Đã bán 37.6k+
-          </div>
+    <Link href={`/product/${link}`} className="group/item bg-white flex flex-col gap-3 relative">
+      {/* Số lượng đã bán */}
+      <div className="group-hover/item:hidden absolute left-1 bottom-1/3 z-20 bg-white text-[#040707] text-xs 
+              font-bold px-2 py-1 rounded-md shadow-md border-b-2 border-[#a52f21] box-shadow-custom ">
+        Đã bán 37.6k+
+      </div>
 
-          {/* Badge "100% Arabica Cầu Đất" + Premium Label */}
-          <span className="flex flex-col absolute top-2 right-2 items-center">
+      {/*  */}
+      <div className="group-hover/item:hidden grid grid-cols-2 absolute z-20 items-start top-5 ">
+        <div className="col-span-1 flex items-center ">
+          <p className="text-gray-700 font-medium text-sm sm:text-base">
+            {rating}
+          </p>
+          <StarIcon
+            size={16}
+            fill="yellow"
+            className="text-yellow-400 drop-shadow-sm"
+          />
+        </div>
+        <div className="col-span-1 ">
+          {/* Badge + Label */}
+          <div className=" grid grid-cols-2 grid-rows-2 items-start">
             {/* Badge "100% Arabica Cầu Đất" */}
-            <span
-              className="flex flex-col z-[2] bg-black text-white px-2 py-1 
-                  text-[7px] sm:text-[8px] md:text-[9px] 
-                  items-center justify-center 
-                  rounded-[8px] 
-                  w-[35px] h-[35px] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] 
-                  leading-tight text-center"
-            >
-              <span className="text-[8px] sm:text-[4px] md:text-[5px] font-bold">
+            <p
+              className="col-start-2 row-start-1 flex flex-col z-20 bg-black text-white py-2 text-center text-xs rounded-lg leading-tight">
+              <span>
                 100%
               </span>
               Arabica
               <br />
               Cầu Đất
-            </span>
-
+            </p>
             <img
+              className='col-start-2 row-start-2'
+              alt='Premium'
               src="https://taynguyensoul.vn/wp-content/uploads/2022/04/premium-label-300.png"
-              alt="Premium"
-              className="w-[35px] sm:w-[30px] md:w-[40px] h-auto mt-1"
-            />
-          </span>
-
-          {/* Rating */}
-          <div className="flex items-center space-x-1 mb-2">
-            <p className="text-gray-700 font-medium text-sm sm:text-base">
-              {rating}
-            </p>
->>>>>>> 5e1b441d25d61511af37a31ed607464ae4ce6d3e
-            <StarIcon
-              size={16}
-              fill="yellow"
-              className="text-yellow-400 drop-shadow-sm"
             />
           </div>
-
-          {/* Hình ảnh sản phẩm */}
-          <div className="w-full h-full box-border">
-            <img
-              src={image2}
-              alt={title}
-<<<<<<< HEAD
-              className="group-hover/item:hidden w-full  object-contain rounded-lg transition-all duration-300"
-=======
-              className="group-hover/item:hidden w-full h-[120px] sm:h-[140px] md:h-[200px] lg:h-[220px] object-contain rounded-lg transition-all duration-300"
->>>>>>> 5e1b441d25d61511af37a31ed607464ae4ce6d3e
-            />
-            <img
-              src={image1}
-              alt={title}
-<<<<<<< HEAD
-              className="hidden group-hover/item:block w-full object-contain rounded-lg transition-all duration-300"
-=======
-              className="hidden group-hover/item:block w-full h-[120px] sm:h-[140px] md:h-[200px] lg:h-[220px] object-contain rounded-lg transition-all duration-300"
->>>>>>> 5e1b441d25d61511af37a31ed607464ae4ce6d3e
-            />
-          </div>
-
-          {/* Tên sản phẩm */}
-          <div className="mt-4">
-            <p className="text-xs sm:text-sm text-gray-500 capitalize">
-              {title}
-            </p>
-            <h1 className="text-base sm:text-lg font-semibold text-gray-900 hover:text-blue-500 transition-all sm:w-full sm:truncate mt-2">
-              {title}
-            </h1>
-          </div>
-        </Link>
-
-        {/* Giá sản phẩm */}
-        <div className="mt-4   flex flex-col items-center">
-          <h2 className="text-sm sm:text-base font-semibold text-gray-400 line-through opacity-60">
-            $ {price}
-          </h2>
-
-          <h2 className="text-base sm:text-lg font-semibold text-red-500">
-            $ {price}
-          </h2>
         </div>
+        {/* Rating */}
+
       </div>
-    </div>
+
+      {/* Hình ảnh sản phẩm */}
+      <div className="w-full h-full box-border py-5">
+        <img
+          src={image2}
+          alt={title}
+          className="group-hover/item:hidden w-full object-contain rounded-lg transition-all duration-300"
+        />
+        <img
+          src={image1}
+          alt={title}
+
+          className="hidden group-hover/item:block w-full object-contain rounded-lg transition-all duration-300"
+        />
+      </div>
+
+      {/* Tên sản phẩm */}
+      <div className="">
+        <p className="text-xs sm:text-sm text-gray-500 capitalize">
+          {title}
+        </p>
+        <h1 className="text-base sm:text-lg font-semibold text-gray-900 transition-all">
+          {title}
+        </h1>
+      </div>
+
+      {/* Giá sản phẩm */}
+      <h2 className=" text-base sm:text-xl font-semibold text-red-500">
+        $ {price} -
+        <span className="text-sm font-semibold text-gray-400 line-through opacity-60">
+          $ {price}
+        </span>
+      </h2>
+
+    </Link>
   );
 }

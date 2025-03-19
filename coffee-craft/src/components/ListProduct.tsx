@@ -14,7 +14,7 @@ const data = [
     title: "Product 1",
     image1: "/product/product4.png",
     image2: "/product/product2.png",
-    price: 100,
+    price: "100,000",
     link: "/product/1",
     rating: "5.0",
   },
@@ -22,7 +22,7 @@ const data = [
     title: "Product 1",
     image1: "/product/product4.png",
     image2: "/product/product2.png",
-    price: 100,
+    price: "100,000",
     link: "/product/1",
     rating: "5.0",
   },
@@ -30,7 +30,7 @@ const data = [
     title: "Product 1",
     image1: "/product/product4.png",
     image2: "/product/product2.png",
-    price: 100,
+    price: "100,000",
     link: "/product/1",
     rating: "5.0",
   },
@@ -38,7 +38,7 @@ const data = [
     title: "Product 1",
     image1: "/product/product4.png",
     image2: "/product/product2.png",
-    price: 100,
+    price: "100,000",
     link: "/product/1",
     rating: "5.0",
   },
@@ -46,7 +46,7 @@ const data = [
     title: "Product 1",
     image1: "/product/product4.png",
     image2: "/product/product2.png",
-    price: 100,
+    price: "100,000",
     link: "/product/1",
     rating: "5.0",
   },
@@ -54,7 +54,7 @@ const data = [
     title: "Product 1",
     image1: "/product/product4.png",
     image2: "/product/product2.png",
-    price: 100,
+    price: "100,000",
     link: "/product/1",
     rating: "5.0",
   },
@@ -62,7 +62,7 @@ const data = [
     title: "Product 1",
     image1: "/product/product4.png",
     image2: "/product/product1.png",
-    price: 100,
+    price: "100,000",
     link: "/product/1",
     rating: "5.0",
   },
@@ -77,7 +77,6 @@ export default function ListProduct() {
       <Carousel>
         <CarouselContent>
           {data.map((item, index) => (
-<<<<<<< HEAD
             <CarouselItem key={index} className="md:basis-1/3 basis-1/2 lg:basis-1/4 ">
                 <Card>
                   <CardContent className="flex aspect-square items-center justify-center">
@@ -91,26 +90,8 @@ export default function ListProduct() {
                     />
                   </CardContent>
                 </Card>
-=======
-            <CarouselItem
-              key={index}
-              className="md:basis-1/3 basis-1/2 lg:basis-1/4 "
-            >
-              <Card>
-                <CardContent className="flex aspect-square items-center justify-center p-6">
-                  <ProductCard
-                    title={item.title}
-                    image1={item.image1}
-                    image2={item.image2}
-                    price={item.price}
-                    link={item.link}
-                    rating={item.rating}
-                  />
-                </CardContent>
-              </Card>
->>>>>>> 5e1b441d25d61511af37a31ed607464ae4ce6d3e
-            </CarouselItem>
-          ))}
+                </CarouselItem>
+                ))}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
