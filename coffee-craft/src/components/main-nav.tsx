@@ -16,7 +16,7 @@ export default function MainNav() {
           <Link href="/" className="hover:text-gray-900 transition">
             Home
           </Link>
-          <Link href="/all-products" className="hover:text-gray-900 transition">
+          <Link href="/product" className="hover:text-gray-900 transition">
             Shop
           </Link>
           <Link href="/" className="hover:text-gray-900 transition">

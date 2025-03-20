@@ -16,6 +16,7 @@ export interface ProductCardProps {
   price: string;
   link: string;
   rating: string;
+  className?: string;
 }
 
 export interface NavItemWithChildren extends NavItem {

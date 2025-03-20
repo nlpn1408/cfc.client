@@ -13,7 +13,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: '100,000',
       link: "1",
       rating: "5.0",
     },
@@ -21,7 +21,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: '100,000',
       link: "1",
       rating: "5.0",
     },
@@ -29,7 +29,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: '100,000',
       link: "1",
       rating: "5.0",
     },
@@ -37,7 +37,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: '100,000',
       link: "1",
       rating: "5.0",
     },
@@ -45,7 +45,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: '100,000',
       link: "1",
       rating: "5.0",
     },
@@ -53,7 +53,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: '100,000',
       link: "1",
       rating: "5.0",
     },
@@ -61,7 +61,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: '100,000',
       link: "1",
       rating: "5.0",
     },
@@ -69,7 +69,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: '100,000',
       link: "1",
       rating: "5.0",
     },
@@ -77,7 +77,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: '100,000',
       link: "1",
       rating: "5.0",
     },
@@ -85,7 +85,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: '100,000',
       link: "1",
       rating: "5.0",
     },
@@ -93,7 +93,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: '100,000',
       link: "1",
       rating: "5.0",
     },
@@ -101,7 +101,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: '100,000',
       link: "1",
       rating: "5.0",
     },
@@ -116,7 +116,7 @@ const AllProducts: React.FC = () => {
     }
   }, [pageCount]);
 
-  const itemsPerPage = 9;
+  const itemsPerPage = 12;
   const displayedProducts = data.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
@@ -165,7 +165,7 @@ const AllProducts: React.FC = () => {
         {["Arabica", "Robusta", "Culi", "Moka"].map((label, index) => (
           <button
             key={index}
-            className="px-4 py-2 rounded-lg bg-gray-100 text-black font-medium shadow-md transition-all hover:bg-gray-600 hover:text-white active:scale-95"
+            className="px-4 py-2 rounded-lg bg-gray-'100,000' text-black font-medium shadow-md transition-all hover:bg-gray-600 hover:text-white active:scale-95"
           >
             {label}
           </button>
@@ -193,7 +193,7 @@ const AllProducts: React.FC = () => {
               (item, idx) => (
                 <button
                   key={idx}
-                  className="block w-full text-left py-2 px-4 rounded-lg transition duration-300 hover:bg-gray-600 hover:text-white bg-gray-100 lg:bg-transparent"
+                  className="block w-full text-left py-2 px-4 rounded-lg transition duration-300 hover:bg-gray-600 hover:text-white bg-gray-'100,000' lg:bg-transparent"
                 >
                   {item}
                 </button>
@@ -203,9 +203,9 @@ const AllProducts: React.FC = () => {
         </aside>
 
         <section className="w-full lg:w-3/4">
-          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-6 ">
+          <div className="grid lg:grid-cols-4 grid-cols-2 md:grid-cols-3 gap-6 ">
             {displayedProducts.map((item, index) => (
-              <ProductCard key={index} {...item} />
+              <ProductCard className="shadow-md border border-slate-200 rounded-md" key={index} {...item} />
             ))}
           </div>
           <ReactPaginate
