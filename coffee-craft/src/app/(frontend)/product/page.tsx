@@ -13,7 +13,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: '100,000',
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -21,7 +21,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: '100,000',
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -29,7 +29,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: '100,000',
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -37,7 +37,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: '100,000',
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -45,7 +45,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: '100,000',
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -53,7 +53,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: '100,000',
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -61,7 +61,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: '100,000',
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -69,7 +69,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: '100,000',
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -77,7 +77,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: '100,000',
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -85,7 +85,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: '100,000',
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -93,7 +93,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: '100,000',
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -101,7 +101,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: '100,000',
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -203,7 +203,11 @@ const AllProducts: React.FC = () => {
         <section className="w-full lg:w-3/4">
           <div className="grid lg:grid-cols-4 grid-cols-2 md:grid-cols-3 gap-6 ">
             {displayedProducts.map((item, index) => (
-              <ProductCard className="shadow-md border border-slate-200 rounded-md" key={index} {...item} />
+              <ProductCard
+                className="shadow-md border border-slate-200 rounded-md"
+                key={index}
+                {...item}
+              />
             ))}
           </div>
           <ReactPaginate
