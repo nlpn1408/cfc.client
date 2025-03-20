@@ -22,7 +22,7 @@ export default function ProductCard({
   return (
     <div className="group relative">
       <div className="group/item rounded-lg shadow-md p-4 transition-all duration-300 hover:shadow-xl hover:scale-[1.02] bg-white">
-        <Link href={`/product/${link}`} className="block relative">
+        <Link href="/detail" className="block relative">
           {/* Số lượng đã bán */}
           <div
             className="absolute left-[5px] bottom-16 z-2 bg-white text-[#040707] text-[10px] sm:text-[11px] font-bold px-2 py-1 rounded-[4px] shadow-md border-b-2 border-[#a52f21]"

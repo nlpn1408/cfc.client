@@ -150,14 +150,12 @@ const AllProducts: React.FC = () => {
           className="orderby bg-white border border-gray-300 text-gray-700 text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2 transition-all duration-300"
           aria-label="Đơn hàng của cửa hàng"
         >
-          <option value="menu_order" selected>
-            Thứ tự mặc định
-          </option>
-          <option value="popularity">Thứ tự theo mức độ phổ biến</option>
-          <option value="rating">Thứ tự theo điểm đánh giá</option>
-          <option value="date">Mới nhất</option>
-          <option value="price">Thứ tự theo giá: thấp đến cao</option>
-          <option value="price-desc">Thứ tự theo giá: cao xuống thấp</option>
+          <option selected>Thứ tự mặc định</option>
+          <option>Thứ tự theo mức độ phổ biến</option>
+          <option>Thứ tự theo điểm đánh giá</option>
+          <option>Mới nhất</option>
+          <option>Thứ tự theo giá: thấp đến cao</option>
+          <option>Thứ tự theo giá: cao xuống thấp</option>
         </select>
       </div>
 
@@ -173,7 +171,7 @@ const AllProducts: React.FC = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6">
-        <aside className="w-full lg:w-1/4 bg-white shadow-md rounded-lg p-6">
+        <aside className="w-full lg:w-1/4 bg-white text-black shadow-md rounded-lg p-6">
           {/* Nút mở menu trên mobile */}
           <button
             className="lg:hidden flex items-center space-x-2 p-3 bg-gray-200 rounded-lg w-full text-left"
@@ -217,9 +215,9 @@ const AllProducts: React.FC = () => {
             pageRangeDisplayed={3}
             onPageChange={handlePageClick}
             containerClassName="flex justify-center items-center mt-8 space-x-2"
-            pageClassName="px-3 py-2 bg-white border rounded-lg"
-            previousLinkClassName="px-4 py-2 bg-white border rounded-lg"
-            nextLinkClassName="px-4 py-2 bg-white border rounded-lg"
+            pageClassName="px-3 py-2 bg-white border rounded-lg text-black"
+            previousLinkClassName="px-4 py-2 bg-white border rounded-lg text-black"
+            nextLinkClassName="px-4 py-2 bg-white border rounded-lg text-black"
             disabledClassName="opacity-50 cursor-not-allowed"
             activeClassName="px-3 py-2 bg-indigo-600 text-gray-500 rounded-lg"
             forcePage={currentPage}
