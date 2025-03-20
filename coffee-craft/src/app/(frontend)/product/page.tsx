@@ -13,7 +13,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -21,7 +21,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -29,7 +29,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -37,7 +37,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -45,7 +45,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -53,7 +53,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -61,7 +61,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -69,7 +69,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -77,7 +77,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -85,7 +85,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -93,7 +93,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -101,7 +101,7 @@ const AllProducts: React.FC = () => {
       title: "Product 1",
       image1: "/product/product4.png",
       image2: "/product/product2.png",
-      price: 100,
+      price: "100,000",
       link: "1",
       rating: "5.0",
     },
@@ -116,7 +116,7 @@ const AllProducts: React.FC = () => {
     }
   }, [pageCount]);
 
-  const itemsPerPage = 9;
+  const itemsPerPage = 12;
   const displayedProducts = data.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
@@ -150,14 +150,12 @@ const AllProducts: React.FC = () => {
           className="orderby bg-white border border-gray-300 text-gray-700 text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2 transition-all duration-300"
           aria-label="Đơn hàng của cửa hàng"
         >
-          <option value="menu_order" selected>
-            Thứ tự mặc định
-          </option>
-          <option value="popularity">Thứ tự theo mức độ phổ biến</option>
-          <option value="rating">Thứ tự theo điểm đánh giá</option>
-          <option value="date">Mới nhất</option>
-          <option value="price">Thứ tự theo giá: thấp đến cao</option>
-          <option value="price-desc">Thứ tự theo giá: cao xuống thấp</option>
+          <option selected>Thứ tự mặc định</option>
+          <option>Thứ tự theo mức độ phổ biến</option>
+          <option>Thứ tự theo điểm đánh giá</option>
+          <option>Mới nhất</option>
+          <option>Thứ tự theo giá: thấp đến cao</option>
+          <option>Thứ tự theo giá: cao xuống thấp</option>
         </select>
       </div>
 
@@ -165,7 +163,7 @@ const AllProducts: React.FC = () => {
         {["Arabica", "Robusta", "Culi", "Moka"].map((label, index) => (
           <button
             key={index}
-            className="px-4 py-2 rounded-lg bg-gray-100 text-black font-medium shadow-md transition-all hover:bg-gray-600 hover:text-white active:scale-95"
+            className="px-4 py-2 rounded-lg bg-gray-'100,000' text-black font-medium shadow-md transition-all hover:bg-gray-600 hover:text-white active:scale-95"
           >
             {label}
           </button>
@@ -173,7 +171,7 @@ const AllProducts: React.FC = () => {
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6">
-        <aside className="w-full lg:w-1/4 bg-white shadow-md rounded-lg p-6">
+        <aside className="w-full lg:w-1/4 bg-white text-black shadow-md rounded-lg p-6">
           {/* Nút mở menu trên mobile */}
           <button
             className="lg:hidden flex items-center space-x-2 p-3 bg-gray-200 rounded-lg w-full text-left"
@@ -193,7 +191,7 @@ const AllProducts: React.FC = () => {
               (item, idx) => (
                 <button
                   key={idx}
-                  className="block w-full text-left py-2 px-4 rounded-lg transition duration-300 hover:bg-gray-600 hover:text-white bg-gray-100 lg:bg-transparent"
+                  className="block w-full text-left py-2 px-4 rounded-lg transition duration-300 hover:bg-gray-600 hover:text-white bg-gray-'100,000' lg:bg-transparent"
                 >
                   {item}
                 </button>
@@ -203,9 +201,13 @@ const AllProducts: React.FC = () => {
         </aside>
 
         <section className="w-full lg:w-3/4">
-          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 gap-6 ">
+          <div className="grid lg:grid-cols-4 grid-cols-2 md:grid-cols-3 gap-6 ">
             {displayedProducts.map((item, index) => (
-              <ProductCard key={index} {...item} />
+              <ProductCard
+                className="shadow-md border border-slate-200 rounded-md"
+                key={index}
+                {...item}
+              />
             ))}
           </div>
           <ReactPaginate
@@ -217,9 +219,9 @@ const AllProducts: React.FC = () => {
             pageRangeDisplayed={3}
             onPageChange={handlePageClick}
             containerClassName="flex justify-center items-center mt-8 space-x-2"
-            pageClassName="px-3 py-2 bg-white border rounded-lg"
-            previousLinkClassName="px-4 py-2 bg-white border rounded-lg"
-            nextLinkClassName="px-4 py-2 bg-white border rounded-lg"
+            pageClassName="px-3 py-2 bg-white border rounded-lg text-black"
+            previousLinkClassName="px-4 py-2 bg-white border rounded-lg text-black"
+            nextLinkClassName="px-4 py-2 bg-white border rounded-lg text-black"
             disabledClassName="opacity-50 cursor-not-allowed"
             activeClassName="px-3 py-2 bg-indigo-600 text-gray-500 rounded-lg"
             forcePage={currentPage}
