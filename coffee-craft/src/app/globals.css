@@ -273,12 +273,12 @@ body {
   color: #333;
   margin: 25px;
 }
-form h2 {
+.form-contact h2 {
   font-size: 30px;
   text-align: center;
   font-weight: 800;
 }
-form .input-box{
+.form-contact .input-box{
   margin-top: 20px;
 }
 .input-box .field {
