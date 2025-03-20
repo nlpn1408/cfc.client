@@ -1,5 +1,7 @@
 import { UserPageProps } from "@/types/types";
 import * as Tabs from "@radix-ui/react-tabs";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
+
 
 export default function OrderPage(
   { page,
@@ -105,37 +107,43 @@ export default function OrderPage(
       ),
       name: "plans",
     },
-  ];
+  ]; return (
+    <Tabs.Root className="mx-auto px-4 md:px-8" defaultValue="Overview">
+      {/* Bọc Tabs trong Carousel */}
+      <Carousel className="w-full">
+        <CarouselContent className="flex w-full">
+          {tabItems.map((item, idx) => (
+            <CarouselItem key={idx} className="basis-1/3 md:basis-1/5">
+              <Tabs.List
+                className="flex gap-x-2 border-b text-xs md:text-sm whitespace-nowrap"
+                aria-label="Manage your account"
+              >
+                <Tabs.Trigger
+                  key={idx}
+                  className="group px-3 py-2 border-b-2 border-transparent text-gray-500 
+                  data-[state=active]:border-indigo-600 data-[state=active]:text-indigo-600"
+                  value={item.name}
+                >
+                  <div className="flex items-center gap-x-2 rounded-lg duration-150 
+                  group-hover:text-indigo-600 group-hover:bg-gray-50 group-active:bg-gray-100 font-medium">
+                    {item.icon}
+                    {item.name}
+                  </div>
+                </Tabs.Trigger>
+              </Tabs.List>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
 
-  return (
-    <Tabs.Root
-      className="max-w-screen-xl mx-auto px-4 md:px-8"
-      defaultValue="Overview"
-    >
-      <Tabs.List
-        className="w-full border-b flex items-center gap-x-3 overflow-x-auto text-sm"
-        aria-label="Manage your account"
-      >
-        {tabItems.map((item, idx) => (
-          <Tabs.Trigger
-            key={idx}
-            className="group outline-none py-1.5 border-b-2 border-white text-gray-500 data-[state=active]:border-indigo-600 data-[state=active]:text-indigo-600"
-            value={item.name}
-          >
-            <div className="flex items-center gap-x-2 py-1.5 px-3 rounded-lg duration-150 group-hover:text-indigo-600 group-hover:bg-gray-50 group-active:bg-gray-100 font-medium">
-              {item.icon}
-              {item.name}
-            </div>
-          </Tabs.Trigger>
-        ))}
-      </Tabs.List>
+      {/* Nội dung Tabs */}
       {tabItems.map((item, idx) => (
         <Tabs.Content key={idx} className="py-6" value={item.name}>
-          <p className="text-xs leading-normal">
+          <p className="text-xs md:text-sm leading-normal">
             This is <b>{item.name}</b> Tab
           </p>
         </Tabs.Content>
       ))}
     </Tabs.Root>
   );
-};
+}

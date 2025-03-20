@@ -12,7 +12,7 @@ const ProductDetail = () => {
     image1: "/product/product4.png",
     image2: "/product/product2.png",
     price: 100,
-    link: "/product/1",
+    link: "1",
     rating: "5.0",
   };
 
