@@ -263,7 +263,7 @@ body {
   min-height: 100vh;
 }
 
-form {
+.form-contact {
   max-width: 600px;
   width: 100%;
   background-color: #fff;
