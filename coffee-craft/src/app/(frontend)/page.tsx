@@ -3,6 +3,7 @@ import Blogs from "@/components/Home/Blogs";
 import Hero from "@/components/Home/Hero";
 import NewsLetter from "@/components/Home/NewsLetter";
 import ListProduct from "@/components/ListProduct";
+// import BlogDetail from "../(frontend)/blog-detail/page";
 
 
 export default function Home() {
@@ -29,6 +30,7 @@ export default function Home() {
       <ListProduct />
       <Blogs />
       <NewsLetter />
+      
     </>
   );
-}4
+}

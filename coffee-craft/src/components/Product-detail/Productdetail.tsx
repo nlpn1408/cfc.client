@@ -119,14 +119,16 @@ export default function Productdetail({ product }: { product: Product }) {
             <option value="Nguyên hạt">Nguyên hạt</option>
           </select>
         </div>
-        <div className="flex mt-6 gap-4">
-          <button className="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 text-lg font-semibold">
-            Thêm vào giỏ hàng
-          </button>
-          <button className="flex-1 bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 text-lg font-semibold">
-            Mua ngay
-          </button>
+        <div className="mt-4">
+          <h2 className="text-lg font-semibold">Số lượng: </h2>
+          {/* <div className=" p-2 mt-2"> <QuantitySelector/></div> */}
         </div>
+        <button className="mt-4 px-6 py-5 text-xl font-medium bg-green-600 text-white rounded-lg hover:bg-green-700">
+          Thêm vào giỏ hàng
+        </button>
+        <button className="ml-4 px-20 py-5 text-xl font-medium mt-4 bg-red-600 text-white rounded-lg hover:bg-red-700">
+          Mua ngay
+        </button>
       </div>
     </div>
     
