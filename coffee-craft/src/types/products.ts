@@ -1,3 +1,4 @@
+// src/types/Product.ts
 export interface Product {
   id: string;
   name: string;
@@ -8,12 +9,7 @@ export interface Product {
   stock: number;
   active: boolean;
   avgRating: number;
-  createdAt: string; // ISO Date string
-  updatedAt: string; // ISO Date string
-  images: Image[];
-}
-
-export interface Image {
-  id: string;
-  isThumbnail: boolean;
+  createdAt: string;
+  updatedAt: string;
+  images: Array<{ id: string; isThumbnail: boolean; url: string }>;
 }

@@ -25,14 +25,14 @@ export default function ProductCard({
     <Link
       href={`/product/${link}`}
       className={cn(
-        "group/item bg-white flex flex-col py-2 gap-3 relative",
+        "group/item bg-white flex flex-col  gap-3 relative",
         className
       )}
     >
       {/* Số lượng đã bán */}
       <div
         className="group-hover/item:hidden absolute left-1 bottom-1/3 z-20 bg-white text-[#040707] text-xs 
-              font-bold px-2 py-1 rounded-md shadow-md border-b-2 border-[#a52f21] box-shadow-custom "
+              font-bold px-2 py-1 rounded-lg shadow-md border-b-2 border-[#a52f21] box-shadow-custom "
       >
         Đã bán 37.6k+
       </div>
@@ -53,7 +53,7 @@ export default function ProductCard({
           {/* Badge + Label */}
           <div className=" grid grid-cols-2 grid-rows-2 items-start">
             {/* Badge "100% Arabica Cầu Đất" */}
-            <p className="col-start-2 row-start-1 flex flex-col z-20 bg-black text-white py-2 text-center text-xs rounded-lg leading-tight">
+            <p className="col-start-2 row-start-1  flex flex-col z-20 bg-black text-white py-2 text-center text-[0.6rem] rounded-lg leading-tight">
               <span>100%</span>
               Arabica
               <br />
@@ -70,7 +70,7 @@ export default function ProductCard({
       </div>
 
       {/* Hình ảnh sản phẩm */}
-      <div className="w-full h-full box-border py-5">
+      <div className="w-full h-full box-border ">
         <img
           src={image2}
           alt={title}
@@ -92,11 +92,11 @@ export default function ProductCard({
       </div>
 
       {/* Giá sản phẩm */}
-      <h2 className=" px-2 text-base sm:text-xl font-semibold text-red-500">
-        $ {price} -
+      <h2 className=" px-2 text-base sm:text-xl font-semibold text-red-500 text-center">
         <span className="text-sm font-semibold text-gray-400 line-through opacity-60">
           $ {price}
         </span>
+        - $ {price}
       </h2>
     </Link>
   );

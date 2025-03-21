@@ -8,6 +8,7 @@ const AllProducts: React.FC = () => {
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+
   const data = [
     {
       title: "Product 1",
@@ -204,7 +205,7 @@ const AllProducts: React.FC = () => {
           <div className="grid lg:grid-cols-4 grid-cols-2 md:grid-cols-3 gap-6 ">
             {displayedProducts.map((item, index) => (
               <ProductCard
-                className="shadow-md border border-slate-200 rounded-md"
+                className="shadow-lg border border-slate-200 rounded-md"
                 key={index}
                 {...item}
               />

@@ -1,37 +1,102 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
+import { Product } from "@/types/products";
+import { ProductCardProps } from "@/types/nav";
 
-const ProductDetail = () => {
+export default function Productdetail({ product }: { product: Product }) {
   const [selectedWeight, setSelectedWeight] = useState("250g");
   const [grindType, setGrindType] = useState("Xay sẵn");
+  const [currentSlide, setCurrentSlide] = useState(0);
 
+  const nextSlide = () => {
+    setCurrentSlide((prev) =>
+      prev === product.images.length - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) =>
+      prev === 0 ? product.images.length - 1 : prev - 1
+    );
+  };
+
+  // Auto chuyển slide mỗi 500ms
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 3500); // 500ms
+
+    return () => clearInterval(interval); // Cleanup khi unmount
+  }, [currentSlide]); // Lắng nghe thay đổi của currentSlide
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-10 bg-white shadow-lg rounded-lg">
       <div className="w-full h-[400px]">
-        <img
-          src="https://taynguyensoul.vn/wp-content/uploads/2021/06/ca-phe-nguyen-chat-signature-taynguyensoul.vn_-600x600.jpg"
-          alt="Cà Phê Nguyên Chất Signature"
-          className="rounded-lg w-full h-full object-cover"
-        />
-      </div>
-      <div>
-        <h1 className="text-3xl font-extrabold pb-10">
-          Cà Phê Nguyên Chất Signature
-        </h1>
-        <div className="text-yellow-500 my-2 text-lg flex items-center">
-          {[...Array(5)].map((_, i) => (
-            <Star key={i} size={20} className="text-yellow-500" />
-          ))}
-          <span className="ml-2">37.7k+ đã bán</span>
+        <div className="relative w-full">
+          {/* Carousel wrapper */}
+          <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
+            {product.images.map((image, index) => (
+              <div
+                key={index}
+                className={`absolute inset-0 transition-opacity duration-700 ${
+                  index === currentSlide ? "opacity-100" : "opacity-0"
+                }`}
+              >
+                <img
+                  src={image.url}
+                  alt={`Slide ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Slider indicators */}
+          <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 space-x-3">
+            {product.images.map((_, index) => (
+              <button
+                key={index}
+                className={`w-3 h-3 rounded-full ${
+                  index === currentSlide ? "bg-blue-500" : "bg-gray-300"
+                }`}
+                onClick={() => setCurrentSlide(index)}
+              ></button>
+            ))}
+          </div>
+
+          {/* Slider controls */}
+          <button
+            onClick={prevSlide}
+            className="absolute top-1/2 left-4 transform -translate-y-1/2 p-2 bg-gray-700/50 text-white rounded-full"
+          >
+            ◀
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute top-1/2 right-4 transform -translate-y-1/2 p-2 bg-gray-700/50 text-white rounded-full"
+          >
+            ▶
+          </button>
         </div>
-        <p className="text-red-500 text-xl font-semibold">
-          Giá: <span className="line-through text-gray-500">645.000đ</span>{" "}
-          460.000đ
-        </p>
-        <div className="mt-4">
+      </div>
+      <div className="flex flex-col justify-between">
+        <div>
+          <h1 className="text-4xl font-bold pb-4">{product.name}</h1>
+          <p className="text-gray-700 text-lg pb-4">{product.description}</p>
+          <div className="flex items-center text-yellow-500 pb-4">
+            {[...Array(product.avgRating)].map((_, i) => (
+              <Star key={i} size={24} className="text-yellow-500" />
+            ))}
+          </div>
+          <p className="text-red-600 text-2xl font-semibold pb-4">
+            Giá: <span className="line-through text-gray-500">15.0 $</span>{" "}
+            {product.price} $
+          </p>
+          <p className="text-gray-700 pb-4">Kho: {product.stock} sản phẩm</p>
+        </div>
+        <div>
           <h2 className="text-lg font-semibold">Chọn trọng lượng:</h2>
           <select
-            className="border p-2 rounded-md mt-2"
+            className="border p-2 rounded-md mt-2 w-full"
             value={selectedWeight}
             onChange={(e) => setSelectedWeight(e.target.value)}
           >
@@ -43,7 +108,7 @@ const ProductDetail = () => {
         <div className="mt-4">
           <h2 className="text-lg font-semibold">Yêu cầu:</h2>
           <select
-            className="border p-2 rounded-md mt-2"
+            className="border p-2 rounded-md mt-2 w-full"
             value={grindType}
             onChange={(e) => setGrindType(e.target.value)}
           >
@@ -51,15 +116,71 @@ const ProductDetail = () => {
             <option value="Nguyên hạt">Nguyên hạt</option>
           </select>
         </div>
-        <button className="mt-4 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">
-          Thêm vào giỏ hàng
-        </button>
-        <button className="ml-4 mt-4 bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700">
-          Mua ngay
-        </button>
+        <div className="flex mt-6 gap-4">
+          <button className="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 text-lg font-semibold">
+            Thêm vào giỏ hàng
+          </button>
+          <button className="flex-1 bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 text-lg font-semibold">
+            Mua ngay
+          </button>
+        </div>
       </div>
     </div>
+    // <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-10 bg-white shadow-lg rounded-lg">
+    //   <div className="w-full h-[400px]">
+    //     <img
+    //       src={product?.image1 || "/default-image.jpg"}
+    //       alt={product?.title || "Sản phẩm"}
+    //       className="rounded-lg w-full h-full object-cover"
+    //     />
+    //   </div>
+    //   <div className="flex flex-col justify-between">
+    //     <div>
+    //       <h1 className="text-4xl font-bold pb-4">
+    //         {product?.title || "Tên sản phẩm"}
+    //       </h1>
+    //       <div className="flex items-center text-yellow-500 pb-4">
+    //         {[...Array(product?.rating || 0)].map((_, i) => (
+    //           <Star key={i} size={24} className="text-yellow-500" />
+    //         ))}
+    //       </div>
+    //       <p className="text-red-600 text-2xl font-semibold pb-4">
+    //         Giá: <span className="line-through text-gray-500">15.0 $</span>{" "}
+    //         {product?.price || 0} $
+    //       </p>
+    //     </div>
+    //     <div>
+    //       <h2 className="text-lg font-semibold">Chọn trọng lượng:</h2>
+    //       <select
+    //         className="border p-2 rounded-md mt-2 w-full"
+    //         value={selectedWeight}
+    //         onChange={(e) => setSelectedWeight(e.target.value)}
+    //       >
+    //         <option value="250g">250g</option>
+    //         <option value="500g">500g</option>
+    //         <option value="1kg">1kg (2 gói 500g)</option>
+    //       </select>
+    //     </div>
+    //     <div className="mt-4">
+    //       <h2 className="text-lg font-semibold">Yêu cầu:</h2>
+    //       <select
+    //         className="border p-2 rounded-md mt-2 w-full"
+    //         value={grindType}
+    //         onChange={(e) => setGrindType(e.target.value)}
+    //       >
+    //         <option value="Xay sẵn">Xay sẵn</option>
+    //         <option value="Nguyên hạt">Nguyên hạt</option>
+    //       </select>
+    //     </div>
+    //     <div className="flex mt-6 gap-4">
+    //       <button className="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 text-lg font-semibold">
+    //         Thêm vào giỏ hàng
+    //       </button>
+    //       <button className="flex-1 bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 text-lg font-semibold">
+    //         Mua ngay
+    //       </button>
+    //     </div>
+    //   </div>
+    // </div>
   );
-};
-
-export default ProductDetail;
+}

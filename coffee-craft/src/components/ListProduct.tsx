@@ -15,7 +15,7 @@ const data = [
     image1: "/product/product4.png",
     image2: "/product/product2.png",
     price: "100,000",
-    link:"1",
+    link: "1",
     rating: "5.0",
   },
   {
@@ -23,7 +23,7 @@ const data = [
     image1: "/product/product4.png",
     image2: "/product/product2.png",
     price: "100,000",
-    link:"1",
+    link: "2",
     rating: "5.0",
   },
   {
@@ -31,7 +31,7 @@ const data = [
     image1: "/product/product4.png",
     image2: "/product/product2.png",
     price: "100,000",
-    link:"1",
+    link: "3",
     rating: "5.0",
   },
   {
@@ -39,7 +39,7 @@ const data = [
     image1: "/product/product4.png",
     image2: "/product/product2.png",
     price: "100,000",
-    link:"1",
+    link: "1",
     rating: "5.0",
   },
   {
@@ -47,7 +47,7 @@ const data = [
     image1: "/product/product4.png",
     image2: "/product/product2.png",
     price: "100,000",
-    link:"1",
+    link: "4",
     rating: "5.0",
   },
   {
@@ -55,7 +55,7 @@ const data = [
     image1: "/product/product4.png",
     image2: "/product/product2.png",
     price: "100,000",
-    link:"1",
+    link: "5",
     rating: "5.0",
   },
   {
@@ -63,7 +63,7 @@ const data = [
     image1: "/product/product4.png",
     image2: "/product/product1.png",
     price: "100,000",
-    link:"1",
+    link: "6",
     rating: "5.0",
   },
 ];
@@ -71,27 +71,27 @@ const data = [
 export default function ListProduct() {
   return (
     <section className="container max-w-screen-2xl py-10">
-      <h1 className="text-center text-3xl font-extrabold underline pb-10">
-        Featured
-      </h1>
       <Carousel>
         <CarouselContent>
           {data.map((item, index) => (
-            <CarouselItem key={index} className="md:basis-1/3 basis-1/2 lg:basis-1/4 ">
-                <Card>
-                  <CardContent className="flex aspect-square items-center justify-center">
-                    <ProductCard
-                      title={item.title}
-                      image1={item.image1}
-                      image2={item.image2}
-                      price={item.price}
-                      link={item.link}
-                      rating={item.rating}
-                    />
-                  </CardContent>
-                </Card>
-                </CarouselItem>
-                ))}
+            <CarouselItem
+              key={index}
+              className="md:basis-1/3 basis-1/2 lg:basis-1/4 "
+            >
+              <Card>
+                <CardContent className="flex aspect-square items-center justify-center">
+                  <ProductCard
+                    title={item.title}
+                    image1={item.image1}
+                    image2={item.image2}
+                    price={item.price}
+                    link={item.link}
+                    rating={item.rating}
+                  />
+                </CardContent>
+              </Card>
+            </CarouselItem>
+          ))}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
