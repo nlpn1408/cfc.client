@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Star } from "lucide-react";
+import QuantitySelector from "../QuantitySelector";
 
 const ProductDetail = () => {
   const [selectedWeight, setSelectedWeight] = useState("250g");
@@ -7,7 +8,7 @@ const ProductDetail = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div className="w-full h-[400px]">
+      <div className="w-full h-[500px]">
         <img
           src="https://taynguyensoul.vn/wp-content/uploads/2021/06/ca-phe-nguyen-chat-signature-taynguyensoul.vn_-600x600.jpg"
           alt="Cà Phê Nguyên Chất Signature"
@@ -51,10 +52,14 @@ const ProductDetail = () => {
             <option value="Nguyên hạt">Nguyên hạt</option>
           </select>
         </div>
-        <button className="mt-4 bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">
+        <div className="mt-4">
+          <h2 className="text-lg font-semibold">Số lượng: </h2>
+          <div className=" p-2 mt-2"> <QuantitySelector/></div>
+        </div>
+        <button className="mt-4 px-6 py-5 text-xl font-medium bg-green-600 text-white rounded-lg hover:bg-green-700">
           Thêm vào giỏ hàng
         </button>
-        <button className="ml-4 mt-4 bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700">
+        <button className="ml-4 px-20 py-5 text-xl font-medium mt-4 bg-red-600 text-white rounded-lg hover:bg-red-700">
           Mua ngay
         </button>
       </div>

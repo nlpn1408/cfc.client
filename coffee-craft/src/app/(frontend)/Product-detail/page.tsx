@@ -23,9 +23,9 @@ export default function ProductDetail() {
       <div key={index} className="p-8 my-6 grid md:grid-cols-12 grid-col-1 gap-6 text-center items-center border border-black-200 divide-x rounded-xl py-6 pb-5">
         <div className="col-span-5 col-start-2" >
           <div>
-          <div className=" flex items-center justify-center bg-gray-900">
-            <Slideshow />
-          </div>
+            <div className=" flex items-center justify-center bg-gray-900">
+              <Slideshow />
+            </div>
             {/* <div>
                 <img className="w-96" src={item.image2} />
             </div> */}
