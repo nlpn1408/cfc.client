@@ -1,16 +1,22 @@
 import { UserPageProps } from "@/types/types";
 import * as Tabs from "@radix-ui/react-tabs";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../ui/carousel";
+import { Component } from "lucide-react";
+import OrderItems from "./oder/oder-items";
 
-
-export default function OrderPage(
-  { page,
-    title,
-    description,
-    userId,
-    formId,
-  }: UserPageProps
-) {
+export default function OrderPage({
+  page,
+  title,
+  description,
+  userId,
+  formId,
+}: UserPageProps) {
   const tabItems = [
     {
       icon: (
@@ -106,8 +112,10 @@ export default function OrderPage(
         </svg>
       ),
       name: "plans",
+      Component: <OrderItems />,
     },
-  ]; return (
+  ];
+  return (
     <Tabs.Root className="mx-auto px-4 md:px-8" defaultValue="Overview">
       {/* Bọc Tabs trong Carousel */}
       <Carousel className="w-full">
@@ -124,8 +132,10 @@ export default function OrderPage(
                   data-[state=active]:border-indigo-600 data-[state=active]:text-indigo-600"
                   value={item.name}
                 >
-                  <div className="flex items-center gap-x-2 rounded-lg duration-150 
-                  group-hover:text-indigo-600 group-hover:bg-gray-50 group-active:bg-gray-100 font-medium">
+                  <div
+                    className="flex items-center gap-x-2 rounded-lg duration-150 
+                  group-hover:text-indigo-600 group-hover:bg-gray-50 group-active:bg-gray-100 font-medium"
+                  >
                     {item.icon}
                     {item.name}
                   </div>
@@ -139,9 +149,7 @@ export default function OrderPage(
       {/* Nội dung Tabs */}
       {tabItems.map((item, idx) => (
         <Tabs.Content key={idx} className="py-6" value={item.name}>
-          <p className="text-xs md:text-sm leading-normal">
-            This is <b>{item.name}</b> Tab
-          </p>
+          <p className="text-xs md:text-sm leading-normal">{item.Component} </p>
         </Tabs.Content>
       ))}
     </Tabs.Root>
