@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { NavigationMenuDemo } from "./navigate";
 
 export default function MainNav() {
   return (
@@ -25,6 +26,7 @@ export default function MainNav() {
           <Link href="/" className="hover:text-gray-900 transition">
             Contact
           </Link>
+          <NavigationMenuDemo />
         </div>
       </nav>
     </div>

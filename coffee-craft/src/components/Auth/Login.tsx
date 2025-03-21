@@ -1,14 +1,11 @@
 "use client"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import React from "react"
 import { useRouter } from "next/navigation"
 import { LoginInputProps } from "@/types/types"
-import { signIn } from "next-auth/react"
 import { useForm } from 'react-hook-form'
 import toast from "react-hot-toast"
 import { HiInformationCircle } from "react-icons/hi"
-import Image from "next/image"
 import TextInput from "../FromInput/TextInput"
 import { Alert } from "flowbite-react"
 import SubmitButton from "../FromInput/SubmitButton"
@@ -46,7 +43,6 @@ export default function Login() {
         //         setShowNotification(false);
         //         reset();
         //         setIsLoading(false);
-        //         toast.success("Login Successful");
         //         router.push("/");
         //     }
         // } catch (error) {
@@ -54,6 +50,8 @@ export default function Login() {
         //     console.error("Network Error:", error);
         //     toast.error("Its seems something is wrong with your Network");
         // }
+        toast.success("Login Successful");
+        router.push("/");
         console.log(data);
     }
     return (
@@ -93,11 +91,8 @@ export default function Login() {
                         <SubmitButton
                             title="Login"
                             loadingTitle="Logging you please wait..."
-                            isLoading={isLoading} 
+                            isLoading={isLoading}
                         />
-                        {/* <Button variant="outline" className="w-full">
-                            Login with Google
-                        </Button> */}
                     </form>
                     <div className="mt-4 text-center text-sm">
                         Don&apos;t have an account?{" "}

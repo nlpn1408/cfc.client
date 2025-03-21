@@ -20,22 +20,19 @@ export default function Productdetail({ product }: { product: Product }) {
     );
   };
 
-
+  // Auto chuyển slide mỗi 500ms
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
+    }, 3500); // 500ms
 
-    }, 3500);
-
-
-
-    return () => clearInterval(interval);
-  }, [currentSlide]);
+    return () => clearInterval(interval); // Cleanup khi unmount
+  }, [currentSlide]); // Lắng nghe thay đổi của currentSlide
   return (
     <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-10 bg-white shadow-lg rounded-lg">
-      <div className="w-full h-[400px]">
+      <div className="w-full">
         <div className="relative w-full">
-
+          {/* Carousel wrapper */}
           <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
             {product.images.map((image, index) => (
               <div
@@ -53,7 +50,7 @@ export default function Productdetail({ product }: { product: Product }) {
             ))}
           </div>
 
-
+          {/* Slider indicators */}
           <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 space-x-3">
             {product.images.map((_, index) => (
               <button
@@ -66,8 +63,6 @@ export default function Productdetail({ product }: { product: Product }) {
               ></button>
             ))}
           </div>
-
-
           <button
             onClick={prevSlide}
             className="absolute top-1/2 left-4 transform -translate-y-1/2 p-2 bg-gray-700/50 text-white rounded-full"

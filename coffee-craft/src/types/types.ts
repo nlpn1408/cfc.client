@@ -44,6 +44,7 @@ export type RegisterInputProps = {
   password: string;
   confirmPassword: string;
   role: any;
+  address?:any
 };
 
 export type LoginInputProps = {
