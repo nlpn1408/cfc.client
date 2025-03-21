@@ -1,0 +1,224 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  CUSTOMER
+  STAFF
+  ADMIN
+}
+
+// Category Model
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  SHIPPED
+  DELIVERED
+  CANCELED
+}
+
+enum PaymentMethod {
+  COD
+  CREDIT_CARD
+  PAYPAL 
+}
+
+enum VoucherType {
+  PERCENT
+  FIXED
+}
+
+// User Model
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      UserRole @default(CUSTOMER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  // Relationships
+  orders            Order[]
+  blogs             Blog[]
+  reviews           Review[]
+  shippingAddresses ShippingAddress[]
+}
+
+model ShippingAddress {
+  id            String @id @default(uuid())
+  userId        String
+  address       String
+  receiverName  String
+  receiverPhone String
+
+  // Relationships
+  orders Order[]
+  User   User    @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Category {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+  parentId    String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  // Relationships
+  parent   Category?  @relation("CategoryToCategory", fields: [parentId], references: [id])
+  children Category[] @relation("CategoryToCategory")
+  products Product[]
+}
+
+// Brand Model
+model Brand {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+
+  // Relationships
+  products Product[]
+}
+
+// Product Model
+model Product {
+  id          String  @id @default(uuid())
+  name        String
+  description String?
+  price       Decimal
+  categoryId  String
+  brandId     String
+  stock       Int
+  active      Boolean @default(true)
+  avgRating   Float   @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  // Relationships
+  category     Category       @relation(fields: [categoryId], references: [id])
+  brand        Brand?         @relation(fields: [brandId], references: [id])
+  orderItems   OrderItem[]
+  reviews      Review[]
+  images ProductImage[]
+}
+
+model ProductImage {
+  id        String   @id @default(uuid())
+  productId String
+  url       String
+  order     Int?
+  isThumbnail Boolean @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  // Relationships
+  product Product @relation(fields: [productId], references: [id])
+}
+
+// Order Model
+model Order {
+  id                String        @id @default(uuid())
+  userId            String
+  total             Decimal
+  status            OrderStatus   @default(PENDING)
+  voucherId         String?
+  shippingAddressId String
+  orderDate         DateTime
+  paymentMethod     PaymentMethod @default(COD)
+  note              String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  // Relationships
+  user            User            @relation(fields: [userId], references: [id])
+  voucher         Voucher?        @relation(fields: [voucherId], references: [id])
+  shippingAddress ShippingAddress @relation(fields: [shippingAddressId], references: [id])
+  orderItems      OrderItem[]
+}
+
+// OrderItem Model
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  productId String
+  quantity  Int
+  subTotal  Decimal
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  // Relationships
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}
+
+// Voucher Model
+model Voucher {
+  id              String      @id @default(uuid())
+  code            String      @unique
+  discountPercent Decimal
+  maxDiscount     Decimal
+  type            VoucherType
+  startDate       DateTime
+  endDate         DateTime
+  usedLeft        Int
+  isActive        Boolean     @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  // Relationships
+  orders Order[] 
+}
+
+model Blog {
+  id              String   @id @default(uuid())
+  title           String
+  content         String
+  thumbnail       String?
+  userId          String
+  publicationDate DateTime
+  active          Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  // Relationships
+  author User @relation(fields: [userId], references: [id])
+}
+
+// Review Model
+model Review {
+  id        String  @id @default(uuid())
+  userId    String
+  productId String
+  rating    Int
+  comment   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  // Relationships
+  user      User     @relation(fields: [userId], references: [id])
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+// -- Reset database --
+// npx prisma migrate reset
+// rm  prisma/migrations && rm node_modules && rm package-lock.json
+// npx prisma migrate dev --name init
+// npx prisma generate
