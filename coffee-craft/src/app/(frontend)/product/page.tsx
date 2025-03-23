@@ -20,7 +20,7 @@ const AllProducts: React.FC = () => {
       );
       const result = await response.json();
 
-      console.log("API response:", result);
+      console.log("API response:", result); // Debug dữ liệu trả về
 
       if (Array.isArray(result.data)) {
         setProducts(result.data);
