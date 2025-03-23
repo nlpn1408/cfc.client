@@ -1,14 +1,12 @@
-import { Product } from "@/types/products";
+import { Product } from "@/types/product";
+import { baseApi } from ".";
 
-export const getProducts = async (): Promise<Product[]> => {
+export const getAllProducts = async (): Promise<Product | null> => {
   try {
-    const response = await fetch(
-      "https://coffee-craft-service.onrender.com/products"
-    );
-    if (!response.ok) throw new Error("Lỗi khi lấy sản phẩm");
-    return await response.json();
+    const response = await baseApi.get<Product>("/products");
+    return response.data;
   } catch (error) {
-    console.error(error);
-    return [];
+    console.error("Error fetching products", error);
+    return null;
   }
 };

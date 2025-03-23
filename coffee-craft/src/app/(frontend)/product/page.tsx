@@ -4,128 +4,49 @@ import ProductCard from "@/components/ProductCard";
 import { Menu, X } from "lucide-react";
 import ReactPaginate from "react-paginate";
 import NewsLetter from "../../../components/Home/NewsLetter";
+import { Product } from "../../../types/product";
+import { ProductImage } from "../../../types/product";
+
 const AllProducts: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+  const itemsPerPage = 12;
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch(
+        "https://coffee-craft-service.onrender.com/products"
+      );
+      const result = await response.json();
 
-  const data = [
-    {
-      title: "Product 1",
-      image1: "/product/product4.png",
-      image2: "/product/product2.png",
-      price: "100,000",
-      link: "1",
-      rating: "5.0",
-    },
-    {
-      title: "Product 1",
-      image1: "/product/product4.png",
-      image2: "/product/product2.png",
-      price: "100,000",
-      link: "1",
-      rating: "5.0",
-    },
-    {
-      title: "Product 1",
-      image1: "/product/product4.png",
-      image2: "/product/product2.png",
-      price: "100,000",
-      link: "1",
-      rating: "5.0",
-    },
-    {
-      title: "Product 1",
-      image1: "/product/product4.png",
-      image2: "/product/product2.png",
-      price: "100,000",
-      link: "1",
-      rating: "5.0",
-    },
-    {
-      title: "Product 1",
-      image1: "/product/product4.png",
-      image2: "/product/product2.png",
-      price: "100,000",
-      link: "1",
-      rating: "5.0",
-    },
-    {
-      title: "Product 1",
-      image1: "/product/product4.png",
-      image2: "/product/product2.png",
-      price: "100,000",
-      link: "1",
-      rating: "5.0",
-    },
-    {
-      title: "Product 1",
-      image1: "/product/product4.png",
-      image2: "/product/product2.png",
-      price: "100,000",
-      link: "1",
-      rating: "5.0",
-    },
-    {
-      title: "Product 1",
-      image1: "/product/product4.png",
-      image2: "/product/product2.png",
-      price: "100,000",
-      link: "1",
-      rating: "5.0",
-    },
-    {
-      title: "Product 1",
-      image1: "/product/product4.png",
-      image2: "/product/product2.png",
-      price: "100,000",
-      link: "1",
-      rating: "5.0",
-    },
-    {
-      title: "Product 1",
-      image1: "/product/product4.png",
-      image2: "/product/product2.png",
-      price: "100,000",
-      link: "1",
-      rating: "5.0",
-    },
-    {
-      title: "Product 1",
-      image1: "/product/product4.png",
-      image2: "/product/product2.png",
-      price: "100,000",
-      link: "1",
-      rating: "5.0",
-    },
-    {
-      title: "Product 1",
-      image1: "/product/product4.png",
-      image2: "/product/product2.png",
-      price: "100,000",
-      link: "1",
-      rating: "5.0",
-    },
-  ];
+      console.log("API response:", result);
+
+      if (Array.isArray(result.data)) {
+        setProducts(result.data);
+        setPageCount(Math.ceil(result.total / itemsPerPage));
+      } else {
+        console.error("Unexpected API response format", result);
+      }
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    }
+  };
 
   useEffect(() => {
-    setPageCount(Math.ceil(data.length / itemsPerPage));
-  }, [data.length]);
-  useEffect(() => {
+    fetchProducts();
     if (currentPage >= pageCount) {
       setCurrentPage(0);
     }
   }, [pageCount]);
 
-  const itemsPerPage = 12;
-  const displayedProducts = data.slice(
+  const displayedProducts = products.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
 
   const handlePageClick = (event: any) => {
-    const selected = event.selected;
-    setCurrentPage(selected);
+    setCurrentPage(event.selected);
   };
 
   return (
@@ -200,16 +121,17 @@ const AllProducts: React.FC = () => {
             )}
           </div>
         </aside>
-
-        <section className="w-full lg:w-3/4">
+        <section className="w-full">
           <div className="grid lg:grid-cols-4 grid-cols-2 md:grid-cols-3 gap-6 ">
-            {displayedProducts.map((item, index) => (
-              <ProductCard
-                className="shadow-lg border border-slate-200 rounded-md"
-                key={index}
-                {...item}
-              />
-            ))}
+            {displayedProducts
+              .filter((product) => product && product.id)
+              .map((product) => (
+                <ProductCard
+                  className="shadow-lg border border-slate-200 rounded-md"
+                  key={product.id}
+                  product={product}
+                />
+              ))}
           </div>
           <ReactPaginate
             previousLabel={"<"}

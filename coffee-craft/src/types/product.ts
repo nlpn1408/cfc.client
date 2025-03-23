@@ -3,7 +3,7 @@ export interface Product {
   id: string;
   name: string;
   description: string;
-  price: number;
+  price: string;
   categoryId: string;
   brandId: string;
   stock: number;
@@ -11,5 +11,11 @@ export interface Product {
   avgRating: number;
   createdAt: string;
   updatedAt: string;
-  images: Array<{ id: string; isThumbnail: boolean; url: string }>;
+  images: ProductImage[];
+}
+
+export interface ProductImage {
+  id: string;
+  isThumbnail: boolean;
+  url: string;
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
-import { Product } from "@/types/products";
+import { Product } from "@/types/product";
 import { ProductCardProps } from "@/types/nav";
 
 export default function Productdetail({ product }: { product: Product }) {

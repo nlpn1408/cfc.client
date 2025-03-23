@@ -34,39 +34,44 @@ const Detailpage: React.FC = () => {
 
   // if (!ProductData) return <p>Không tìm thấy sản phẩm.</p>;
   const productData = {
-    id: "uuid-16",
-    name: "Robusta Coffee",
-    description: "This is Robusta Coffee",
-    price: 12.5,
-    categoryId: "uuid-3",
+    id: "00bb1762-b465-4009-8c7e-8284ee5781ee",
+    name: "Cà phê viên nén Perfetto - Intenso (25 viên/hộp) - Tương thích Nespresso",
+    description:
+      "ca-phe-vien-nen-perfetto-intenso-25-vien-hop-tuong-thich-nespresso",
+    price: "334800",
+    categoryId: "4f8f6162-564a-4565-a743-bac08f1e0451",
     brandId: "uuid-15",
-    stock: 5,
+    stock: 1000,
     active: true,
-    avgRating: 4,
-    createdAt: "2025-01-01T00:00:00.000Z",
-    updatedAt: "2025-01-01T00:00:00.000Z",
+    avgRating: 0,
+    createdAt: "2025-03-22T10:23:42.413Z",
+    updatedAt: "2025-03-22T16:17:31.834Z",
     images: [
       {
-        id: "uuid-21",
-        isThumbnail: false,
-        url: "https://taynguyensoul.vn/wp-content/uploads/2021/06/ca-phe-nguyen-chat-signature-taynguyensoul.vn_-600x600.jpg",
-      },
-      {
-        id: "uuid-21",
-        isThumbnail: false,
-        url: "https://scontent.fhan4-3.fna.fbcdn.net/v/t39.30808-6/485016554_1044979154117879_2208627813299901002_n.jpg?stp=dst-jpg_s600x600_tt6&_nc_cat=100&ccb=1-7&_nc_sid=aa7b47&_nc_eui2=AeEE6n1JO7NJvBV1Epb38KFi40ggu_EoCaXjSCC78SgJpX9WjWQqGp1etPoOWTW7ArvoBPtV9-cU4B28qcXg_6dV&_nc_ohc=0KNoziDExUUQ7kNvgEwAy-G&_nc_oc=Adnj_uT850XR3e7e9r1OLwBd1FSvaXc6DdyP9MVDxQdSGxYk6KqsbGKyeVrjJCu_wIY&_nc_zt=23&_nc_ht=scontent.fhan4-3.fna&_nc_gid=8l921PhE61XuwsarsZ9ZUw&oh=00_AYE9ludTb-E5oU2Y90UCO6RdmaVDe-UQBpz5fUXoKBPI5w&oe=67E2D791",
-      },
-      {
-        id: "uuid-21",
-        isThumbnail: false,
-        url: "https://taynguyensoul.vn/wp-content/uploads/2021/06/ca-phe-nguyen-chat-signature-taynguyensoul.vn_-600x600.jpg",
-      },
-      {
-        id: "uuid-21",
-        isThumbnail: false,
-        url: "https://scontent.fhan4-3.fna.fbcdn.net/v/t39.30808-6/485016554_1044979154117879_2208627813299901002_n.jpg?stp=dst-jpg_s600x600_tt6&_nc_cat=100&ccb=1-7&_nc_sid=aa7b47&_nc_eui2=AeEE6n1JO7NJvBV1Epb38KFi40ggu_EoCaXjSCC78SgJpX9WjWQqGp1etPoOWTW7ArvoBPtV9-cU4B28qcXg_6dV&_nc_ohc=0KNoziDExUUQ7kNvgEwAy-G&_nc_oc=Adnj_uT850XR3e7e9r1OLwBd1FSvaXc6DdyP9MVDxQdSGxYk6KqsbGKyeVrjJCu_wIY&_nc_zt=23&_nc_ht=scontent.fhan4-3.fna&_nc_gid=8l921PhE61XuwsarsZ9ZUw&oh=00_AYE9ludTb-E5oU2Y90UCO6RdmaVDe-UQBpz5fUXoKBPI5w&oe=67E2D791",
+        id: "d0270ea2-694a-4c8e-8b38-84378802569a",
+        productId: "00bb1762-b465-4009-8c7e-8284ee5781ee",
+        url: "https://estore-image.perfetto.com.vn/api/v1/files/images/ca-phe-vien-nen-perfetto-intenso-25-vien-hop-tuong-thich-nespresso-0-1702264765971",
+        order: 0,
+        isThumbnail: true,
+        createdAt: "2025-03-22T10:23:42.522Z",
+        updatedAt: "2025-03-22T10:23:42.522Z",
       },
     ],
+    category: {
+      id: "4f8f6162-564a-4565-a743-bac08f1e0451",
+      name: "Cà phê",
+      description: "ca-phe",
+      parentId: null,
+      createdAt: "2025-03-22T09:29:39.890Z",
+      updatedAt: "2025-03-22T09:29:39.890Z",
+    },
+    brand: {
+      id: "uuid-15",
+      name: "Lavazza",
+      description: "Lavazza is a coffee company",
+      createdAt: "2025-01-01T00:00:00.000Z",
+      updatedAt: "2025-01-01T00:00:00.000Z",
+    },
   };
 
   //   {

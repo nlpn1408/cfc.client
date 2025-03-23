@@ -1,47 +1,40 @@
 import React from "react";
 import Link from "next/link";
-import {
-  HeartIcon,
-  ShoppingBag,
-  ShoppingCart,
-  Star,
-  StarIcon,
-} from "lucide-react";
-import { Button } from "./ui/button";
-import { ProductCardProps } from "@/types/nav";
+import { StarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-// import Image from "next/image";
-// import premium from "@/public/product/premium.webp"; // Change the extension to .jpg
-export default function ProductCard({
-  rating,
-  title,
-  image1,
-  image2,
-  price,
-  link,
+import { Product } from "@/types/product";
+
+interface ProductCardProps {
+  product: Product;
+  className?: string;
+}
+const ProductCard: React.FC<ProductCardProps> = ({
+  product,
   className = "col-span-1",
-}: ProductCardProps) {
+}) => {
+  if (!product || !product.id) {
+    console.error("Product is undefined or missing id:", product);
+    return null;
+  }
   return (
     <Link
-      href={`/product/${link}`}
+      href={`/product/${product.id}`}
       className={cn(
-        "group/item bg-white flex flex-col  gap-3 relative",
+        "group/item bg-white flex flex-col gap-3 relative",
         className
       )}
     >
       {/* Số lượng đã bán */}
-      <div
-        className="group-hover/item:hidden absolute left-1 bottom-1/3 z-20 bg-white text-[#040707] text-xs 
-              font-bold px-2 py-1 rounded-lg shadow-md border-b-2 border-[#a52f21] box-shadow-custom "
-      >
-        Đã bán 37.6k+
+      <div className="group-hover/item:hidden absolute left-1 bottom-1/3 z-20 bg-white text-[#040707] text-xs font-bold px-2 py-1 rounded-lg shadow-md border-b-2 border-[#a52f21] box-shadow-custom ">
+        Đã bán {Math.floor(Math.random() * 10000) + 100}+{" "}
+        {/* Giả định số lượng đã bán */}
       </div>
 
-      {/* before image product */}
-      <div className="group-hover/item:hidden grid grid-cols-2 absolute z-20 items-start top-5 px-2 ">
-        <div className="col-span-1 flex items-center ">
+      {/* Thông tin sản phẩm */}
+      <div className="group-hover/item:hidden grid grid-cols-2 absolute z-20 items-start top-5 px-2">
+        <div className="col-span-1 flex items-center">
           <p className="text-gray-700 font-medium text-sm sm:text-base">
-            {rating}
+            {product.avgRating.toFixed(1)}
           </p>
           <StarIcon
             size={16}
@@ -66,38 +59,49 @@ export default function ProductCard({
             />
           </div>
         </div>
-        {/* Rating */}
       </div>
 
       {/* Hình ảnh sản phẩm */}
-      <div className="w-full h-full box-border ">
+      <div className="w-full h-full box-border relative">
+        {/* Ảnh mặc định */}
         <img
-          src={image2}
-          alt={title}
-          className="group-hover/item:hidden w-full object-contain rounded-lg transition-all duration-300"
+          src={product.images[0]?.url || "/default-image.jpg"}
+          alt={product.name}
+          className="w-full object-contain rounded-lg transition-opacity duration-300 opacity-100 group-hover/item:opacity-0 absolute top-0 left-0"
         />
+
+        {/* Ảnh khi hover */}
         <img
-          src={image1}
-          alt={title}
-          className="hidden group-hover/item:block w-full object-contain rounded-lg transition-all duration-300"
+          src={product.images[1]?.url || "/default-image.jpg"}
+          alt={product.name}
+          className="w-full object-contain rounded-lg transition-opacity duration-300 opacity-0 group-hover/item:opacity-100"
         />
       </div>
 
       {/* Tên sản phẩm */}
       <div className="px-2">
-        <p className="text-xs sm:text-sm text-gray-500 capitalize">{title}</p>
-        <h1 className="text-base sm:text-lg font-semibold text-gray-900 transition-all">
-          {title}
+        <h1 className="text-sm xs:text-lg font-semibold text-gray-900 transition-all">
+          {product.name}
         </h1>
       </div>
 
       {/* Giá sản phẩm */}
-      <h2 className=" px-2 text-base sm:text-xl font-semibold text-red-500 text-center">
+      <h2 className="px-2 text-base sm:text-xl font-semibold text-red-500 text-center">
         <span className="text-sm font-semibold text-gray-400 line-through opacity-60">
-          $ {price}
+          {new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+          }).format(+product.price * 1.2)}
         </span>
-        - $ {price}
+        <span className="text-base">
+          -{" "}
+          {new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+          }).format(+product.price)}
+        </span>
       </h2>
     </Link>
   );
-}
+};
+export default ProductCard;
