@@ -59,7 +59,7 @@ export default function Register() {
       if (response.ok) {
         toast.success("User created successfully");
         reset();
-        router.push(`/verify-account/${result.id}`);
+        router.push(`/login`);
       } else {
         toast.error(result.message || "Registration failed");
       }

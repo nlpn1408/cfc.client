@@ -4,7 +4,6 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
 const mongoConnect = require("./config/MongoConnect");
-const authMiddleware = require("./middlewares/authMiddleware");
 const errorHandler = require("./middlewares/errorHandler");
 const dotenv = require("dotenv");
 const productRouter = require("./routes/products");
@@ -38,13 +37,9 @@ app.use(cors(corsOptions));
 //kết nối database
 mongoConnect();
 
-app.use(authMiddleware);
 
 //định nghĩa routing
-app.use("/api/auth", authRoutes); // Không yêu cầu xác thực
-app.use(authMiddleware); // Áp dụng cho tất cả các tuyến sau
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
 app.use("/products", productsRouter);
 app.use("/categories", categoriesRouter);
 app.use("/cart", cartRouter);
