@@ -1,68 +1,107 @@
 import React from "react";
 import Link from "next/link";
-import {
-  HeartIcon,
-  ShoppingBag,
-  ShoppingCart,
-  Star,
-  StarIcon,
-} from "lucide-react";
-import { Button } from "./ui/button";
-import { ProductCardProps } from "@/types/nav";
+import { StarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Product } from "@/types/product";
 
-export default function ProductCard({
-  rating,
-  title,
-  image1,
-  image2,
-  price,
-  link,
-}: ProductCardProps) {
+interface ProductCardProps {
+  product: Product;
+  className?: string;
+}
+const ProductCard: React.FC<ProductCardProps> = ({
+  product,
+  className = "col-span-1",
+}) => {
+  if (!product || !product.id) {
+    console.error("Product is undefined or missing id:", product);
+    return null;
+  }
   return (
-    <div className="group relative">
-      <div className="group/item rounded-lg shadow-md p-4 group-hover:shadow-lg">
-        <Link href={`/product/${link}`}>
-          <div className="flex items-center">
-            <p className="mr-3">{rating}</p>
-            <StarIcon
-              key={Math.random() * 1000}
-              size={15}
-              fill="yellow"
-              className="text-yellow-400"
-            />
-          </div>
-          <div className="w-full h-full box-border ">
+    <Link
+      href={`/product/${product.id}`}
+      className={cn(
+        "group/item bg-white flex flex-col gap-3 relative",
+        className
+      )}
+    >
+      {/* Số lượng đã bán */}
+      <div className="group-hover/item:hidden absolute left-1 bottom-1/3 z-20 bg-white text-[#040707] text-xs font-bold px-2 py-1 rounded-lg shadow-md border-b-2 border-[#a52f21] box-shadow-custom ">
+        Đã bán {Math.floor(Math.random() * 10000) + 100}+{" "}
+        {/* Giả định số lượng đã bán */}
+      </div>
+
+      {/* Thông tin sản phẩm */}
+      <div className="group-hover/item:hidden grid grid-cols-2 absolute z-20 items-start top-5 px-2">
+        <div className="col-span-1 flex items-center">
+          <p className="text-gray-700 font-medium text-sm sm:text-base">
+            {product.avgRating.toFixed(1)}
+          </p>
+          <StarIcon
+            size={16}
+            fill="yellow"
+            className="text-yellow-400 drop-shadow-sm"
+          />
+        </div>
+        <div className="col-span-1 relative ">
+          {/* Badge + Label */}
+          <div className=" grid grid-cols-2 grid-rows-2 items-start">
+            {/* Badge "100% Arabica Cầu Đất" */}
+            <p className="col-start-2 row-start-1  flex flex-col z-20 bg-black text-white py-2 text-center text-[0.6rem] rounded-lg leading-tight">
+              <span>100%</span>
+              Arabica
+              <br />
+              Cầu Đất
+            </p>
             <img
-              src={image2}
-              alt={title}
-              className="group-hover/item:hidden w-[80%] h-[80%] object-contain rounded-lg duration-300 transition-all"
-            />
-            <img
-              src={image1}
-              alt={title}
-              className="hidden group-hover/item:block w-full h-[120px] md:h-[200px] lg:h-[210px] object-contain rounded-lg duration-300 transition-all"
+              className="col-start-2 row-start-2"
+              alt="Premium"
+              src="https://taynguyensoul.vn/wp-content/uploads/2022/04/premium-label-300.png"
             />
           </div>
-          <div>
-            <p className="pt-5 text-xs capitalize text-slate-600">{title}</p>
-            <h1
-              className="text-lg cursor-pointer hover:text-blue-500 transition-all hover:underline 
-                    sm:w-full sm:truncate mt-2 text-black font-semibold"
-            >
-              {title}
-            </h1>
-          </div>
-        </Link>
-        <div className="grid grid-cols-2 justify-between items-center ">
-          <h2 className="col-span-full lg:col-span-1 text-base hover:text-red-400">
-            $ {price}
-          </h2>
-          <Button className="col-span-full lg:col-span-1 hover:none bg-transparent border border-slate-600 rounded-full text-black py-0 text-base font-light">
-            {" "}
-            Buy now
-          </Button>
         </div>
       </div>
-    </div>
+
+      {/* Hình ảnh sản phẩm */}
+      <div className="w-full h-full box-border relative">
+        {/* Ảnh mặc định */}
+        <img
+          src={product.images[0]?.url || "/default-image.jpg"}
+          alt={product.name}
+          className="w-full object-contain rounded-lg transition-opacity duration-300 opacity-100 group-hover/item:opacity-0 absolute top-0 left-0"
+        />
+
+        {/* Ảnh khi hover */}
+        <img
+          src={product.images[1]?.url || "/default-image.jpg"}
+          alt={product.name}
+          className="w-full object-contain rounded-lg transition-opacity duration-300 opacity-0 group-hover/item:opacity-100"
+        />
+      </div>
+
+      {/* Tên sản phẩm */}
+      <div className="px-2">
+        <h1 className="text-sm xs:text-lg font-semibold text-gray-900 transition-all">
+          {product.name}
+        </h1>
+      </div>
+
+      {/* Giá sản phẩm */}
+      <h2 className="px-2 text-base sm:text-xl font-semibold text-red-500 text-center">
+        <span className="text-sm font-semibold text-gray-400 line-through opacity-60">
+          {new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+          }).format(+product.price * 1.2)}
+        </span>
+        <span className="text-base">
+          -{" "}
+          {new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+          }).format(+product.price)}
+        </span>
+      </h2>
+    </Link>
   );
-}
+};
+export default ProductCard;

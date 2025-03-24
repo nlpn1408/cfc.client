@@ -116,7 +116,8 @@ body {
 
   --booSize: calc(var(--jaggedDistance) * 5);
   --booBg: var(--bgColor);
-  --booShadow: #e0e0e0; /* darken(#f7f7f7, 5%) */
+  --booShadow: #e0e0e0;
+  /* darken(#f7f7f7, 5%) */
 
   --booFaceSize: calc(var(--jaggedDistance) / 1.3333);
   --booFaceColor: #9b9b9b;
@@ -126,12 +127,15 @@ body {
   0% {
     transform: translate3d(0, 0, 0);
   }
+
   45% {
     transform: translate3d(0, -10%, 0);
   }
+
   55% {
     transform: translate3d(0, -10%, 0);
   }
+
   100% {
     transform: translate3d(0, 0, 0);
   }
@@ -141,12 +145,15 @@ body {
   0% {
     transform: scale(1);
   }
+
   45% {
     transform: scale(0.85);
   }
+
   55% {
     transform: scale(0.85);
   }
+
   100% {
     transform: scale(1);
   }
@@ -189,9 +196,9 @@ body {
   background-size: var(--jaggedDistance) var(--jaggedDistance);
   background-position: left bottom;
   background-image: linear-gradient(-45deg, var(--bgColor) calc(var(--jaggedDistance) / 2), transparent 0),
-                    linear-gradient(45deg, var(--bgColor) calc(var(--jaggedDistance) / 2), transparent 0),
-                    linear-gradient(-45deg, var(--booFaceColor) calc(var(--jaggedDistance) / 1.7), transparent 0),
-                    linear-gradient(45deg, var(--booFaceColor) calc(var(--jaggedDistance) / 1.7), transparent 0);
+    linear-gradient(45deg, var(--bgColor) calc(var(--jaggedDistance) / 2), transparent 0),
+    linear-gradient(-45deg, var(--booFaceColor) calc(var(--jaggedDistance) / 1.7), transparent 0),
+    linear-gradient(45deg, var(--booFaceColor) calc(var(--jaggedDistance) / 1.7), transparent 0);
 }
 
 .boo .face {
@@ -234,4 +241,76 @@ body {
   margin-left: auto;
   border-radius: 50%;
   animation: floatingShadow 3s ease-in-out infinite;
+}
+
+/* Ẩn thanh cuộn trên Chrome, Safari */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ẩn thanh cuộn trên Firefox */
+.scrollbar-hide {
+  scrollbar-width: none;
+}
+
+.box-shadow-custom {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.contact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.form-contact {
+  max-width: 600px;
+  width: 100%;
+  background-color: #fff;
+  padding: 25px 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+  color: #333;
+  margin: 25px;
+}
+.form-contact h2 {
+  font-size: 30px;
+  text-align: center;
+  font-weight: 800;
+}
+.form-contact .input-box{
+  margin-top: 20px;
+}
+.input-box .field {
+  width: 100%;
+  height:  50px;
+  background: transparent ;
+  border: 2px solid #ddd;
+  outline: none;
+  border-radius: 6px;
+  padding: 15px;
+  font-size: 16px;
+  color: #333;
+  margin-top: 8px;
+}
+.input-box .field.mess {
+  height: 150px;
+  resize:  none;
+}
+form button{
+  width: 100%;
+  height: 55px;
+  background-color: black;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 25px;
+  transition: .5s;
+}
+form button:hover {
+  background-color: #333;
 }
