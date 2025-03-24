@@ -1,7 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react"; // Đảm bảo import useEffect
-
-import ProductCard from "../../../../components/ProductCard";
 import NewsLetter from "../../../../components/Home/NewsLetter";
 import Reviews from "../../../../components/Product-detail/comment";
 import ProductDetail from "../../../../components/Product-detail/Productdetail";
@@ -33,7 +31,7 @@ const Detailpage: React.FC = () => {
   if (!productData) return <p>Không tìm thấy sản phẩm.</p>;
 
   return (
-    <div className="container mx-auto p-6 flex flex-col gap-8">
+    <div className="container max-w-screen-2xl py-10 grid gap-3 px-4 md:px-8">
       <ProductDetail product={productData} />
       <Reviews />
       <div>

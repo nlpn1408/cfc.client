@@ -45,26 +45,26 @@ const ProductCard: React.FC<ProductCardProps> = ({
             className="text-yellow-400 drop-shadow-sm"
           />
         </div>
-        {product.categoryId &&
-          product.categoryId === "4f8f6162-564a-4565-a743-bac08f1e0451" && (
-            <div className="col-span-1 relative ">
-              {/* Badge + Label */}
-              <div className=" grid grid-cols-2 grid-rows-2 items-start">
-                {/* Badge "100% Arabica Cầu Đất" */}
-                <p className="col-start-2 row-start-1 flex flex-col z-20 bg-black text-white py-2 text-center text-[0.6rem] rounded-lg leading-tight">
-                  <span>100%</span>
-                  Arabica
-                  <br />
-                  Cầu Đất
-                </p>
-                <img
-                  className="col-start-2 row-start-2"
-                  alt="Premium"
-                  src="https://taynguyensoul.vn/wp-content/uploads/2022/04/premium-label-300.png"
-                />
-              </div>
-            </div>
-          )}
+        {/* {product.categoryId &&
+          product.categoryId === "4f8f6162-564a-4565-a743-bac08f1e0451" && ( */}
+        <div className="col-span-1 relative ">
+          {/* Badge + Label */}
+          <div className=" grid grid-cols-2 grid-rows-2 items-start">
+            {/* Badge "100% Arabica Cầu Đất" */}
+            <p className="col-start-2 row-start-1 flex flex-col z-20 bg-black text-white py-2 text-center text-[0.5rem] rounded-lg leading-tight">
+              <span>100%</span>
+              Arabica
+              <br />
+              Cầu Đất
+            </p>
+            <img
+              className="col-start-2 row-start-2"
+              alt="Premium"
+              src="https://taynguyensoul.vn/wp-content/uploads/2022/04/premium-label-300.png"
+            />
+          </div>
+        </div>
+        {/* )} */}
       </div>
 
       {/* Hình ảnh sản phẩm */}
