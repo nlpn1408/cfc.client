@@ -20,13 +20,9 @@ const AllProducts: React.FC = () => {
       );
       const result = await response.json();
 
-      console.log("API response:", result); // Debug dữ liệu trả về
-
       if (Array.isArray(result.data)) {
         setProducts(result.data);
         setPageCount(Math.ceil(result.total / itemsPerPage));
-      } else {
-        console.error("Unexpected API response format", result);
       }
     } catch (error) {
       console.error("Failed to fetch products:", error);
@@ -71,13 +67,22 @@ const AllProducts: React.FC = () => {
           name="orderby"
           className="orderby bg-white border border-gray-300 text-gray-700 text-sm rounded-md focus:ring-indigo-500 focus:border-indigo-500 px-3 py-2 transition-all duration-300"
           aria-label="Đơn hàng của cửa hàng"
+          defaultValue="Thứ tự mặc định"
         >
-          <option selected>Thứ tự mặc định</option>
-          <option>Thứ tự theo mức độ phổ biến</option>
-          <option>Thứ tự theo điểm đánh giá</option>
-          <option>Mới nhất</option>
-          <option>Thứ tự theo giá: thấp đến cao</option>
-          <option>Thứ tự theo giá: cao xuống thấp</option>
+          <option value="Thứ tự mặc định">Thứ tự mặc định</option>
+          <option value="Thứ tự theo mức độ phổ biến">
+            Thứ tự theo mức độ phổ biến
+          </option>
+          <option value="Thứ tự theo điểm đánh giá">
+            Thứ tự theo điểm đánh giá
+          </option>
+          <option value="Mới nhất">Mới nhất</option>
+          <option value="Thứ tự theo giá: thấp đến cao">
+            Thứ tự theo giá: thấp đến cao
+          </option>
+          <option value="Thứ tự theo giá: cao xuống thấp">
+            Thứ tự theo giá: cao xuống thấp
+          </option>
         </select>
       </div>
 
