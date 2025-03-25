@@ -68,7 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </div>
 
       {/* Hình ảnh sản phẩm */}
-      <div className="w-full h-full box-border relative">
+      <div className="w-full  box-border relative">
         {/* Ảnh mặc định */}
         <img
           src={product.images[0]?.url || "/default-image.jpg"}

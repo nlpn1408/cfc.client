@@ -13,7 +13,6 @@ const AllProducts: React.FC = () => {
       <CardContent className="flex  items-center justify-center">
         <ShowPro />
       </CardContent>
-
       <NewsLetter />
     </section>
   );

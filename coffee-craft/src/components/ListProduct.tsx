@@ -12,14 +12,13 @@ import { Card, CardContent } from "./ui/card";
 import { Product } from "@/types/product";
 
 export default function ListProduct() {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch(
-          "https://coffee-craft-service.onrender.com/products"
-        );
+        const response = await fetch(`${API_URL}/products`);
         const result = await response.json();
 
         if (Array.isArray(result.data)) {
@@ -34,7 +33,7 @@ export default function ListProduct() {
   }, []);
 
   return (
-    <section className="container max-w-screen-2xl py-10">
+    <section className="container max-w-screen-2xl py-10 ">
       <Carousel>
         <CarouselContent>
           {products.length > 0 ? (
@@ -43,15 +42,13 @@ export default function ListProduct() {
                 key={index}
                 className="md:basis-1/3 basis-1/2 lg:basis-1/4"
               >
-                <Card>
-                  <CardContent className="flex aspect-square items-center justify-center">
-                    <ProductCard
-                      className="shadow-lg border border-slate-200 rounded-md"
-                      key={product.id}
-                      product={product}
-                    />
-                  </CardContent>
-                </Card>
+                <CardContent className="flex items-center justify-center">
+                  <ProductCard
+                    className="shadow-lg border border-slate-200 rounded-md"
+                    key={product.id}
+                    product={product}
+                  />
+                </CardContent>
               </CarouselItem>
             ))
           ) : (
