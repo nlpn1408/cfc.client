@@ -18,10 +18,8 @@ export default function SiteHeader() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // Mark that we're now client-side
     setIsClient(true);
 
-    // Get user data from sessionStorage
     const getUserFromStorage = () => {
       const storedUser = sessionStorage.getItem("user");
       if (storedUser) {
@@ -34,10 +32,8 @@ export default function SiteHeader() {
       }
     };
 
-    // Initial load
     getUserFromStorage();
 
-    // Set up storage event listener to handle changes from other tabs
     const handleStorageChange = (event: StorageEvent) => {
       if (event.key === "user") {
         getUserFromStorage();
@@ -52,27 +48,10 @@ export default function SiteHeader() {
   }, []);
 
   async function handleLogout() {
-    sessionStorage.removeItem("user"); // Xóa dữ liệu user khi logout
+    sessionStorage.removeItem("user"); 
     await signOut();
     router.push("/login");
-    window.location.reload()
-  }
-  // Only render user-dependent UI after confirming we're on the client
-  if (!isClient) {
-    return (
-      <header className="sticky top-0 z-50 w-full border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 max-w-screen-2xl items-center justify-around">
-          <MainNav />
-          <MobileNav />
-          <div className="flex justify-end flex-1 items-center gap-2">
-            <CommandMenu />
-            <nav>
-              <ModeToggle />
-            </nav>
-          </div>
-        </div>
-      </header>
-    );
+    window.location.reload(); // 🔄 Reload lại trang để cập nhật giao diện
   }
 
   return (

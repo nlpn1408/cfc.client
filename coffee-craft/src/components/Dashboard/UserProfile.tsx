@@ -7,7 +7,6 @@ import ChangePassword from './ChangePassword'
 import OrderPage from './Orderpage'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { description } from '../Auth/Login'
 import { Separator } from "../ui/separator"
 
 export default function UserProfile({ id }: { id: string }) {
@@ -21,7 +20,7 @@ export default function UserProfile({ id }: { id: string }) {
     {
       title: 'Profile',
       page: 'profile',
-      component: <Profile userId={id} title='Profile' page='profile' description='' />
+      component: <Profile userId={id} title='Profile' />
     },
     {
       title: 'Change Password',
