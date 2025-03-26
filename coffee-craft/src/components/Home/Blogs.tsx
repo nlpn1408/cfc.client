@@ -1,80 +1,97 @@
-export default function Blogs() {
+"use client";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
 
-    const posts = [
-        {
-            title: "What is SaaS? Software as a Service Explained",
-            desc: "Going into this journey, I had a standard therapy regimen, based on looking at the research literature. After I saw the movie, I started to ask other people what they did for their anxiety, and some",
-            img: "https://images.unsplash.com/photo-1556155092-490a1ba16284?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-            authorLogo: "https://api.uifaces.co/our-content/donated/xZ4wg2Xj.jpg",
-            authorName: "Sidi dev",
-            date: "Jan 4 2022",
-            href: "javascript:void(0)"
-        },
-        {
-            title: "A Quick Guide to WordPress Hosting",
-            desc: "According to him, â€œI'm still surprised that this has happened. But we are surprised because we are so surprised.â€More revelations about Whittington will be featured in the film",
-            img: "https://images.unsplash.com/photo-1620287341056-49a2f1ab2fdc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-            authorLogo: "https://api.uifaces.co/our-content/donated/FJkauyEa.jpg",
-            authorName: "Micheal",
-            date: "Jan 4 2022",
-            href: "javascript:void(0)"
-        },
-        {
-            title: "7 Promising VS Code Extensions Introduced in 2022",
-            desc: "I hope I remembered all the stuff that they needed to know. They're like, 'okay,' and write it in their little reading notebooks. I realized today that I have all this stuff that",
-            img: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-            authorLogo: "https://randomuser.me/api/portraits/men/46.jpg",
-            authorName: "Luis",
-            date: "Jan 4 2022",
-            href: "javascript:void(0)"
-        },
-        {
-            title: "How to Use Root C++ Interpreter Shell to Write C++ Programs",
-            desc: "The powerful gravity waves resulting from the impact of the planets' moons â€” four in total â€” were finally resolved in 2015 when gravitational microlensing was used to observe the",
-            img: "https://images.unsplash.com/photo-1617529497471-9218633199c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
-            authorLogo: "https://api.uifaces.co/our-content/donated/KtCFjlD4.jpg",
-            authorName: "Lourin",
-            date: "Jan 4 2022",
-            href: "javascript:void(0)"
-        }
-    ]
-    
-    return (
-        <section className="mt-12 mx-auto py-5 px-4 max-w-screen-2xl md:px-8">
-            <div className="text-center">
-                <h1 className="text-6xl text-gray-800 font-semibold">
-                    Blog
-                </h1>
-                <p className="mt-3 text-gray-500">
-                    Blogs that are loved by the community. Updated every hour.
-                </p>
-            </div>
-            <div className="mt-12 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
-                {
-                    posts.map((items, key) => (
-                        <article className="max-w-md mx-auto mt-4 shadow-lg border rounded-md duration-300 hover:shadow-sm" key={key}>
-                            <a href={items.href}>
-                                <img src={items.img} loading="lazy" alt={items.title}  className="w-full h-48 rounded-t-md" />
-                                <div className="flex items-center mt-2 pt-3 ml-4 mr-2">
-                                    <div className="flex-none w-10 h-10 rounded-full">
-                                        <img src={items.authorLogo} className="w-full h-full rounded-full" alt={items.authorName} />
-                                    </div>
-                                    <div className="ml-3">
-                                        <span className="block text-gray-900">{items.authorName}</span>
-                                        <span className="block text-gray-400 text-sm">{items.date}</span>
-                                    </div>
-                                </div>
-                                <div className="pt-3 ml-4 mr-2 mb-3">
-                                    <h3 className="text-xl text-gray-900">
-                                        {items.title}
-                                    </h3>
-                                    <p className="text-gray-400 text-sm mt-1">{items.desc}</p>
-                                </div>
-                            </a>
-                        </article>
-                    ))
-                }
-            </div>
-        </section>
-    )
+export default function Blogs() {
+  const posts = [
+    {
+      title: "Cà phê pha máy vs pha phin: Đâu là lựa chọn của bạn?",
+      desc: "Khám phá sự khác biệt giữa cà phê pha máy và pha phin, đâu mới là phong cách pha chế phù hợp với bạn?",
+      img: "https://tse2.mm.bing.net/th?id=OIP.oje6KJ65WGwu3UM2Ii1vAgHaE7&pid=Api",
+      authorLogo: "https://randomuser.me/api/portraits/men/32.jpg",
+      authorName: "Nguyễn Minh",
+      date: "20 Tháng 3, 2025",
+      href: "/blogs/coffee-machine-vs-phin",
+    },
+    {
+      title: "Bí quyết làm Latte Art cho người mới bắt đầu",
+      desc: "Hướng dẫn từng bước giúp bạn tạo ra những ly latte đẹp mắt với nghệ thuật vẽ bọt sữa chuyên nghiệp.",
+      img: "https://rangcafe.vn/wp-content/uploads/2020/03/Cach-pha-ca-phe-phin-thom-ngon-1536x1023.jpg",
+      authorLogo: "https://randomuser.me/api/portraits/women/44.jpg",
+      authorName: "Trần Hà",
+      date: "18 Tháng 3, 2025",
+      href: "/blogs/latte-art-guide",
+    },
+    {
+      title: "Hạt Arabica và Robusta: Bạn hợp với loại nào?",
+      desc: "Tìm hiểu sự khác biệt giữa hạt cà phê Arabica và Robusta để chọn loại phù hợp với khẩu vị của bạn.",
+      img: "https://elmarspices.com/wp-content/uploads/2022/05/ca-phe-hat-arabica-la-gi-01.jpg",
+      authorLogo: "https://randomuser.me/api/portraits/men/46.jpg",
+      authorName: "Lê Huy",
+      date: "15 Tháng 3, 2025",
+      href: "/blogs/arabica-vs-robusta",
+    },
+    {
+      title: "Cách bảo quản cà phê đúng chuẩn tại nhà",
+      desc: "Lưu trữ cà phê như thế nào để giữ trọn hương vị tươi ngon lâu dài? Xem ngay hướng dẫn chi tiết!",
+      img: "https://lofita.vn/public/upload/files/ca-phe-Robusta-3.jpg",
+      authorLogo: "https://randomuser.me/api/portraits/women/50.jpg",
+      authorName: "Hoàng Yến",
+      date: "10 Tháng 3, 2025",
+      href: "/blogs/store-coffee-guide",
+    },
+  ];
+
+  return (
+    <section className="mt-12 mx-auto py-5 px-4 max-w-screen-2xl md:px-8">
+      <div className="text-center">
+        <h1 className="text-6xl text-gray-800 font-semibold">Blog</h1>
+        <p className="mt-3 text-gray-500">
+          Những câu chuyện thú vị về cà phê và phong cách sống. Cập nhật mỗi
+          tuần!
+        </p>
+      </div>
+      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {posts.map((item, index) => (
+          <article
+            className="max-w-md mx-auto shadow-lg border rounded-md duration-300 hover:shadow-xl transition-all"
+            key={index}
+          >
+            <Link href={item.href}>
+              <img
+                src={item.img}
+                loading="lazy"
+                alt={item.title}
+                className="w-full h-48 rounded-t-md object-cover"
+              />
+              <div className="flex items-center mt-2 pt-3 px-4">
+                <div className="w-10 h-10 rounded-full overflow-hidden">
+                  <img
+                    src={item.authorLogo}
+                    className="w-full h-full object-cover"
+                    alt={item.authorName}
+                  />
+                </div>
+                <div className="ml-3">
+                  <span className="block text-gray-900 font-medium">
+                    {item.authorName}
+                  </span>
+                  <span className="block text-gray-500 text-sm">
+                    {item.date}
+                  </span>
+                </div>
+              </div>
+              <div className="pt-3 px-4 pb-4">
+                <h3 className="text-xl text-gray-900 font-semibold">
+                  {item.title}
+                </h3>
+                <p className="text-gray-600 text-sm mt-2">{item.desc}</p>
+              </div>
+            </Link>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
 }

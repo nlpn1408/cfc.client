@@ -8,7 +8,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
-import { Card, CardContent } from "./ui/card";
 import { Product } from "@/types/product";
 
 export default function ListProduct() {
@@ -33,30 +32,33 @@ export default function ListProduct() {
   }, []);
 
   return (
-    <section className="container max-w-screen-2xl py-10 ">
-      <Carousel>
-        <CarouselContent>
+    <section className="container max-w-screen-2xl py-10 relative">
+      <Carousel className="flex justify-center relative">
+        {/* Danh sách sản phẩm */}
+        <CarouselContent className="flex items-center">
           {products.length > 0 ? (
             products.map((product, index) => (
               <CarouselItem
                 key={index}
-                className="md:basis-1/3 basis-1/2 lg:basis-1/4"
+                className="flex justify-center px-2 md:basis-1/3 lg:basis-1/4"
               >
-                <CardContent className="flex items-center justify-center">
+                <div className="w-full max-w-xs p-4 border rounded-lg shadow-md border-gray-200 bg-white">
                   <ProductCard
-                    className="shadow-lg border border-slate-200 rounded-md"
+                    className="w-full"
                     key={product.id}
                     product={product}
                   />
-                </CardContent>
+                </div>
               </CarouselItem>
             ))
           ) : (
             <p className="text-center w-full py-5">Đang tải sản phẩm...</p>
           )}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+
+        {/* Nút điều hướng */}
+        <CarouselPrevious className="absolute left-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-300 transition" />
+        <CarouselNext className="absolute right-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-300 transition" />
       </Carousel>
     </section>
   );

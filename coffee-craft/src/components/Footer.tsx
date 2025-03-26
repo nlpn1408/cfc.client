@@ -1,63 +1,150 @@
 import React from "react";
-import Image from "next/image";
+import Link from "next/link";
+import { Facebook, Instagram, Twitter } from "lucide-react"; // Import icons
 
 const Footer = () => {
   return (
-    <footer>
-      <div className="flex flex-col md:flex-row items-start justify-center px-6 md:px-16 lg:px-32 gap-10 py-14 border-b border-gray-500/30 text-gray-500">
-        <div className="w-4/5">
-          <h1 className="font-extrabold text-orange-900/70 text-3xl">
-            {" "}
-            Coffee <span>Cart</span>
-          </h1>
-          <p className="mt-6 text-sm">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
-          </p>
-        </div>
-
-        <div className="w-1/2 flex items-center justify-start md:justify-center">
+    <footer className="bg-gray-50 text-gray-600">
+      <div className="container mx-auto px-6 md:px-16 lg:px-32 py-14 border-b border-gray-300">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+          {/* Thông tin thương hiệu */}
           <div>
-            <h2 className="font-medium text-gray-900 mb-5">Company</h2>
+            <h1 className="font-extrabold text-orange-900 text-3xl">
+              Coffee <span className="text-black">Cart</span>
+            </h1>
+            <p className="mt-6 text-sm leading-relaxed">
+              Coffee Cart chuyên cung cấp cà phê nguyên chất và phụ kiện pha chế
+              dành cho những người yêu thích cà phê. Chúng tôi cam kết mang đến
+              sản phẩm chất lượng cao, giúp bạn tận hưởng trọn vẹn hương vị
+              tuyệt vời của cà phê mỗi ngày.
+            </p>
+          </div>
+
+          {/* Liên kết nhanh */}
+          <div>
+            <h2 className="font-semibold text-gray-900 mb-5">Về chúng tôi</h2>
             <ul className="text-sm space-y-2">
               <li>
-                <a className="hover:underline transition" href="#">
-                  Home
-                </a>
+                <Link href="/" className="hover:text-orange-600 transition">
+                  Trang chủ
+                </Link>
               </li>
               <li>
-                <a className="hover:underline transition" href="#">
-                  About us
-                </a>
+                <Link
+                  href="/about"
+                  className="hover:text-orange-600 transition"
+                >
+                  Giới thiệu
+                </Link>
               </li>
               <li>
-                <a className="hover:underline transition" href="#">
-                  Contact us
-                </a>
+                <Link
+                  href="/contact"
+                  className="hover:text-orange-600 transition"
+                >
+                  Liên hệ
+                </Link>
               </li>
               <li>
-                <a className="hover:underline transition" href="#">
-                  Privacy policy
-                </a>
+                <Link
+                  href="/support"
+                  className="hover:text-orange-600 transition"
+                >
+                  Hỗ trợ khách hàng
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/privacy-policy"
+                  className="hover:text-orange-600 transition"
+                >
+                  Chính sách bảo mật
+                </Link>
               </li>
             </ul>
           </div>
-        </div>
 
-        <div className="w-1/2 flex items-start justify-start md:justify-center">
+          {/* Sản phẩm & Dịch vụ */}
           <div>
-            <h2 className="font-medium text-gray-900 mb-5">Get in touch</h2>
+            <h2 className="font-semibold text-gray-900 mb-5">
+              Sản phẩm & Dịch vụ
+            </h2>
+            <ul className="text-sm space-y-2">
+              <li>
+                <Link
+                  href="/products"
+                  className="hover:text-orange-600 transition"
+                >
+                  Cà phê nguyên chất
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/products/accessories"
+                  className="hover:text-orange-600 transition"
+                >
+                  Phụ kiện pha chế
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/products/machines"
+                  className="hover:text-orange-600 transition"
+                >
+                  Máy pha cà phê
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/blogs"
+                  className="hover:text-orange-600 transition"
+                >
+                  Blog cà phê
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/membership"
+                  className="hover:text-orange-600 transition"
+                >
+                  Chương trình thành viên
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Thông tin liên hệ */}
+          <div>
+            <h2 className="font-semibold text-gray-900 mb-5">
+              Liên hệ với chúng tôi
+            </h2>
             <div className="text-sm space-y-2">
-              <p>+1-234-567-890</p>
-              <p>contact@greatstack.dev</p>
+              <p>
+                📞 <span className="font-medium">0909-xxx-xxx</span>
+              </p>
+              <p>
+                📧 <span className="font-medium">support@coffeecart.com</span>
+              </p>
+              <p>🏠 123 Quang Trung, Gò Vấp, TP.HCM</p>
+            </div>
+
+            {/* Icon Mạng Xã Hội */}
+            <div className="flex items-center space-x-4 mt-4">
+              <Link href="#" className="hover:text-orange-600 transition">
+                <Facebook size={24} />
+              </Link>
+              <Link href="#" className="hover:text-orange-600 transition">
+                <Instagram size={24} />
+              </Link>
+              <Link href="#" className="hover:text-orange-600 transition">
+                <Twitter size={24} />
+              </Link>
             </div>
           </div>
         </div>
       </div>
-      <p className="py-4 text-center text-xs md:text-sm">
-        Copyright 2025 © GreatStack.dev All Right Reserved.
+      <p className="py-4 text-center text-xs md:text-sm bg-gray-100">
+        Copyright 2025 © Coffee Cart. All Rights Reserved.
       </p>
     </footer>
   );

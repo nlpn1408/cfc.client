@@ -28,17 +28,6 @@ export default function ProductFilter() {
           </option>
         </select>
       </div>
-
-      <div className="flex flex-wrap   gap-3 md:gap-5 p-4">
-        {["Arabica", "Robusta", "Culi", "Moka"].map((label, index) => (
-          <button
-            key={index}
-            className="px-4 py-2 rounded-lg bg-gray-'100,000' text-black font-medium shadow-md transition-all hover:bg-gray-600 hover:text-white active:scale-95"
-          >
-            {label}
-          </button>
-        ))}
-      </div>
     </>
   );
 }

@@ -71,20 +71,20 @@ export default function ShowPro() {
   };
 
   return (
-    <div className="grid grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
       {/* Sidebar danh mục */}
-      <aside className=" bg-white text-black shadow-md rounded-lg p-6">
+      <aside className="bg-white text-black shadow-md rounded-lg p-6">
         <button
-          className="lg:hidden flex items-center space-x-2 p-3 bg-gray-200 rounded-lg w-full text-left"
+          className="flex items-center justify-between w-full p-3 text-left bg-gray-200 rounded-lg lg:hidden"
           onClick={() => setIsOpen(!isOpen)}
         >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
           <span className="text-lg font-semibold">Danh mục</span>
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
         <div className={`${isOpen ? "block" : "hidden"} lg:block mt-4`}>
           <button
-            className={`block w-full text-left py-2 px-4 rounded-lg transition duration-300 ${
+            className={`block w-full py-2 px-4 text-left rounded-lg transition duration-300 ${
               selectedCategory === null
                 ? "bg-gray-600 text-white"
                 : "hover:bg-gray-600 hover:text-white"
@@ -96,7 +96,7 @@ export default function ShowPro() {
           {categories.map((category) => (
             <button
               key={category.id}
-              className={`block w-full text-left py-2 px-4 rounded-lg transition duration-300 ${
+              className={`block w-full py-2 px-4 text-left rounded-lg transition duration-300 ${
                 selectedCategory === category.id
                   ? "bg-gray-600 text-white"
                   : "hover:bg-gray-600 hover:text-white"
@@ -110,22 +110,26 @@ export default function ShowPro() {
       </aside>
 
       {/* Danh sách sản phẩm */}
-      <section className="lg:col-span-3 ">
+      <section className="lg:col-span-3 flex flex-col ">
         {products.length > 0 ? (
-          <div className="grid lg:grid-cols-4 grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 gap-4 p-4 border rounded-lg shadow-md md:grid-cols-3 lg:grid-cols-4 border-gray-200 ">
             {products
               .slice(
                 currentPage * itemsPerPage,
                 (currentPage + 1) * itemsPerPage
               )
               .map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard
+                  className="shadow-lg border border-slate-200 rounded-md"
+                  key={product.id}
+                  product={product}
+                />
               ))}
           </div>
         ) : (
-          <p className="text-center py-5 text-gray-500">
-            Không có sản phẩm nào.
-          </p>
+          <div className="flex flex-col items-center justify-center min-h-[400px] w-full bg-white border rounded-lg shadow-md">
+            <p className="text-gray-500 text-lg">Không có sản phẩm nào.</p>
+          </div>
         )}
 
         {/* Pagination */}
@@ -137,12 +141,12 @@ export default function ShowPro() {
           marginPagesDisplayed={1}
           pageRangeDisplayed={3}
           onPageChange={handlePageClick}
-          containerClassName="flex justify-center items-center mt-8 space-x-2"
-          pageClassName="px-3 py-2 bg-white border rounded-lg text-black"
-          previousLinkClassName="px-4 py-2 bg-white border rounded-lg text-black"
-          nextLinkClassName="px-4 py-2 bg-white border rounded-lg text-black"
+          containerClassName="flex items-center justify-center mt-8 space-x-2"
+          pageClassName="px-4 py-2 text-gray-700 bg-white border rounded-md hover:bg-gray-100"
+          previousLinkClassName="px-4 py-2 text-gray-700 bg-white border rounded-md hover:bg-gray-100"
+          nextLinkClassName="px-4 py-2 text-gray-700 bg-white border rounded-md hover:bg-gray-100"
           disabledClassName="opacity-50 cursor-not-allowed"
-          activeClassName="px-3 py-2 bg-indigo-600 text-gray-500 rounded-lg"
+          activeClassName="px-4 py-2 text-gray-500 bg-indigo-600 rounded-md"
           forcePage={currentPage}
         />
       </section>

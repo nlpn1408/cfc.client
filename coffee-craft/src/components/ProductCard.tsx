@@ -24,10 +24,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
         className
       )}
     >
-      <div className="absolute top-1 -left-5 z-20 bg-red-500 text-white text-xs font-semibold px-5 py-1 -rotate-45 ">
-        {product.active === true ? "NEW" : ""}
-      </div>
-
       {/* Số lượng đã bán */}
       <div className="group-hover/item:hidden absolute left-1 bottom-1/3 z-20 bg-white text-[#040707] text-xs font-bold px-2 py-1 rounded-lg shadow-md border-b-2 border-[#a52f21] box-shadow-custom ">
         Đã bán {Math.floor(Math.random() * 10000) + 100}+
@@ -67,26 +63,27 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* )} */}
       </div>
 
-      {/* Hình ảnh sản phẩm */}
-      <div className="w-full  box-border relative">
-        {/* Ảnh mặc định */}
+      <div className="w-full h-60 relative overflow-hidden rounded-lg">
+        {/* Ảnh chính */}
         <img
-          src={product.images[0]?.url || "/default-image.jpg"}
+          src={product.images?.[0]?.url}
           alt={product.name}
-          className="w-full object-contain rounded-lg transition-opacity duration-300 opacity-100 group-hover/item:opacity-0 absolute top-0 left-0"
+          className="w-full h-full object-contain rounded-lg transition-opacity duration-300 ease-in-out opacity-100 group-hover/item:opacity-0 absolute top-0 left-0"
+          onError={(e) => (e.currentTarget.src = "/default-image.jpg")}
         />
 
         {/* Ảnh khi hover */}
         <img
-          src={product.images[1]?.url || "/default-image.jpg"}
+          src={product.images?.[1]?.url}
           alt={product.name}
-          className="w-full object-contain rounded-lg transition-opacity duration-300 opacity-0 group-hover/item:opacity-100"
+          className="w-full h-full object-contain rounded-lg transition-opacity duration-300 ease-in-out opacity-0 group-hover/item:opacity-100"
+          onError={(e) => (e.currentTarget.src = "/default-image.jpg")}
         />
       </div>
 
       {/* Tên sản phẩm */}
       <div className="px-2">
-        <h1 className="text-sm xs:text-lg font-semibold text-gray-900 transition-all group-hover/item:text-red-500">
+        <h1 className="text-sm xs:text-lg font-semibold text-gray-900 transition-all group-hover/item:text-red-500 line-clamp-2">
           {product.name}
         </h1>
       </div>
