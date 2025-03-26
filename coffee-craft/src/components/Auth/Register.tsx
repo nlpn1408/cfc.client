@@ -38,24 +38,29 @@ export default function Register() {
 
   async function onSubmit(data: RegisterInputProps) {
     setIsLoading(true);
-
+  
     if (!passwordMatch) {
       toast.error("Passwords do not match!");
       setIsLoading(false);
       return;
     }
-
+  
     try {
-      const response = await fetch("http://localhost:5555/auth/register", {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  
+      // 🔹 Loại bỏ confirmPassword nhưng giữ name, phone nếu API yêu cầu
+      const { confirmPassword, ...postData } = data; 
+  
+      const response = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(postData),
       });
-
+  
       const result = await response.json();
-
+  
       if (response.ok) {
         toast.success("User created successfully");
         reset();
@@ -70,6 +75,8 @@ export default function Register() {
       setIsLoading(false);
     }
   }
+  
+  
 
   return (
     <div className="w-full lg:grid h-screen lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
@@ -96,7 +103,7 @@ export default function Register() {
             <TextInput
               label="Full Name"
               register={register}
-              name="fullName"
+              name="name"
               type="text"
               errors={errors}
               placeholder="Nguyen Van A"

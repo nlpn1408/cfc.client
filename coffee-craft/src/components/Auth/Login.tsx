@@ -28,34 +28,40 @@ export default function Login() {
         reset,
         formState: { errors }
     } = useForm<LoginInputProps>()
+    
     async function onSubmit(data: LoginInputProps) {
-        // try {
-        //     setIsLoading(true);
-        //     console.log("Attempting to sign in with credentials:", data);
-        //     const loginData = await signIn("credentials", {
-        //         ...data,
-        //         redirect: false,
-        //     });
-        //     console.log("SignIn response:", loginData);
-        //     if (loginData?.error) {
-        //         setIsLoading(false);
-        //         toast.error("Sign-in error: Check your credentials");
-        //         setShowNotification(true);
-        //     } else {
-        //         // Sign-in was successful
-        //         setShowNotification(false);
-        //         reset();
-        //         setIsLoading(false);
-        //         toast.success("Login Successful");
-        //         router.push("/");
-        //     }
-        // } catch (error) {
-        //     setIsLoading(false);
-        //     console.error("Network Error:", error);
-        //     toast.error("Its seems something is wrong with your Network");
-        // }
-        console.log(data);
+        try {
+            setIsLoading(true);
+            const API_URL = process.env.NEXT_PUBLIC_API_URL;
+            const response = await fetch(`${API_URL}/auth/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+    
+            const result = await response.json();
+            if (!response.ok) {
+                throw new Error(result.message || "Login failed");
+            }
+    
+            // 🔹 Lưu thông tin user vào sessionStorage
+            sessionStorage.setItem("user", JSON.stringify(result.user));
+    
+            toast.success("Login Successful");
+            router.push("/");
+        } catch (error: unknown) {
+            if (error instanceof Error) {
+                toast.error(error.message);
+            } else {
+                toast.error("An unexpected error occurred");
+            }
+        } finally {
+            setIsLoading(false);
+        }
     }
+    
     return (
         <div className="w-full lg:grid h-screen lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
             <div className="flex items-center justify-center py-12">
