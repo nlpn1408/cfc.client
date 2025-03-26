@@ -7,6 +7,7 @@ import ListProduct from "../../../../components/ListProduct";
 import { useParams } from "next/dist/client/components/navigation";
 
 const Detailpage: React.FC = () => {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const params = useParams();
   const id = params?.id; // Lấy id từ URL
   const [productData, setProductData] = useState(null);
@@ -14,7 +15,7 @@ const Detailpage: React.FC = () => {
 
   useEffect(() => {
     if (id) {
-      fetch(`https://coffee-craft-service.onrender.com/products/${id}`)
+      fetch(`${API_URL}/products/${id}`)
         .then((res) => res.json())
         .then((data) => {
           setProductData(data);
