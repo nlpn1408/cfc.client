@@ -17,6 +17,8 @@ export interface TextInputProps {
   page?: string
   className?: string
   isRequired?: boolean
+  disabled?: boolean
+  defaultValue?: string
 }
 
 export interface TextAreaInputProps {
@@ -27,6 +29,8 @@ export interface TextAreaInputProps {
   type?: string
   placeholder: string
   className?: string
+  disabled?: boolean
+  defaultValue?: string
 }
 
 export interface BannerProps {
@@ -63,4 +67,12 @@ export type ChangePasswordProps ={
   password:string
   newpassword:string
   confirmPassword: string;
+}
+
+export type UserProfile ={
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  imgUrl: string;
 }

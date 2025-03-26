@@ -11,7 +11,8 @@ export default function TextAreaInput({
     errors,
     type = "text",
     placeholder,
-    className = "col-span-full"
+    className = "col-span-full",
+    disabled
 }: TextAreaInputProps
 ) {
     return (
@@ -22,6 +23,7 @@ export default function TextAreaInput({
                 id={`${name}`}
                 name={`${name}`}
                 type={type}
+                disabled={disabled}
                 placeholder={`${placeholder}`}
             />
             {errors[`${name}`] && (

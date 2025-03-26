@@ -14,7 +14,8 @@ export default function TextInput({
     placeholder,
     page,
     className ="col-span-full",
-    isRequired=true
+    isRequired=true,
+    disabled,
 }: TextInputProps) {
     return (
         <div className={cn('grid gap-2',className)}>
@@ -42,6 +43,7 @@ export default function TextInput({
                     name={`${name}`}
                     type={type}
                     autoComplete="name"
+                    disabled={disabled}
                     placeholder={`${placeholder}`}
                 />
                 {errors[`${name}`]&& isRequired && (
