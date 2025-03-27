@@ -29,50 +29,51 @@ export default function Productdetail({ product }: { product: Product }) {
     return () => clearInterval(interval); // Cleanup khi unmount
   }, [currentSlide]); // Lắng nghe thay đổi của currentSlide
   return (
-    <div className="container mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-10 bg-white shadow-lg rounded-lg">
+    <div className="grid grid-cols-1 md:grid-cols-2 items-center bg-white shadow-lg rounded-lg p-4">
       {/* Image Slider */}
-      <div className="w-full h-[400px]">
-        <div className="relative w-full">
-          <div className="relative h-56 overflow-hidden rounded-lg md:h-96">
-            {product.images.map((image, index) => (
-              <div
-                key={index}
-                className={`absolute inset-0 transition-opacity duration-700 ${
-                  index === currentSlide ? "opacity-100" : "opacity-0"
-                }`}
-              >
-                <img
-                  src={image.url}
-                  alt={`Slide ${index + 1}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            ))}
-          </div>
-          <div className="absolute bottom-5 left-1/2 flex -translate-x-1/2 space-x-3">
-            {product.images.map((_, index) => (
-              <button
-                key={index}
-                className={`w-3 h-3 rounded-full ${
-                  index === currentSlide ? "bg-blue-500" : "bg-gray-300"
-                }`}
-                onClick={() => setCurrentSlide(index)}
-              ></button>
-            ))}
-          </div>
-
+      <div className="w-full max-w-3xl mx-auto">
+        {/* Hình ảnh chính */}
+        <div className="relative w-full h-[400px] overflow-hidden rounded-lg ">
+          {product.images.map((image, index) => (
+            <img
+              key={index}
+              src={image.url}
+              alt={`Slide ${index + 1}`}
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+                index === currentSlide ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
+          {/* Nút điều hướng */}
           <button
             onClick={prevSlide}
-            className="absolute top-1/2 left-4 transform -translate-y-1/2 p-2 bg-gray-700/50 text-white rounded-full"
+            className="absolute top-1/2 left-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-40"
           >
             ◀
           </button>
           <button
             onClick={nextSlide}
-            className="absolute top-1/2 right-4 transform -translate-y-1/2 p-2 bg-gray-700/50 text-white rounded-full"
+            className="absolute top-1/2 right-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-40"
           >
             ▶
           </button>
+        </div>
+
+        {/* Danh sách ảnh nhỏ */}
+        <div className="flex justify-center mt-4 space-x-3">
+          {product.images.map((image, index) => (
+            <img
+              key={index}
+              src={image.url}
+              alt={`Thumbnail ${index + 1}`}
+              className={`w-20 h-20 object-cover cursor-pointer rounded-lg border-2 transition-all duration-300 ${
+                index === currentSlide
+                  ? "border-blue-500 scale-110"
+                  : "border-gray-300"
+              }`}
+              onClick={() => setCurrentSlide(index)}
+            />
+          ))}
         </div>
       </div>
       {/* Product Info */}

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react"; // Đảm bảo import useEffect
+import React, { useState, useEffect } from "react";
 import NewsLetter from "../../../../components/Home/NewsLetter";
 import Reviews from "../../../../components/Product-detail/comment";
 import ProductDetail from "../../../../components/Product-detail/Productdetail";
@@ -9,7 +9,7 @@ import { useParams } from "next/dist/client/components/navigation";
 const Detailpage: React.FC = () => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const params = useParams();
-  const id = params?.id; // Lấy id từ URL
+  const id = params?.id;
   const [productData, setProductData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -28,18 +28,43 @@ const Detailpage: React.FC = () => {
     }
   }, [id]);
 
-  if (loading) return <p>Đang tải dữ liệu sản phẩm...</p>;
-  if (!productData) return <p>Không tìm thấy sản phẩm.</p>;
+  if (loading)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-lg font-semibold text-gray-700">
+          Đang tải dữ liệu sản phẩm...
+        </p>
+      </div>
+    );
+  if (!productData)
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p className="text-lg font-semibold text-red-500">
+          Không tìm thấy sản phẩm.
+        </p>
+      </div>
+    );
 
   return (
-    <div className="container max-w-screen-2xl py-10 grid gap-3 px-4 md:px-8">
-      <ProductDetail product={productData} />
-      <Reviews />
-      <div>
-        <h1 className=" text-3xl font-extrabold  pb-10">Sản phẩm liên quan</h1>
+    <div className="container max-w-7xl mx-auto py-10    md:px-8">
+      <div className="bg-white shadow-lg rounded-2xl ">
+        <ProductDetail product={productData} />
+      </div>
+
+      <div className="mt-10 bg-gray-100    rounded-2xl shadow-md">
+        <Reviews />
+      </div>
+
+      <div className="mt-10">
+        <h2 className="text-3xl font-extrabold text-gray-800 pb-6 text-center">
+          Sản phẩm liên quan
+        </h2>
         <ListProduct />
       </div>
-      <NewsLetter />
+
+      <div className="mt-16">
+        <NewsLetter />
+      </div>
     </div>
   );
 };
