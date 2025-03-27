@@ -50,6 +50,7 @@ export default function Login() {
             sessionStorage.setItem("user", JSON.stringify(result.user));
     
             toast.success("Login Successful");
+            window.dispatchEvent(new Event("userChanged"));
             router.push("/");
         } catch (error: unknown) {
             if (error instanceof Error) {

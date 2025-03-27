@@ -10,16 +10,12 @@ import { useRouter } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
-import { signOut } from "next-auth/react";
 
 export default function SiteHeader() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
-  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
-
     const getUserFromStorage = () => {
       const storedUser = sessionStorage.getItem("user");
       if (storedUser) {
@@ -32,26 +28,21 @@ export default function SiteHeader() {
       }
     };
 
-    getUserFromStorage();
+    getUserFromStorage()
 
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === "user") {
-        getUserFromStorage();
-      }
+    const handleUserChange = () => {
+      getUserFromStorage();
     };
 
-    window.addEventListener("storage", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
+    window.addEventListener("userChanged", handleUserChange);
+    return () => window.removeEventListener("userChanged", handleUserChange);
   }, []);
 
+
   async function handleLogout() {
-    sessionStorage.removeItem("user"); 
-    await signOut();
+    sessionStorage.removeItem("user");
     router.push("/login");
-    window.location.reload(); // 🔄 Reload lại trang để cập nhật giao diện
+    window.location.reload();
   }
 
   return (
