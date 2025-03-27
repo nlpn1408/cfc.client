@@ -2,14 +2,22 @@
 import React, { useEffect, useState } from "react";
 import MainNav from "./main-nav";
 import { CommandMenu } from "./command-menu";
+
 import ModeToggle from "./ModeToggle";
 import { LogInIcon, LogOut, ShoppingBagIcon } from "lucide-react";
 import { MobileNav } from "./mobile-nav";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
+import { signOut } from "next-auth/react";
 
 export default function SiteHeader() {
   const router = useRouter();
@@ -28,7 +36,7 @@ export default function SiteHeader() {
       }
     };
 
-    getUserFromStorage()
+    getUserFromStorage();
 
     const handleUserChange = () => {
       getUserFromStorage();
@@ -38,9 +46,9 @@ export default function SiteHeader() {
     return () => window.removeEventListener("userChanged", handleUserChange);
   }, []);
 
-
   async function handleLogout() {
     sessionStorage.removeItem("user");
+    await signOut();
     router.push("/login");
     window.location.reload();
   }
@@ -63,7 +71,11 @@ export default function SiteHeader() {
           ) : (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="secondary" size="icon" className="rounded-full">
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="rounded-full"
+                >
                   <Avatar>
                     {user?.image ? (
                       <AvatarImage src={user.image} />
@@ -76,7 +88,9 @@ export default function SiteHeader() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuSeparator />
-                <DropdownMenuItem><Link href={`/dashboard/${user.id}`}>Dashboard</Link></DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href={`/dashboard/${user.id}`}>Dashboard</Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem>Support</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>
