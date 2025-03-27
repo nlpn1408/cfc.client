@@ -41,8 +41,7 @@ export default function SiteHeader() {
 
   async function handleLogout() {
     sessionStorage.removeItem("user");
-    router.push("/login");
-    window.location.reload();
+    window.location.href = "/login";
   }
 
   return (
@@ -76,7 +75,7 @@ export default function SiteHeader() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuSeparator />
-                <DropdownMenuItem><Link href={`/dashboard/${user.id}`}>Dashboard</Link></DropdownMenuItem>
+                <DropdownMenuItem><Link href={`/dashboard/${user.id}?page=profile`}>Dashboard</Link></DropdownMenuItem>
                 <DropdownMenuItem>Support</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>

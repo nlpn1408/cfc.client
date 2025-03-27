@@ -37,7 +37,6 @@ export default function ChangePassword({ page,
     setIsLoading(true)
     console.log(data);
     toast.success('Profile Info Updated Successfully')
-    router.push(`/dashboard/1?page=profile`)
 
   }
   return (

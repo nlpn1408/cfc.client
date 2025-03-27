@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { Button } from '../ui/button'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 import Profile from './Profile'
 import ChangePassword from './ChangePassword'
 import OrderPage from './Orderpage'
@@ -9,28 +9,27 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { Separator } from "../ui/separator"
 
-export default function UserProfile({ id }: { id: string }) {
-  const parmas = useSearchParams()
-  const page = parmas.get('page') ?? 'profile'
+export default function UserProfile() {
+  const params = useSearchParams()
+  const page = params.get('page') ?? 'profile'
   const router = useRouter()
-  const [selectedComponent, setSelectedComponent] = useState('Profile')
-
+  
   // Xác định component nào sẽ được hiển thị
   const steps = [
     {
       title: 'Profile',
       page: 'profile',
-      component: <Profile userId={id} title='Profile' />
+      component: <Profile title='Profile' />
     },
     {
       title: 'Change Password',
       page: 'changepassword',
-      component: <ChangePassword userId={id} title='Change Password' page='changepasswod' description='' />
+      component: <ChangePassword  title='Change Password' page='changepasswod' description='' />
     },
     {
       title: 'OrderPage',
       page: 'oder',
-      component: <OrderPage userId={id} title='Order Page' page='order' description='' />
+      component: <OrderPage  title='Order Page' page='order' description='' />
     }
   ]
 

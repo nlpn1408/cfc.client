@@ -74,4 +74,5 @@ export type UserProfile ={
   phone: string;
   address: string;
   imgUrl: string;
+  gender: string;
 }
