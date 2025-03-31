@@ -2,12 +2,10 @@
 import React, { useEffect, useState } from "react";
 import MainNav from "./main-nav";
 import { CommandMenu } from "./command-menu";
-
 import ModeToggle from "./ModeToggle";
 import { LogInIcon, LogOut, ShoppingBagIcon } from "lucide-react";
 import { MobileNav } from "./mobile-nav";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,10 +15,8 @@ import {
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
-import { signOut } from "next-auth/react";
 
 export default function SiteHeader() {
-  const router = useRouter();
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
@@ -38,18 +34,33 @@ export default function SiteHeader() {
 
     getUserFromStorage();
 
-    const handleUserChange = () => {
-      getUserFromStorage();
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === "user") {
+        getUserFromStorage();
+      }
     };
 
-    window.addEventListener("userChanged", handleUserChange);
-    return () => window.removeEventListener("userChanged", handleUserChange);
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
+
   async function handleLogout() {
-    sessionStorage.removeItem("user");
-    window.location.href = "/login";
+    try {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+      await fetch(`${API_URL}/auth/logout`, {
+        method: "POST",
+        credentials: "include", // ✅ Quan trọng để backend nhận diện user qua cookie
+      });
+
+      sessionStorage.removeItem("user");
+      window.dispatchEvent(new Event("userChanged"));
+      window.location.href = "/login";
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   }
+
 
   return (
     <header className="sticky top-0 z-50 w-full border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -75,12 +86,13 @@ export default function SiteHeader() {
                   className="rounded-full"
                 >
                   <Avatar>
-                    {user?.image ? (
-                      <AvatarImage src={user.image} />
-                    ) : (
-                      <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
-                    )}
+                    <AvatarImage
+                      src={user?.image || "/default-avatar.png"}
+                      onError={(e) => (e.currentTarget.src = "/default-avatar.png")}
+                    />
+                    <AvatarFallback>{user?.name?.charAt(0) || "?"}</AvatarFallback>
                   </Avatar>
+
                   <span className="sr-only">Toggle user menu</span>
                 </Button>
               </DropdownMenuTrigger>

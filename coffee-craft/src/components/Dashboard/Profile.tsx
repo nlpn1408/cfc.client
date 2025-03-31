@@ -40,41 +40,40 @@ export default function Profile({ title }: { title: string }) {
     }
   }, [setValue]);
 
-  // Xử lý khi chọn ảnh đại diện
-  function handleAvatarChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const file = event.target.files?.[0];
-    if (file) {
-      setAvatarFile(file);
-      setPreviewAvatar(URL.createObjectURL(file));
-    }
-  }
 
   async function onSubmit(data: UserProfile) {
     setIsLoading(true);
 
     try {
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
-      console.log("API URL:", API_URL);
-      console.log("ID gửi đi:", id);
+      const { email, imgUrl, ...postData } = data;
+
       const response = await fetch(`${API_URL}/users/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        credentials: "include", // ✅ Gửi cookies để backend xác thực
+        body: JSON.stringify(postData),
       });
 
-      if (!response.ok) throw new Error("Cập nhật thất bại");
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error("Cập nhật thất bại: " + errorText);
+      }
 
-      // Cập nhật lại state và sessionStorage
-      setUser(data);
-      sessionStorage.setItem("userProfile", JSON.stringify(data));
+      // 🔹 Cập nhật thông tin user sau khi PUT thành công
+      const updatedUser = await response.json();
+      setUser(updatedUser);
+      sessionStorage.setItem("user", JSON.stringify(updatedUser));
       setIsEditing(false);
       toast.success("Thông tin đã được cập nhật!");
     } catch (error) {
       console.error("Lỗi khi cập nhật thông tin:", error);
       toast.error("Có lỗi xảy ra, vui lòng thử lại!");
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }
+
 
   const handleGenderChange = (gender: string, value: string) => {
     setValue('gender', value);
@@ -104,7 +103,7 @@ export default function Profile({ title }: { title: string }) {
               placeholder="Chọn ảnh đại diện"
               name="imgUrl"
               className="mt-3 text-sm text-gray-600"
-              onChange={handleAvatarChange}
+            // onChange={handleAvatarChange}
             />
           )}
         </div>
