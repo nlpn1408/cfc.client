@@ -62,17 +62,36 @@ export type UserPageProps = {
   formId?: string;
 };
 
-export type ChangePasswordProps ={
-  password:string
-  newpassword:string
+export type ChangePasswordProps = {
+  password: string
+  newpassword: string
   confirmPassword: string;
 }
 
-export type UserProfile ={
+export type UserProfile = {
   name: string;
   email: string;
   phone: string;
   address: string;
   imgUrl: string;
   gender: string;
+}
+
+export type ContactFormProps = {
+  name: string;
+  phone: string;
+  email: string;
+  message: string;
+};
+
+export interface Category {
+  id: string;
+  name: string;
+  description: string;
+  parentId: string | null;
+  createdAt: string;
+  updatedAt: string;
+  _count: {
+    products: number;
+  };
 }

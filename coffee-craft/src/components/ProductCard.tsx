@@ -13,7 +13,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
   className = "col-span-1",
 }) => {
   if (!product || !product.id) {
-    // console.error("Product is undefined or missing id:", product);
     return null;
   }
   return (
@@ -69,7 +68,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
           src={product.images?.[0]?.url}
           alt={product.name}
           className="w-full h-full object-contain rounded-lg transition-opacity duration-300 ease-in-out opacity-100 group-hover/item:opacity-0 absolute top-0 left-0"
-          onError={(e) => (e.currentTarget.src = "/default-image.jpg")}
         />
 
         {/* Ảnh khi hover */}
@@ -77,7 +75,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
           src={product.images?.[1]?.url}
           alt={product.name}
           className="w-full h-full object-contain rounded-lg transition-opacity duration-300 ease-in-out opacity-0 group-hover/item:opacity-100"
-          onError={(e) => (e.currentTarget.src = "/default-image.jpg")}
         />
       </div>
 

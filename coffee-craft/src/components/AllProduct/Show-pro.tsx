@@ -3,18 +3,9 @@ import { Product } from "@/types/product";
 import ProductCard from "@/components/ProductCard";
 import { Menu, X } from "lucide-react";
 import ReactPaginate from "react-paginate";
+import { Category } from "@/types/types";
 
-interface Category {
-  id: string;
-  name: string;
-  description: string;
-  parentId: string | null;
-  createdAt: string;
-  updatedAt: string;
-  _count: {
-    products: number;
-  };
-}
+
 
 export default function ShowPro() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;

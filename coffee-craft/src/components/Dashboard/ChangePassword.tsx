@@ -18,7 +18,6 @@ export default function ChangePassword({ page,
     watch,
     formState: { errors }
   } = useForm<ChangePasswordProps>()
-  const router = useRouter()
   const [isLoading, setIsLoading] = React.useState(false)
   const password = watch("password")
   const confirmPassword = watch("confirmPassword")
