@@ -80,7 +80,9 @@ export default function Productdetail({ product }: { product: Product }) {
       <div className="flex flex-col justify-between">
         <div>
           <h1 className="text-4xl font-bold pb-4">{product.name}</h1>
-          <p className="text-gray-700 text-lg pb-4">{product.description}</p>
+          <p className="text-gray-700 text-lg pb-4">
+            {product.shortDescription}
+          </p>
 
           <div className="flex items-center text-yellow-500 pb-4">
             {[...Array(product.avgRating)].map((_, i) => (

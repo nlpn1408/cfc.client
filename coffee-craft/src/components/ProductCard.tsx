@@ -69,7 +69,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
           src={product.images?.[0]?.url}
           alt={product.name}
           className="w-full h-full object-contain rounded-lg transition-opacity duration-300 ease-in-out opacity-100 group-hover/item:opacity-0 absolute top-0 left-0"
-          onError={(e) => (e.currentTarget.src = "/default-image.jpg")}
         />
 
         {/* Ảnh khi hover */}
@@ -77,7 +76,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
           src={product.images?.[1]?.url}
           alt={product.name}
           className="w-full h-full object-contain rounded-lg transition-opacity duration-300 ease-in-out opacity-0 group-hover/item:opacity-100"
-          onError={(e) => (e.currentTarget.src = "/default-image.jpg")}
         />
       </div>
 
@@ -94,14 +92,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
           {new Intl.NumberFormat("vi-VN", {
             style: "currency",
             currency: "VND",
-          }).format(+product.price * 1.2)}
+          }).format(+product.price)}
         </span>
         <span className="text-base">
           -{" "}
           {new Intl.NumberFormat("vi-VN", {
             style: "currency",
             currency: "VND",
-          }).format(+product.price)}
+          }).format(+product.discountPrice)}
         </span>
       </h2>
     </Link>

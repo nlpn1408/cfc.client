@@ -143,10 +143,7 @@ export function CommandMenu({ ...props }: DialogProps) {
                   className="flex items-center gap-4 p-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg"
                 >
                   <img
-                    src={
-                      product.images.find((img) => img.isThumbnail)?.url ||
-                      "/default.jpg"
-                    }
+                    src={product.images?.[0]?.url}
                     alt={product.name}
                     className="w-12 h-12 rounded-md object-cover"
                   />
@@ -155,7 +152,11 @@ export function CommandMenu({ ...props }: DialogProps) {
                       {product.name}
                     </span>
                     <span className="text-sm text-gray-500 dark:text-gray-400">
-                      ${product.price} - {product.stock} in stock
+                      {new Intl.NumberFormat("vi-VN", {
+                        style: "currency",
+                        currency: "VND",
+                      }).format(Number(product.price))}{" "}
+                      - {product.stock} sản phẩm
                     </span>
                     <span className="text-xs text-yellow-500">
                       ⭐ {product.avgRating}/5
