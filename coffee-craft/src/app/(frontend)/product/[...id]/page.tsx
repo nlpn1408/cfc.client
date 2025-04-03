@@ -50,12 +50,12 @@ const Detailpage: React.FC = () => {
     );
 
   return (
-    <div className="container max-w-7xl mx-auto py-10    md:px-8">
+    <section className="container max-w-screen-2xl ">
       <div className="bg-white shadow-lg rounded-2xl ">
         <ProductDetail product={productData} />
       </div>
 
-      <div className="mt-10 bg-gray-100    rounded-2xl shadow-md">
+      <div className="mt-10 bg-gray-100 rounded-2xl shadow-md">
         <Reviews />
       </div>
 
@@ -69,7 +69,7 @@ const Detailpage: React.FC = () => {
       <div className="mt-16">
         <NewsLetter />
       </div>
-    </div>
+    </section>
   );
 };
 

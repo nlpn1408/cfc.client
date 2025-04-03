@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
 import { Product } from "@/types/product";
 import { ProductCardProps } from "@/types/nav";
+import { Button } from "../ui/button";
 
 export default function Productdetail({ product }: { product: Product }) {
   const [selectedWeight, setSelectedWeight] = useState("250g");
@@ -29,11 +30,11 @@ export default function Productdetail({ product }: { product: Product }) {
     return () => clearInterval(interval); // Cleanup khi unmount
   }, [currentSlide]); // Lắng nghe thay đổi của currentSlide
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 items-center bg-white shadow-lg rounded-lg p-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 items-center bg-white shadow-lg rounded-lg p-4 gap-4">
       {/* Image Slider */}
       <div className="w-full max-w-3xl mx-auto">
         {/* Hình ảnh chính */}
-        <div className="relative w-full h-[400px] overflow-hidden rounded-lg ">
+        <div className="relative w-full h-[500px] overflow-hidden rounded-lg ">
           {product.images.map((image, index) => (
             <img
               key={index}
@@ -60,7 +61,7 @@ export default function Productdetail({ product }: { product: Product }) {
         </div>
 
         {/* Danh sách ảnh nhỏ */}
-        <div className="flex justify-center mt-4 space-x-3">
+        <div className="flex justify-center space-x-3 mt-5">
           {product.images.map((image, index) => (
             <img
               key={index}
@@ -77,7 +78,7 @@ export default function Productdetail({ product }: { product: Product }) {
         </div>
       </div>
       {/* Product Info */}
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col justify-between gap-5">
         <div>
           <h1 className="text-4xl font-bold pb-4">{product.name}</h1>
           <p className="text-gray-700 text-lg pb-4">
@@ -114,7 +115,7 @@ export default function Productdetail({ product }: { product: Product }) {
         </div>
 
         {/* Grind Type Selection */}
-        <div className="mt-4">
+        <div className="">
           <h2 className="text-lg font-semibold">Yêu cầu:</h2>
           <div className="flex gap-4 mt-2">
             {["Xay sẵn", "Nguyên hạt"].map((type) => (
@@ -129,13 +130,13 @@ export default function Productdetail({ product }: { product: Product }) {
         </div>
 
         {/* Buttons */}
-        <div className="flex mt-6 gap-4">
-          <button className="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg text-lg font-semibold transition-all duration-300 hover:bg-green-700 hover:scale-105 hover:shadow-lg">
+        <div className="grid grid-cols-2 gap-4">
+          <Button className="col-span-1 bg-[#E1991D] h-auto text-white rounded-lg text-sm lg:text-lg font-semibold transition-all duration-300 hover:bg-[#ffa200] hover:scale-105 hover:shadow-lg">
             Thêm vào giỏ hàng
-          </button>
-          <button className="flex-1 bg-red-600 text-white px-6 py-3 rounded-lg text-lg font-semibold transition-all duration-300 hover:bg-red-700 hover:scale-105 hover:shadow-lg">
+          </Button>
+          <Button className="col-span-1 bg-[#683122] text-white h-auto px-6 py-3 rounded-lg text-sm lg:text-lg font-semibold transition-all duration-300 hover:bg-[#351811] hover:scale-105 hover:shadow-lg">
             Mua ngay
-          </button>
+          </Button>
         </div>
       </div>
     </div>

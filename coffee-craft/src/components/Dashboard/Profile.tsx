@@ -74,7 +74,6 @@ export default function Profile({ title }: { title: string }) {
     }
   }
 
-
   const handleGenderChange = (gender: string, value: string) => {
     setValue('gender', value);
   };

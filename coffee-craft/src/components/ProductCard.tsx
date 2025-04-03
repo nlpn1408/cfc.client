@@ -13,7 +13,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
   className = "col-span-1",
 }) => {
   if (!product || !product.id) {
-    // console.error("Product is undefined or missing id:", product);
     return null;
   }
   return (

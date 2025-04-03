@@ -5,8 +5,8 @@ import { Facebook, Instagram, Twitter } from "lucide-react"; // Import icons
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-50 text-gray-600">
-      <div className="container mx-auto px-6 md:px-16 lg:px-32 py-14 border-b border-gray-300">
+    <footer className="bg-gray-50 text-gray-600 ">
+      <div className="container  max-w-screen-2xl py-5 border-b border-gray-300">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Thông tin thương hiệu */}
           <div>
