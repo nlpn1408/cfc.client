@@ -1,22 +1,7 @@
 "use client";
 
+import { SelectionInputProps } from "@/types/types";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-
-type SelectionInputProps = {
-    label: string;
-    register: any;
-    className?: string;
-    name: string;
-    options: SelectedProps[];
-    placeholder: string;
-    setValue: (gender: string, value: string) => void;
-    disabled?: boolean;
-};
-
-type SelectedProps = {
-    gender: string;
-    value: string;
-};
 
 export default function SelectionInput({
     label,
@@ -39,12 +24,12 @@ export default function SelectionInput({
                     disabled={disabled}
                 >
                     <SelectTrigger className="w-full text-slate-700 hover:bg-white mt-0">
-                        <SelectValue placeholder={placeholder} />
+                        <SelectValue placeholder={placeholder}/>
                     </SelectTrigger>
                     <SelectContent>
                         {options.map((option, i) => (
                             <SelectItem key={i} value={option.value}>
-                                {option.gender}
+                                {option.label}
                             </SelectItem>
                         ))}
                     </SelectContent>

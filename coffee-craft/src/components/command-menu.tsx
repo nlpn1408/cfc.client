@@ -57,7 +57,7 @@ export function CommandMenu({ ...props }: DialogProps) {
           throw new Error(`HTTP error! Status: ${response.status}`);
 
         const data = await response.json();
-        console.log("Fetched products:", data);
+        // console.log("Fetched products:", data);
 
         // Kiểm tra key chứa danh sách sản phẩm và cập nhật
         setProducts(data.data);
@@ -90,16 +90,16 @@ export function CommandMenu({ ...props }: DialogProps) {
     });
   }, [searchTerm, products]);
 
-  console.log(
-    "Search Term:",
-    searchTerm,
-    "Normalized:",
-    removeVietnameseTones(searchTerm)
-  );
-  console.log(
-    "Product Names:",
-    products.map((p) => removeVietnameseTones(p.name))
-  );
+  // console.log(
+  //   "Search Term:",
+  //   searchTerm,
+  //   "Normalized:",
+  //   removeVietnameseTones(searchTerm)
+  // );
+  // console.log(
+  //   "Product Names:",
+  //   products.map((p) => removeVietnameseTones(p.name))
+  // );
 
   const runCommand = React.useCallback((command: () => unknown) => {
     setOpen(false);
