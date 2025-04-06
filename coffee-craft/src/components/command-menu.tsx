@@ -90,16 +90,16 @@ export function CommandMenu({ ...props }: DialogProps) {
     });
   }, [searchTerm, products]);
 
-  console.log(
-    "Search Term:",
-    searchTerm,
-    "Normalized:",
-    removeVietnameseTones(searchTerm)
-  );
-  console.log(
-    "Product Names:",
-    products.map((p) => removeVietnameseTones(p.name))
-  );
+  // console.log(
+  //   "Search Term:",
+  //   searchTerm,
+  //   "Normalized:",
+  //   removeVietnameseTones(searchTerm)
+  // );
+  // console.log(
+  //   "Product Names:",
+  //   products.map((p) => removeVietnameseTones(p.name))
+  // );
 
   const runCommand = React.useCallback((command: () => unknown) => {
     setOpen(false);
