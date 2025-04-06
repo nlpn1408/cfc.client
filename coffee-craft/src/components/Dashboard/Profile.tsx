@@ -8,6 +8,7 @@ import SubmitButton from "../FromInput/SubmitButton";
 import toast from "react-hot-toast";
 import SelectionInput from "../FromInput/SelectionInput";
 import { useParams } from "next/navigation";
+import { DateInput } from "../FromInput/DateInput";
 
 export default function Profile({ title }: { title: string }) {
   const params = useParams();
@@ -31,7 +32,9 @@ export default function Profile({ title }: { title: string }) {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
       const userData: UserProfile = JSON.parse(storedUser);
+      console.log("User Data:", userData); // ✅ Kiểm tra dữ liệu
       setUser(userData);
+
       Object.keys(userData).forEach((key) => {
         if (key in userData) {
           setValue(key as keyof UserProfile, userData[key as keyof UserProfile]);
@@ -47,6 +50,7 @@ export default function Profile({ title }: { title: string }) {
     try {
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
       const { email, imgUrl, ...postData } = data;
+      console.log(postData);
 
       const response = await fetch(`${API_URL}/users/${id}`, {
         method: "PUT",
@@ -75,7 +79,7 @@ export default function Profile({ title }: { title: string }) {
   }
 
   const handleGenderChange = (gender: string, value: string) => {
-    setValue('gender', value);
+    setValue("gender", value);
   };
 
   return (
@@ -146,16 +150,15 @@ export default function Profile({ title }: { title: string }) {
             placeholder="Chọn giới tính"
             name="gender"
             options={[
-              { value: "Male", gender: "Nam" },
-              { value: "Female", gender: "Nữ" },
-              { value: "Other", gender: "Khác" },
+              { value: "MALE", label: "Nam" },
+              { value: "FEMALE", label: "Nữ" },
+              { value: "OTHER", label: "Khác" },
             ]}
             register={register}
             setValue={handleGenderChange}
             disabled={!isEditing}
             className="col-span-1"
           />
-
 
           <TextAreaInput
             label="Địa chỉ"
@@ -167,15 +170,14 @@ export default function Profile({ title }: { title: string }) {
             defaultValue={user?.address ?? "Chưa có địa chỉ"}
           />
         </div>
-
-        <div className="flex justify-center pb-3">
+        <div className="flex justify-center py-3">
           {isEditing ? (
             <SubmitButton title="Lưu thay đổi" isLoading={isLoading} loadingTitle="Đang lưu..." />
           ) : (
             <button
               type="button"
               onClick={() => setIsEditing(true)}
-              className="bg-blue-500 text-white px-6 py-3 rounded-lg text-lg"
+              className="bg-blue-500 text-white px-6 py-3 rounded-lg text-lg col-span-full"
             >
               Chỉnh sửa
             </button>

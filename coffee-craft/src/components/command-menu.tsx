@@ -57,7 +57,7 @@ export function CommandMenu({ ...props }: DialogProps) {
           throw new Error(`HTTP error! Status: ${response.status}`);
 
         const data = await response.json();
-        console.log("Fetched products:", data);
+        // console.log("Fetched products:", data);
 
         // Kiểm tra key chứa danh sách sản phẩm và cập nhật
         setProducts(data.data);

@@ -33,6 +33,34 @@ export interface TextAreaInputProps {
   defaultValue?: string
 }
 
+export type SelectionInputProps = {
+  label: string;
+  register: any;
+  className?: string;
+  name: string;
+  options: SelectedProps[];
+  placeholder: string;
+  setValue: (gender: string, value: string) => void;
+  disabled?: boolean;
+  defaultValue?: string;
+};
+
+export type SelectedProps = {
+  label: string;
+  value: string;
+};
+
+export type DateInputProps = {
+  label: string;
+  register: any;
+  name: string;
+  errors: any;
+  placeholder: string;
+  className?: string;
+  disabled?: boolean;
+  defaultValue?: string;
+};
+
 export interface BannerProps {
   image: string
   title: string
@@ -84,14 +112,14 @@ export type ContactFormProps = {
   message: string;
 };
 
-export interface Category {
-  id: string;
-  name: string;
-  description: string;
-  parentId: string | null;
-  createdAt: string;
-  updatedAt: string;
-  _count: {
-    products: number;
-  };
-}
+// export interface Category {
+//   id: string;
+//   name: string;
+//   description: string;
+//   parentId: string | null;
+//   createdAt: string;
+//   updatedAt: string;
+//   _count: {
+//     products: number;
+//   };
+// }
