@@ -31,7 +31,7 @@ export const getCart = () => {
   };
   export const increaseQuantity = (productId: number) => {
     const cart = getCart();
-    const index = cart.findIndex(item => item.id === productId);
+    const index = cart.findIndex((item: any) => item.id === productId);
   
     if (index !== -1) {
       cart[index].quantity += 1;
@@ -40,7 +40,7 @@ export const getCart = () => {
   };
   export const decreaseQuantity = (productId: number) => {
     const cart = getCart();
-    const index = cart.findIndex(item => item.id === productId);
+    const index = cart.findIndex((item:any) => item.id === productId);
   
     if (index !== -1) {
       if (cart[index].quantity > 1) {
@@ -53,7 +53,7 @@ export const getCart = () => {
   };
   export const getCartTotal = (): number => {
     const cart = getCart();
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    return cart.reduce((total: any, item: any) => total + item.price * item.quantity, 0);
   };
 
   export const formatCurrency = (value: number): string => {

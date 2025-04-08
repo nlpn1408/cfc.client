@@ -14,7 +14,7 @@ import { RegisterInputProps } from "@/types/types";
 import TextInput from "../../../components/FromInput/TextInput";
 import SubmitButton from "../../../components/FromInput/SubmitButton";
 import Register from "@/components/Auth/Register";
-export const description =
+const description =
                       "A login form with email and password. There's an option to login with Google and a link to sign up if you don't have an account.";
                     
            
@@ -199,7 +199,7 @@ const contact = () =>{
                             isLoading={isLoading}
                             loadingTitle="Creating an account please wait ..."
                         />
-                        <Button variant="outline" className="w-full">
+                        <Button className="w-full">
                             Login with Google
                         </Button>
                         </form>
