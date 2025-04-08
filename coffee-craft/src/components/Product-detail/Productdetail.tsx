@@ -66,6 +66,7 @@ export default function Productdetail({ product }: { product: Product }) {
               ></button>
             ))}
           </div>
+
           <button
             onClick={prevSlide}
             className="absolute top-1/2 left-4 transform -translate-y-1/2 p-2 bg-gray-700/50 text-white rounded-full"

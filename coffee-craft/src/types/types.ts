@@ -42,12 +42,11 @@ export interface BannerProps {
 }
 
 export type RegisterInputProps = {
-  fullName: string;
+  name: string;
   phone: string;
   email: string;
   password: string;
   confirmPassword: string;
-  role: any;
 };
 
 export type LoginInputProps = {

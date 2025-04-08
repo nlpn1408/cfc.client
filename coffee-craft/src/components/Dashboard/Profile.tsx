@@ -5,6 +5,7 @@ import { UserProfile } from "@/types/types";
 import { useForm } from "react-hook-form";
 import TextAreaInput from "../FromInput/TextAreaInput";
 import SubmitButton from "../FromInput/SubmitButton";
+import toast from "react-hot-toast";
 
 export default function Profile({ userId, title }: { userId: string; title: string }) {
   const [user, setUser] = useState<UserProfile | null>(null);
@@ -20,23 +21,18 @@ export default function Profile({ userId, title }: { userId: string; title: stri
     formState: { errors },
   } = useForm<UserProfile>();
 
-  // Lấy dữ liệu từ API khi component mount
+  // Lấy dữ liệu từ sessionStorage khi component mount
   useEffect(() => {
-    async function fetchUserProfile() {
-      try {
-        const response = await fetch(`/api/users/${userId}`);
-        const data = await response.json();
-        setUser(data);
-        Object.keys(data).forEach((key) => {
-          setValue(key as keyof UserProfile, data[key]);
-        });
-      } catch (error) {
-        console.error("Lỗi khi lấy dữ liệu người dùng:", error);
-      }
-    }
-
-    fetchUserProfile();
-  }, [userId, setValue]);
+    const storedUser = sessionStorage.getItem("user");
+    if (storedUser) {
+      const userData: UserProfile = JSON.parse(storedUser);
+      setUser(userData);
+      Object.keys(userData).forEach((key) => {
+        if (key in userData) {
+          setValue(key as keyof UserProfile, userData[key as keyof UserProfile]);
+        }
+      });    }
+  }, [setValue]);
 
   // Xử lý khi chọn ảnh đại diện
   function handleAvatarChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -50,20 +46,23 @@ export default function Profile({ userId, title }: { userId: string; title: stri
   async function onSubmit(data: UserProfile) {
     setIsLoading(true);
     try {
-      const response = await fetch(`/api/users/${userId}`, {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+      const response = await fetch(`${API_URL}/users/${userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
       if (!response.ok) throw new Error("Cập nhật thất bại");
-      
+
+      // Cập nhật lại state và sessionStorage
       setUser(data);
+      sessionStorage.setItem("userProfile", JSON.stringify(data));
       setIsEditing(false);
-      alert("Thông tin đã được cập nhật!");
+      toast.success("Thông tin đã được cập nhật!");
     } catch (error) {
       console.error("Lỗi khi cập nhật thông tin:", error);
-      alert("Có lỗi xảy ra, vui lòng thử lại!");
+      toast.error("Có lỗi xảy ra, vui lòng thử lại!");
     }
     setIsLoading(false);
   }
@@ -84,8 +83,8 @@ export default function Profile({ userId, title }: { userId: string; title: stri
                 <input
                   type="file"
                   accept="image/*"
+                  placeholder="Chọn ảnh đại diện"
                   name="imgUrl"
-                  placeholder="Avatar"
                   className="mt-3 text-sm text-gray-600"
                   onChange={handleAvatarChange}
                 />
@@ -126,11 +125,12 @@ export default function Profile({ userId, title }: { userId: string; title: stri
             <TextAreaInput
               label="Địa chỉ"
               name="address"
-              placeholder="Nhập địa chỉ"
+              placeholder="Chưa có địa chỉ"
               register={register}
               errors={errors}
               disabled={!isEditing}
-              defaultValue={user?.address}
+
+              defaultValue={user?.address ?? "Chưa có địa chỉ"}
             />
             <div className="mt-8 flex justify-center">
               {isEditing ? (
@@ -150,4 +150,5 @@ export default function Profile({ userId, title }: { userId: string; title: stri
       </main>
     </div>
   );
+
 }
