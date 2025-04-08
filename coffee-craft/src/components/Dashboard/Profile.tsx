@@ -8,7 +8,6 @@ import SubmitButton from "../FromInput/SubmitButton";
 import toast from "react-hot-toast";
 import SelectionInput from "../FromInput/SelectionInput";
 import { useParams } from "next/navigation";
-import { DateInput } from "../FromInput/DateInput";
 
 export default function Profile({ title }: { title: string }) {
   const params = useParams();
@@ -43,6 +42,46 @@ export default function Profile({ title }: { title: string }) {
     }
   }, [setValue]);
 
+  const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setAvatarFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewAvatar(reader.result as string); // Preview image
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const uploadAvatar = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET; // Get the preset from env
+    if (!uploadPreset) {
+      throw new Error("Cloudinary upload preset is missing");
+    }
+
+    formData.append("upload_preset", uploadPreset);  // Use the correct upload preset
+
+    const cloudName = process.env.NEXT_PUBLIC_CLOUD_NAME;
+    const uploadUrl = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+
+    const response = await fetch(uploadUrl, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Error uploading image:", errorText);
+      throw new Error("Image upload failed");
+    }
+
+    const data = await response.json();
+    return data.secure_url;  // Return the secure URL of the uploaded image
+  };
 
   async function onSubmit(data: UserProfile) {
     setIsLoading(true);
@@ -50,29 +89,36 @@ export default function Profile({ title }: { title: string }) {
     try {
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
       const { email, imgUrl, ...postData } = data;
-      console.log(postData);
 
+      let uploadedImageUrl = imgUrl;
+
+      // Upload image if user selected a new avatar
+      if (avatarFile) {
+        uploadedImageUrl = await uploadAvatar(avatarFile); // Upload new avatar and get URL
+      }
+
+      // Send updated data to the server
       const response = await fetch(`${API_URL}/users/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // ✅ Gửi cookies để backend xác thực
-        body: JSON.stringify(postData),
+        credentials: "include",  // Send cookies for auth
+        body: JSON.stringify({ ...postData, imgUrl: uploadedImageUrl }),
       });
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error("Cập nhật thất bại: " + errorText);
+        throw new Error("Update failed: " + errorText);
       }
 
-      // 🔹 Cập nhật thông tin user sau khi PUT thành công
+      // Update user data in sessionStorage and local state
       const updatedUser = await response.json();
       setUser(updatedUser);
       sessionStorage.setItem("user", JSON.stringify(updatedUser));
       setIsEditing(false);
-      toast.success("Thông tin đã được cập nhật!");
+      toast.success("Your information has been updated!");
     } catch (error) {
-      console.error("Lỗi khi cập nhật thông tin:", error);
-      toast.error("Có lỗi xảy ra, vui lòng thử lại!");
+      console.error("Error updating user info:", error);
+      toast.error("Something went wrong, please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -95,7 +141,7 @@ export default function Profile({ title }: { title: string }) {
             />
           ) : (
             <img
-              src="/vercel.svg"
+              src="/default-avatar.png"
               alt="Avatar"
               className="w-32 h-32 rounded-full border-4 border-gray-300 object-cover" />
           )}
@@ -106,10 +152,12 @@ export default function Profile({ title }: { title: string }) {
               placeholder="Chọn ảnh đại diện"
               name="imgUrl"
               className="mt-3 text-sm text-gray-600"
-            // onChange={handleAvatarChange}
+              onChange={handleAvatarChange}
             />
           )}
         </div>
+
+
         {/* Form thông tin người dùng */}
         <div className="grid grid-cols-2 gap-4  items-center">
           <TextInput
