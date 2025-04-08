@@ -10,7 +10,7 @@ import {
 } from "../ui/carousel";
 import { Product } from "@/types/product";
 import Link from "next/link";
-import {  ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 export default function NewProducts() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -50,7 +50,12 @@ export default function NewProducts() {
     <section className="container max-w-screen-2xl py-10 relative">
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold mb-5">Sản phẩm mới</h2>
-        <Link href='/product' className="flex items-center text-lg text-slate-400 hover:text-[#683122]">Show more <ChevronRight /></Link>
+        <Link
+          href="/product"
+          className="flex items-center text-lg text-slate-400 hover:text-[#683122]"
+        >
+          Xem thêm <ChevronRight />
+        </Link>
       </div>
 
       {loading ? (
