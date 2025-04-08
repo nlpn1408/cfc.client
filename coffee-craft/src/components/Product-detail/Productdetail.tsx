@@ -23,11 +23,6 @@ export default function Productdetail({ product }: { product: Product }) {
     );
   };
 
-  const handleAddToCart = (product:Product) => {
-    addToCart(product); // Thêm sản phẩm vào giỏ
-    alert(`${product.id} đã được thêm vào giỏ hàng!`);
-  };
-
   // Auto chuyển slide mỗi 500ms
   useEffect(() => {
     const interval = setInterval(() => {
