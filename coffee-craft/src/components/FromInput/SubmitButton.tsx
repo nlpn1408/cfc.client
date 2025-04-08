@@ -17,7 +17,7 @@ export default function SubmitButton({
 }: SubmitButtonProps) {
 
     return (
-        <div className='w-full'>
+        <div className='w-full col-span-full'>
             {isLoading
                 ? (
                     <Button disabled className='w-full bg-[#935027] hover:bg-[#412017]'>

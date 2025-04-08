@@ -1,3 +1,4 @@
+"use client";
 import { AddressForm } from "@/types/types";
 import React, { useEffect, useState } from "react";
 import { addressDummyData } from "../../data/db";

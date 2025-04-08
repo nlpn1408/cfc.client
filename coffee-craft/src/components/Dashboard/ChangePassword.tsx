@@ -18,7 +18,6 @@ export default function ChangePassword({ page,
     watch,
     formState: { errors }
   } = useForm<ChangePasswordProps>()
-  const router = useRouter()
   const [isLoading, setIsLoading] = React.useState(false)
   const password = watch("password")
   const confirmPassword = watch("confirmPassword")
@@ -37,7 +36,6 @@ export default function ChangePassword({ page,
     setIsLoading(true)
     console.log(data);
     toast.success('Profile Info Updated Successfully')
-    router.push(`/dashboard/1?page=profile`)
 
   }
   return (

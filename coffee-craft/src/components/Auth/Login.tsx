@@ -1,14 +1,11 @@
 "use client"
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
 import React from "react"
 import { useRouter } from "next/navigation"
 import { LoginInputProps } from "@/types/types"
-import { signIn } from "next-auth/react"
 import { useForm } from 'react-hook-form'
 import toast from "react-hot-toast"
 import { HiInformationCircle } from "react-icons/hi"
-import Image from "next/image"
 import TextInput from "../FromInput/TextInput"
 import { Alert } from "flowbite-react"
 import SubmitButton from "../FromInput/SubmitButton"
@@ -28,40 +25,60 @@ export default function Login() {
         reset,
         formState: { errors }
     } = useForm<LoginInputProps>()
-    
+
     async function onSubmit(data: LoginInputProps) {
         try {
             setIsLoading(true);
             const API_URL = process.env.NEXT_PUBLIC_API_URL;
-            const response = await fetch(`${API_URL}/auth/login`, {
+
+            // 🔹 Gọi API login
+            const loginResponse = await fetch(`${API_URL}/auth/login`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
+                headers: { "Content-Type": "application/json" },
+                credentials: "include", // ✅ Quan trọng để gửi & nhận cookie
                 body: JSON.stringify(data)
             });
-    
-            const result = await response.json();
-            if (!response.ok) {
-                throw new Error(result.message || "Login failed");
+
+            if (!loginResponse.ok) {
+                const errorText = await loginResponse.text();
+                let errorMessage = "Login failed";
+                try {
+                    const errorData = JSON.parse(errorText);
+                    errorMessage = errorData.message || errorMessage;
+                } catch (e) {
+                    console.error("Error parsing login error response:", errorText);
+                }
+                throw new Error(errorMessage);
             }
-    
+
+            // 🔹 Gọi API /auth/me để lấy thông tin user
+            const meResponse = await fetch(`${API_URL}/auth/me`, {
+                method: "GET",
+                credentials: "include", // ✅ Gửi cookie để backend xác thực
+            });
+
+            if (!meResponse.ok) {
+                throw new Error("Failed to fetch user data");
+            }
+
+            const userData = await meResponse.json();
+
             // 🔹 Lưu thông tin user vào sessionStorage
-            sessionStorage.setItem("user", JSON.stringify(result.user));
-    
+            sessionStorage.setItem("user", JSON.stringify(userData));
+
+            // 🔹 Gửi sự kiện để cập nhật user trên toàn ứng dụng
+            window.dispatchEvent(new Event("userChanged"));
+
             toast.success("Login Successful");
             router.push("/");
-        } catch (error: unknown) {
-            if (error instanceof Error) {
-                toast.error(error.message);
-            } else {
-                toast.error("An unexpected error occurred");
-            }
+        } catch (error) {
+            console.error("Login error:", error);
+            toast.error(error instanceof Error ? error.message : "An unexpected error occurred");
         } finally {
             setIsLoading(false);
         }
     }
-    
+
     return (
         <div className="w-full lg:grid h-screen lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
             <div className="flex items-center justify-center py-12">
@@ -99,7 +116,7 @@ export default function Login() {
                         <SubmitButton
                             title="Login"
                             loadingTitle="Logging you please wait..."
-                            isLoading={isLoading} 
+                            isLoading={isLoading}
                         />
                         {/* <Button variant="outline" className="w-full">
                             Login with Google

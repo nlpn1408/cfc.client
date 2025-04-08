@@ -6,20 +6,20 @@ import ModeToggle from "./ModeToggle";
 import { LogInIcon, LogOut, ShoppingBagIcon } from "lucide-react";
 import { MobileNav } from "./mobile-nav";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
-import { signOut } from "next-auth/react";
 
 export default function SiteHeader() {
-  const router = useRouter();
   const [user, setUser] = useState<any>(null);
-  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
-
     const getUserFromStorage = () => {
       const storedUser = sessionStorage.getItem("user");
       if (storedUser) {
@@ -41,25 +41,33 @@ export default function SiteHeader() {
     };
 
     window.addEventListener("storage", handleStorageChange);
-
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
+    return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
+
   async function handleLogout() {
-    sessionStorage.removeItem("user"); 
-    await signOut();
-    router.push("/login");
-    window.location.reload(); // 🔄 Reload lại trang để cập nhật giao diện
+    try {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+      await fetch(`${API_URL}/auth/logout`, {
+        method: "POST",
+        credentials: "include", // ✅ Quan trọng để backend nhận diện user qua cookie
+      });
+
+      sessionStorage.removeItem("user");
+      window.dispatchEvent(new Event("userChanged"));
+      window.location.href = "/login";
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   }
+
 
   return (
     <header className="sticky top-0 z-50 w-full border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 max-w-screen-2xl items-center justify-around">
+      <div className="container lg:px-16 md:px-8 px-4  flex h-14 items-center justify-between">
         <MainNav />
         <MobileNav />
-        <div className="flex justify-end flex-1 items-center gap-2">
+        <div className="flex lg:flex-auto flex-1 justify-end items-center gap-2">
           <CommandMenu />
 
           {/* Login */}
@@ -72,20 +80,25 @@ export default function SiteHeader() {
           ) : (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="secondary" size="icon" className="rounded-full">
+                <Button
+                  variant="secondary"
+                  size="icon"
+                  className="rounded-full"
+                >
                   <Avatar>
-                    {user?.image ? (
-                      <AvatarImage src={user.image} />
-                    ) : (
-                      <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
-                    )}
+                    <AvatarImage
+                      src={user?.image || "/default-avatar.png"}
+                      onError={(e) => (e.currentTarget.src = "/default-avatar.png")}
+                    />
+                    <AvatarFallback>{user?.name?.charAt(0) || "?"}</AvatarFallback>
                   </Avatar>
+
                   <span className="sr-only">Toggle user menu</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuSeparator />
-                <DropdownMenuItem><Link href={`/dashboard/${user.id}`}>Dashboard</Link></DropdownMenuItem>
+                <DropdownMenuItem><Link href={`/dashboard/${user.id}?page=profile`}>Dashboard</Link></DropdownMenuItem>
                 <DropdownMenuItem>Support</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>

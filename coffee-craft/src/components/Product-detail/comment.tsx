@@ -76,9 +76,7 @@ export default function Reviews() {
 
   return (
     <div className="p-4 bg-white rounded-lg shadow-md">
-      <h1 className="text-3xl font-extrabold pb-10">
-        Đánh giá cho Cà Phê Nguyên Chất Signature
-      </h1>
+      <h1 className="text-3xl font-extrabold pb-10">Đánh giá sản phẩm</h1>
       <div className="flex items-center gap-2">
         <span className="text-2xl font-bold text-orange-500">4.91</span>
         {[...Array(5)].map((_, i) => (

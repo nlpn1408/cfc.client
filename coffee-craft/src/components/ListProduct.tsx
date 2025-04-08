@@ -32,7 +32,7 @@ export default function ListProduct() {
   }, []);
 
   return (
-    <section className="container max-w-screen-2xl py-10 relative">
+    <section className="container lg:px-16 md:px-8 px-4  py-10 relative">
       <Carousel className="flex justify-center relative">
         {/* Danh sách sản phẩm */}
         <CarouselContent className="flex items-center">
@@ -40,9 +40,9 @@ export default function ListProduct() {
             products.map((product, index) => (
               <CarouselItem
                 key={index}
-                className="flex justify-center px-2 md:basis-1/3 lg:basis-1/4"
+                className="flex justify-center px-2 basis-1/2 md:basis-1/3 lg:basis-1/4"
               >
-                <div className="w-full max-w-xs p-4 border rounded-lg shadow-md border-gray-200 bg-white">
+                <div className="w-full max-w-xs px-4 border rounded-lg shadow-md border-gray-200 bg-white">
                   <ProductCard
                     className="w-full"
                     key={product.id}
