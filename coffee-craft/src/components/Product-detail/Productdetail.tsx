@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
 import { Product } from "@/types/product";
 import { ProductCardProps } from "@/types/nav";
+import { addToCart } from "../Cart/cart";
 
 export default function Productdetail({ product }: { product: Product }) {
   const [selectedWeight, setSelectedWeight] = useState("250g");
@@ -18,6 +19,11 @@ export default function Productdetail({ product }: { product: Product }) {
     setCurrentSlide((prev) =>
       prev === 0 ? product.images.length - 1 : prev - 1
     );
+  };
+
+  const handleAddToCart = (product:Product) => {
+    addToCart(product); // Thêm sản phẩm vào giỏ
+    alert(`${product.id} đã được thêm vào giỏ hàng!`);
   };
 
   // Auto chuyển slide mỗi 500ms
@@ -126,7 +132,7 @@ export default function Productdetail({ product }: { product: Product }) {
 
         {/* Buttons */}
         <div className="flex mt-6 gap-4">
-          <button className="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg text-lg font-semibold transition-all duration-300 hover:bg-green-700 hover:scale-105 hover:shadow-lg">
+          <button onClick={() => handleAddToCart(product)} className="flex-1 bg-green-600 text-white px-6 py-3 rounded-lg text-lg font-semibold transition-all duration-300 hover:bg-green-700 hover:scale-105 hover:shadow-lg">
             Thêm vào giỏ hàng
           </button>
           <button className="flex-1 bg-red-600 text-white px-6 py-3 rounded-lg text-lg font-semibold transition-all duration-300 hover:bg-red-700 hover:scale-105 hover:shadow-lg">

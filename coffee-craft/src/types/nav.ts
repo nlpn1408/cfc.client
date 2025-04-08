@@ -19,6 +19,27 @@ export interface ProductCardProps {
   className?: string;
 }
 
+export interface ShoppingCart{
+  id: string;
+  name: string;
+  price: number;
+  brandId: string;
+  active: boolean;
+  quantity: number;
+  images: string;
+}
+ export interface CartContextType {
+  cart: ShoppingCart;
+  addToCart: (item: ShoppingCart) => void;
+  increaseQuantity: (id: number) => void;
+  decreaseQuantity: (id: number) => void;
+  removeFromCart: (id: number) => void;
+}
+export interface Cart {
+  items: ShoppingCart[]; // Mảng các đối tượng sản phẩm trong giỏ
+  total: number; // Tổng giá trị của giỏ hàng
+}
+
 export interface NavItemWithChildren extends NavItem {
   items: NavItemWithChildren[];
 }
