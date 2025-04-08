@@ -33,7 +33,7 @@ export const HeroData = [
 
 export default function Hero() {
   return (
-    <section className="container max-w-screen-2xl">
+    <section className="container lg:px-16 md:px-8 px-4 ">
       <div className="grid grid-cols-12 items-center gap-6 pb-8 pt-3 md:py-5">
         {/* Banner chính */}
         <div className="col-span-full lg:col-span-4 flex py-5 px-5 items-end space-y-4 relative bg-[url(/hero/hero1.png)] h-[500px] bg-cover bg-left bg-no-repeat rounded-lg shadow-lg">
@@ -76,13 +76,13 @@ export default function Hero() {
             className="col-span-full md:col-span-2 lg:col-span-2 hover:scale-105 transition-all duration-300 ease-in-out bg-[url(/hero/hero2.png)] h-[240px] bg-left bg-no-repeat rounded-lg shadow-lg"
           >
             <div className="grid grid-cols-3 gap-5">
-              <div className="col-span-2 flex flex-col space-y-10 justify-around text-white px-5 py-5">
+              <div className="col-span-2 flex flex-col space-y-5 justify-around text-white px-5 py-5">
                 <h1 className="text-3xl font-bold ">Khám phá hương vị</h1>
                 <p className="text-sm ">
                   Những dòng cà phê đậm đà với hương thơm quyến rũ dành cho
                   người yêu cà phê.
                 </p>
-                <h2 className="flex text-sm ">
+                <h2 className="flex text-lg font-bold ">
                   Tìm hiểu ngay <ArrowRight size={20} />
                 </h2>
               </div>

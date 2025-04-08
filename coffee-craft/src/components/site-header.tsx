@@ -64,10 +64,10 @@ export default function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 max-w-screen-2xl items-center justify-around">
+      <div className="container lg:px-16 md:px-8 px-4  flex h-14 items-center justify-between">
         <MainNav />
         <MobileNav />
-        <div className="flex justify-end flex-1 items-center gap-2">
+        <div className="flex lg:flex-auto flex-1 justify-end items-center gap-2">
           <CommandMenu />
 
           {/* Login */}

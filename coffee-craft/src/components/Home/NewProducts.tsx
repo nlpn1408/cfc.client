@@ -47,7 +47,7 @@ export default function NewProducts() {
   }, []);
 
   return (
-    <section className="container max-w-screen-2xl py-10 relative">
+    <section className="container lg:px-16 md:px-8 px-4  py-10 relative">
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold mb-5">Sản phẩm mới</h2>
         <Link href='/product' className="flex items-center text-lg text-slate-400 hover:text-[#683122]">Show more <ChevronRight /></Link>
@@ -72,9 +72,9 @@ export default function NewProducts() {
                   key={product.id}
                   className="flex justify-center px-2 md:basis-1/3 lg:basis-1/4"
                 >
-                  <div className="relative overflow-hidden w-full max-w-xs p-4 border rounded-lg shadow-md border-gray-200 bg-white flex flex-col h-full">
+                  <div className="relative overflow-hidden w-full max-w-xs border rounded-lg shadow-md border-gray-200 bg-white flex flex-col h-full">
                     {isNew && (
-                      <div className="absolute top-2 -left-7    bg-red-500 text-white text-xs font-bold px-10 py-1  z-30 -rotate-45">
+                      <div className="absolute top-2 -left-7 bg-red-500 text-white text-xs font-bold px-10 py-1  z-30 -rotate-45">
                         Mới
                       </div>
                     )}
