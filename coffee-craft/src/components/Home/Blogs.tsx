@@ -46,7 +46,7 @@ export default function Blogs() {
   return (
     <section className="container lg:px-16 md:px-8 px-4 ">
       <div className="text-center">
-        <h1 className="text-6xl text-gray-800 font-semibold">Tin tuc</h1>
+        <h1 className="text-6xl text-gray-800 font-semibold">Tin tức</h1>
         <p className="mt-3 text-gray-500">
           Những câu chuyện thú vị về cà phê và phong cách sống. Cập nhật mỗi
           tuần!

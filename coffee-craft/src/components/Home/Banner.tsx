@@ -26,7 +26,7 @@ export default function Banner({
             </h1>
             <p className="text-white w-2/3">{description}</p>
             <Link href={buttonLink}>
-              <Button className="w-2/5 bg-white text-black hover:bg-[#935027] hover:text-white font-bold py-5 rounded">
+              <Button className="w-1/5 bg-white text-black hover:bg-[#935027] hover:text-white font-bold py-5 rounded">
                 {buttonText} <ShoppingCart   size={30} />
               </Button>
             </Link>

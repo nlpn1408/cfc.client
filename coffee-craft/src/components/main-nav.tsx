@@ -35,10 +35,10 @@ export default function MainNav() {
       <nav className="flex items-center justify-between px-4 md:px-8 py-3 text-gray-600">
         <div className="flex items-center gap-4 lg:gap-8 max-md:hidden">
           <Link href="/" className="hover:text-gray-900 transition">
-            Home
+            Trang chủ
           </Link>
           <Link href="/product" className="hover:text-gray-900 transition">
-            Shop
+            Cửa hàng
           </Link>
           {/* {categories.map((category) => (
             <Link
@@ -50,7 +50,7 @@ export default function MainNav() {
             </Link>
           ))} */}
           <Link href="/contact" className="hover:text-gray-900 transition">
-            Contact
+            Liên hệp
           </Link>
         </div>
       </nav>
