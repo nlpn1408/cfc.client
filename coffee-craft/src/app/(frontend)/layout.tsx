@@ -1,6 +1,6 @@
 "use client";
 
-import { Provider } from "react-redux";
+// import { Provider } from "react-redux";
 // import { store } from "@/redux/store";
 import Footer from "@/components/Footer";
 import SiteHeader from "@/components/site-header";
