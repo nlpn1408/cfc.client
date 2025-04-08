@@ -35,7 +35,7 @@ export default function OrderPage({
           />
         </svg>
       ),
-      name: "Overview",
+      name: "Chờ xác nhận",
     },
     {
       icon: (
@@ -54,7 +54,7 @@ export default function OrderPage({
           />
         </svg>
       ),
-      name: "Integration",
+      name: "Chờ lấy hàng",
     },
     {
       icon: (
@@ -73,7 +73,7 @@ export default function OrderPage({
           />
         </svg>
       ),
-      name: "Billing",
+      name: "Đang giao hàng",
     },
     {
       icon: (
@@ -92,7 +92,7 @@ export default function OrderPage({
           />
         </svg>
       ),
-      name: "Transactions",
+      name: "Đã hủy",
     },
     {
       icon: (
@@ -111,7 +111,7 @@ export default function OrderPage({
           />
         </svg>
       ),
-      name: "plans",
+      name: "Đã giao hàng",
       Component: <OrderItems />,
     },
   ];
