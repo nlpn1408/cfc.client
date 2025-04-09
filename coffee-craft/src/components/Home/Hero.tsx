@@ -1,10 +1,13 @@
 "use client";
+import { UploadButton } from "@/utils/uploadthing";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import ImageInput from "../FromInput/ImageInput";
 
 export const HeroData = [
+  
   {
     id: 1,
     title: "Cà phê mới về",
@@ -32,6 +35,7 @@ export const HeroData = [
 ];
 
 export default function Hero() {
+  const [imageUrl, setImageUrl] = useState<string>();
   return (
     <section className="container lg:px-16 md:px-8 px-4 ">
       <div className="grid grid-cols-12 items-center gap-6 pb-8 pt-3 md:py-5">
@@ -88,6 +92,20 @@ export default function Hero() {
               </div>
             </div>
           </Link>
+
+          <UploadButton
+            endpoint="imageUploader"
+            onClientUploadComplete={(res) => {
+              // Do something with the response
+              console.log("Files: ", res);
+              alert("Upload Completed");
+            }}
+            onUploadError={(error: Error) => {
+              // Do something with the error.
+              alert(`ERROR! ${error.message}`);
+            }}
+          />
+         
         </div>
       </div>
     </section>

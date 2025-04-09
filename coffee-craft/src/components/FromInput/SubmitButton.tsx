@@ -1,23 +1,26 @@
 import { Loader2 } from 'lucide-react'
 import React from 'react'
 import { Button } from '../ui/button'
+import { cn } from '@/lib/utils'
 
 type SubmitButtonProps = {
     title: string
     buttonType?: 'submit' | 'button' | 'reset' | undefined,
     isLoading?: boolean,
     loadingTitle?: string
+    className?: string
 }
 
 export default function SubmitButton({
     title,
     buttonType = 'submit',
     isLoading = false,
-    loadingTitle = 'Loading...'
+    loadingTitle = 'Loading...',
+    className
 }: SubmitButtonProps) {
 
     return (
-        <div className='w-full col-span-full'>
+        <div className={cn('w-full col-span-full',className)}>
             {isLoading
                 ? (
                     <Button disabled className='w-full bg-[#935027] hover:bg-[#412017]'>
