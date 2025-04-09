@@ -1,42 +1,34 @@
 // components/Checkout/PaymentMethod.tsx
-import React from 'react';
+type Props = {
+  selected: string;
+  onChange: (value: string) => void;
+};
 
-const PaymentMethod = () => {
+const PaymentMethod = ({ selected, onChange }: Props) => {
   return (
-    <div className="p-4 border rounded-lg bg-white w-full mt-6">
-      <h2 className="text-lg font-semibold mb-4">Chọn hình thức thanh toán</h2>
-
-      <div className="grid grid-cols-3 gap-4">
-        <label className="flex items-center gap-2 border p-2 rounded-md cursor-pointer">
-          <input type="radio" name="payment" defaultChecked />
-          <img src="/momo-logo.png" alt="MoMo" className="w-8 h-8" />
-          <span>Ví MoMo</span>
+    <div className="p-4 border rounded-lg bg-white w-full">
+      <h2 className="text-xl font-semibold mb-4 text-gray-800">Phương thức thanh toán</h2>
+      <div className="space-y-3">
+        <label className="flex items-center gap-2">
+          <input
+            type="radio"
+            name="payment"
+            value="cod"
+            checked={selected === "cod"}
+            onChange={(e) => onChange(e.target.value)}
+          />
+          Thanh toán khi nhận hàng (COD)
         </label>
-
-        <label className="flex items-center gap-2 border p-2 rounded-md cursor-pointer">
-          <input type="radio" name="payment" />
-          💳 <span>ATM / Internet banking</span>
+        <label className="flex items-center gap-2">
+          <input
+            type="radio"
+            name="payment"
+            value="bank"
+            checked={selected === "bank"}
+            onChange={(e) => onChange(e.target.value)}
+          />
+          Chuyển khoản ngân hàng
         </label>
-
-        <label className="flex items-center gap-2 border p-2 rounded-md cursor-pointer">
-          <input type="radio" name="payment" />
-          💳 <span>Thẻ tín dụng</span>
-        </label>
-
-        <label className="flex items-center gap-2 border p-2 rounded-md cursor-pointer">
-          <input type="radio" name="payment" />
-          🔳 <span>QR code</span>
-        </label>
-
-        <label className="flex items-center gap-2 border p-2 rounded-md cursor-pointer">
-          <input type="radio" name="payment" />
-          💵 <span>Thanh toán khi nhận hàng</span>
-        </label>
-      </div>
-
-      <div className="mt-4 flex items-center gap-2">
-        <input type="checkbox" defaultChecked />
-        <label>Tôi đồng ý thỏa thuận bảo mật và chính sách mua hàng của <strong>Perfetto</strong></label>
       </div>
     </div>
   );
