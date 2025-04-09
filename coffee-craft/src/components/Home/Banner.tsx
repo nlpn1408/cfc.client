@@ -12,16 +12,15 @@ export default function Banner({
   buttonLink,
 }: BannerProps) {
   return (
-    <section className="">
-      <div
+      <section
         className={cn(
-          "w-full h-full bg-no-repeat bg-cover object-fill bg-left md:bg-center",
+          "w-full h-full bg-no-repeat bg-right lg:bg-left object-fit bg-cover",
           image
         )}
       >
-        <div className="container lg:px-16 md:px-8 px-4  py-10 grid grid-cols-2">
-          <div className="col-span-2 md:col-span-1 flex flex-col space-y-5">
-            <h1 className="text-5xl md:text-8xl font-extrabold hit-the-floor">
+        <div className="container lg:px-16 md:px-8 px-4 grid grid-cols-12">
+          <div className="col-span-full md:col-span-9 lg:col-span-7 flex flex-col space-y-5 py-5">
+            <h1 className="text-4xl md:text-5xl lg:text-8xl font-extrabold hit-the-floor">
               {title}
             </h1>
             <p className="text-white w-2/3">{description}</p>
@@ -32,7 +31,6 @@ export default function Banner({
             </Link>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
   );
 }

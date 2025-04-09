@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import ImageInput from "../FromInput/ImageInput";
 
 export const HeroData = [
-  
+
   {
     id: 1,
     title: "Cà phê mới về",
@@ -92,20 +92,6 @@ export default function Hero() {
               </div>
             </div>
           </Link>
-
-          <UploadButton
-            endpoint="imageUploader"
-            onClientUploadComplete={(res) => {
-              // Do something with the response
-              console.log("Files: ", res);
-              alert("Upload Completed");
-            }}
-            onUploadError={(error: Error) => {
-              // Do something with the error.
-              alert(`ERROR! ${error.message}`);
-            }}
-          />
-         
         </div>
       </div>
     </section>

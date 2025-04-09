@@ -50,7 +50,7 @@ export default function MainNav() {
             </Link>
           ))} */}
           <Link href="/contact" className="hover:text-gray-900 transition">
-            Liên hệp
+            Liên hệ
           </Link>
         </div>
       </nav>

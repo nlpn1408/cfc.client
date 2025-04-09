@@ -107,7 +107,7 @@ export default function Productdetail({ product }: { product: Product }) {
         <div>
           <h1 className="text-4xl font-bold pb-4">{product.name}</h1>
           <p className="text-gray-700 text-lg pb-4">
-            {product.shortDescription}
+            {product.longDescription}
           </p>
 
           <div className="flex items-center text-yellow-500 pb-4">

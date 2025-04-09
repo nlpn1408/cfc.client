@@ -29,7 +29,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </div>
 
       {/* Thông tin sản phẩm */}
-      <div className="group-hover/item:hidden grid grid-cols-2 absolute z-20 items-start top-3">
+      <div className=" grid grid-cols-2 absolute z-20 items-start top-3">
         <div className="col-span-1 flex items-center">
           <p className="text-gray-700 font-medium text-sm sm:text-base">
             {product.avgRating.toFixed(1)}
@@ -88,7 +88,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </div>
 
       {/* Giá sản phẩm */}
-      <h2 className="px-2 text-base sm:text-xl font-semibold text-red-500 text-center transition-colors duration-300">
+      <h2 className="px-2 text-base sm:text-xl font-semibold text-red-500 transition-colors duration-300">
         <span className="text-sm font-semibold text-gray-400 line-through opacity-60">
           {new Intl.NumberFormat("vi-VN", {
             style: "currency",
