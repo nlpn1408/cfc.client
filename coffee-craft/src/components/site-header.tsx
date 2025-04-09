@@ -10,6 +10,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
@@ -80,30 +81,28 @@ export default function SiteHeader() {
           ) : (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button
-                  variant="secondary"
-                  size="icon"
-                  className="rounded-full"
-                >
+                <Button variant="secondary" size="icon" className="rounded-full">
                   <Avatar>
-                    <AvatarImage
-                      src={user?.image || "/default-avatar.png"}
-                      onError={(e) => (e.currentTarget.src = "/default-avatar.png")}
-                    />
-                    <AvatarFallback>{user?.name?.charAt(0) || "?"}</AvatarFallback>
+                    {user.imgUrl ? (
+                      <Avatar>
+                        <AvatarImage src={user.imgUrl ?? "/avatars/01.png"} />
+                        <AvatarFallback>{user.name}</AvatarFallback>
+                      </Avatar>
+                    ) : (
+                      <AvatarFallback>{user?.name?.charAt(0) || "?"}</AvatarFallback>
+                    )}
                   </Avatar>
-
                   <span className="sr-only">Toggle user menu</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                <DropdownMenuLabel className="text-center">{user.name}</DropdownMenuLabel>
+                <DropdownMenuLabel className="text-center font-light text-sm text-slate-500">{user.email}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem><Link href={`/dashboard/${user.id}?page=profile`}>Dashboard</Link></DropdownMenuItem>
                 <DropdownMenuItem>Support</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout}>
-                  Logout <LogOut size={15} className="ml-2" />
-                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleLogout()}>Logout <LogOut size={15} className="ml-2" /></DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           )}

@@ -70,7 +70,7 @@ export default function Login() {
             window.dispatchEvent(new Event("userChanged"));
 
             toast.success("Login Successful");
-            router.push("/");
+            window.location.href = "/";
         } catch (error) {
             console.error("Login error:", error);
             toast.error(error instanceof Error ? error.message : "An unexpected error occurred");
