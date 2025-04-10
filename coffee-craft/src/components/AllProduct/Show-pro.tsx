@@ -15,13 +15,17 @@ export default function ShowPro() {
   const [isOpen, setIsOpen] = useState(false);
   const itemsPerPage = 12;
 
-  // Fetch danh mục
   const fetchCategories = async () => {
     try {
       const response = await fetch(`${API_URL}/categories`);
       const result = await response.json();
-      if (Array.isArray(result)) {
-        setCategories(result);
+
+      console.log("Categories fetch result:", result); // debug
+
+      if (Array.isArray(result.data)) {
+        setCategories(result.data); // dùng result.data thay vì result
+      } else {
+        console.error("Dữ liệu categories không đúng định dạng:", result);
       }
     } catch (error) {
       console.error("Lỗi khi tải danh mục:", error);
@@ -36,6 +40,7 @@ export default function ShowPro() {
         : `${API_URL}/products`;
       const response = await fetch(url);
       const result = await response.json();
+
       if (Array.isArray(result.data)) {
         setProducts(result.data);
         setPageCount(Math.ceil(result.total / itemsPerPage));
@@ -101,7 +106,7 @@ export default function ShowPro() {
       {/* Danh sách sản phẩm */}
       <section className="lg:col-span-3 flex flex-col ">
         {products.length > 0 ? (
-          <div className="grid grid-cols-2 gap-4 p-4 border rounded-lg shadow-md md:grid-cols-3 lg:grid-cols-4 border-gray-200 ">
+          <div className="grid grid-cols-2 gap-4 p-4  md:grid-cols-3 lg:grid-cols-4 ">
             {products
               .slice(
                 currentPage * itemsPerPage,

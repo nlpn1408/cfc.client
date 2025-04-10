@@ -82,9 +82,9 @@ export default function Register() {
             <div className="flex items-center justify-center py-12">
                 <div className="mx-auto grid w-[350px] gap-6">
                     <div className="grid gap-2 text-center">
-                        <h1 className="text-3xl font-bold">Register</h1>
+                        <h1 className="text-3xl font-bold">Đăng ký</h1>
                         <p className="text-balance text-muted-foreground">
-                            Enter your information to create an account
+                            Nhập thông tin của bạn để tạo tài khoản
                         </p>
                     </div>
                     <form
@@ -94,13 +94,13 @@ export default function Register() {
                     >
                         {showNotification && (
                             <Alert color="failure" icon={HiInformationCircle}>
-                                <span className="font-medium">Sign-in error!</span> Please Check
-                                your credentials
+                                <span className="font-medium">Lỗi đăng kí!</span>Vui lòng kiểm tra
+                                Thông tin đăng ký của bạn
                             </Alert>
                         )}
 
                         <TextInput
-                            label="Full Name"
+                            label="Họ và tên"
                             register={register}
                             name="name"
                             type="text"
@@ -109,7 +109,7 @@ export default function Register() {
                         />
 
                         <TextInput
-                            label="Phone Number"
+                            label="Số điện thoại"
                             register={register}
                             name="phone"
                             type="tel"
@@ -127,18 +127,25 @@ export default function Register() {
                         />
 
                         <TextInput
-                            label="Password"
+                            label="Mật khẩu"
                             register={register}
                             name="password"
                             type="password"
                             errors={errors}
                             placeholder="********"
+                            validateOptions={{
+                                minLength: {
+                                    value: 6,
+                                    message: "Password must be at least 6 characters",
+                                },
+                            }}
                         />
+
                         {!passwordMatch && (
-                            <p className="text-red-500 text-sm">Passwords do not match</p>
+                            <p className="text-red-500 text-sm">Không trùng mật khẩu đã nhập</p>
                         )}
                         <TextInput
-                            label="Confirm Password"
+                            label="Nhập lại mật khẩu"
                             register={register}
                             name="confirmPassword"
                             type="password"
@@ -146,18 +153,18 @@ export default function Register() {
                             placeholder="********"
                         />
                         <SubmitButton
-                            title="Create an account"
+                            title="Đăng ký tài khoản"
                             isLoading={isLoading}
-                            loadingTitle="Creating an account please wait ..."
+                            loadingTitle="Đang đăng ký vui lòng chờ..."
                         />
                         <Button variant="outline" className="w-full">
-                            Login with Google
+                            Đăng nhập bằng Google
                         </Button>
                     </form>
                     <div className="mt-4 text-center text-sm">
-                        Don&apos;t have an account?{" "}
+                        Bạn đã có tài khoản? {" "}
                         <Link href="/login" className="underline">
-                            Sign in
+                            Đăng nhập ngay
                         </Link>
                     </div>
                 </div>

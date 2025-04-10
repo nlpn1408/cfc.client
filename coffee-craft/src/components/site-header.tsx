@@ -10,6 +10,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
@@ -44,7 +45,6 @@ export default function SiteHeader() {
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
-
   async function handleLogout() {
     try {
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -61,7 +61,6 @@ export default function SiteHeader() {
     }
   }
 
-
   return (
     <header className="sticky top-0 z-50 w-full border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container lg:px-16 md:px-8 px-4  flex h-14 items-center justify-between">
@@ -74,7 +73,7 @@ export default function SiteHeader() {
           {!user ? (
             <Button asChild>
               <Link href="/login">
-                Login <LogInIcon size={16} className="ml-2" />
+                Đăng nhập <LogInIcon size={16} className="ml-2" />
               </Link>
             </Button>
           ) : (
@@ -86,23 +85,37 @@ export default function SiteHeader() {
                   className="rounded-full"
                 >
                   <Avatar>
-                    <AvatarImage
-                      src={user?.image || "/default-avatar.png"}
-                      onError={(e) => (e.currentTarget.src = "/default-avatar.png")}
-                    />
-                    <AvatarFallback>{user?.name?.charAt(0) || "?"}</AvatarFallback>
+                    {user.imgUrl ? (
+                      <Avatar>
+                        <AvatarImage src={user.imgUrl ?? "/avatars/01.png"} />
+                        <AvatarFallback>{user.name}</AvatarFallback>
+                      </Avatar>
+                    ) : (
+                      <AvatarFallback>
+                        {user?.name?.charAt(0) || "?"}
+                      </AvatarFallback>
+                    )}
                   </Avatar>
-
                   <span className="sr-only">Toggle user menu</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                <DropdownMenuLabel className="text-center">
+                  {user.name}
+                </DropdownMenuLabel>
+                <DropdownMenuLabel className="text-center font-light text-sm text-slate-500">
+                  {user.email}
+                </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem><Link href={`/dashboard/${user.id}?page=profile`}>Dashboard</Link></DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href={`/dashboard/${user.id}?page=profile`}>
+                    Dashboard
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem>Support</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout}>
-                  Logout <LogOut size={15} className="ml-2" />
+                <DropdownMenuItem onClick={() => handleLogout()}>
+                  Đăng xuất tài khoản <LogOut size={15} className="ml-2" />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

@@ -49,7 +49,7 @@ export default function Productdetail({ product }: { product: Product }) {
     dispatch(addToCart(cartItem));
   };
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 items-center bg-white shadow-lg rounded-lg p-4 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 items-center bg-white  p-4 gap-4">
       {/* Image Slider */}
       <div className="w-full max-w-3xl mx-auto">
         {/* Hình ảnh chính */}
@@ -107,7 +107,7 @@ export default function Productdetail({ product }: { product: Product }) {
         <div>
           <h1 className="text-4xl font-bold pb-4">{product.name}</h1>
           <p className="text-gray-700 text-lg pb-4">
-            {product.shortDescription}
+            {product.longDescription}
           </p>
 
           <div className="flex items-center text-yellow-500 pb-4">
@@ -119,8 +119,11 @@ export default function Productdetail({ product }: { product: Product }) {
             </span>
           </div>
           <p className="text-red-600 text-2xl font-semibold pb-4">
-            Giá: <span className="line-through text-gray-500">400.000 ₫</span>{" "}
-            {parseInt(product.price).toLocaleString()} ₫
+            Giá:{" "}
+            <span className="line-through text-gray-500">
+              {parseInt(product.price).toLocaleString()} ₫
+            </span>{" "}
+            {parseInt(product.discountPrice).toLocaleString()} ₫
           </p>
           <p className="text-gray-700 pb-4">Kho: {product.stock} sản phẩm</p>
         </div>
@@ -162,7 +165,7 @@ export default function Productdetail({ product }: { product: Product }) {
                 className={`border px-4 py-2 rounded-md cursor-pointer transition-all duration-300 ${
                   selectedGrindType === type
                     ? "bg-orange-600 text-white shadow-md scale-105"
-                    : "bg-gray-100 hover:bg-gray-200 hover:scale-105 hover:shadow-md"
+                    : "bg-gray-100 hover:bg-gray-200 hover:scale-105 hover:shadow-md border-b-2 border-[#a52f21] box-shadow-custom"
                 }`}
               >
                 {type}
@@ -175,12 +178,9 @@ export default function Productdetail({ product }: { product: Product }) {
         <div className="grid grid-cols-2 gap-4">
           <Button
             onClick={handleAddToCart}
-            className="col-span-1 bg-[#E1991D] h-auto text-white rounded-lg text-sm lg:text-lg font-semibold transition-all duration-300 hover:bg-[#ffa200] hover:scale-105 hover:shadow-lg"
+            className="col-span-1 bg-[#723E1E] hover:bg-[#935027] h-auto text-white rounded-lg text-sm lg:text-lg font-semibold transition-all duration-300  hover:scale-105 hover:shadow-lg"
           >
             Thêm vào giỏ hàng
-          </Button>
-          <Button className="col-span-1 bg-[#683122] text-white h-auto px-6 py-3 rounded-lg text-sm lg:text-lg font-semibold transition-all duration-300 hover:bg-[#351811] hover:scale-105 hover:shadow-lg">
-            Mua ngay
           </Button>
         </div>
       </div>

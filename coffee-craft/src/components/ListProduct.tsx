@@ -32,7 +32,7 @@ export default function ListProduct() {
   }, []);
 
   return (
-    <section className="container lg:px-16 md:px-8 px-4  py-10 relative">
+    <div className=" relative">
       <Carousel className="flex justify-center relative">
         {/* Danh sách sản phẩm */}
         <CarouselContent className="flex items-center">
@@ -60,6 +60,6 @@ export default function ListProduct() {
         <CarouselPrevious className="absolute left-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-300 transition" />
         <CarouselNext className="absolute right-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-300 transition" />
       </Carousel>
-    </section>
+    </div>
   );
 }
