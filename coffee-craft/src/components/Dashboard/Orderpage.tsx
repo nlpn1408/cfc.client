@@ -9,6 +9,9 @@ import {
 } from "../ui/carousel";
 import { Component } from "lucide-react";
 import OrderItems from "./oder/oder-items";
+import OrderDelivery from "./oder/order-delivery";
+import OrderCancel from "./oder/order-cancel";
+import OrderComplete from "./oder/order-complete";
 
 export default function OrderPage({
   page,
@@ -36,6 +39,7 @@ export default function OrderPage({
         </svg>
       ),
       name: "Chờ xác nhận",
+      Component: <OrderItems/>,
     },
     {
       icon: (
@@ -55,6 +59,7 @@ export default function OrderPage({
         </svg>
       ),
       name: "Chờ lấy hàng",
+      Component: <OrderItems />,
     },
     {
       icon: (
@@ -74,6 +79,7 @@ export default function OrderPage({
         </svg>
       ),
       name: "Đang giao hàng",
+      Component: <OrderDelivery />,
     },
     {
       icon: (
@@ -93,6 +99,7 @@ export default function OrderPage({
         </svg>
       ),
       name: "Đã hủy",
+      Component: <OrderCancel />,
     },
     {
       icon: (
@@ -112,7 +119,7 @@ export default function OrderPage({
         </svg>
       ),
       name: "Đã giao hàng",
-      Component: <OrderItems />,
+      Component: <OrderComplete />,
     },
   ];
   return (

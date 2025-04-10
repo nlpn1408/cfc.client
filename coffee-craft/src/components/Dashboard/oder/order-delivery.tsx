@@ -79,7 +79,7 @@ const orderItems = [
 
 
 
-export default function OrderItems() {
+export default function OrderDelivery() {
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [orders, setOrders] = useState<Order[]>([]);
@@ -103,7 +103,7 @@ export default function OrderItems() {
   return (
     <Card className="">
       <CardHeader>
-        <CardTitle className="text-2xl font-semibold">Chờ xác nhận</CardTitle>
+        <CardTitle className="text-2xl font-semibold">Đang giao hàng</CardTitle>
       </CardHeader>
       <CardContent>
         <ul className="divide-y divide-gray-200">
@@ -128,7 +128,7 @@ export default function OrderItems() {
                     <div className="text-red-600 font-medium text-xl mt-2 mx-5 flex " >Tổng: <div className="">{order.tong}</div></div> 
                 </div>
                 <p className="text-base ">
-                  <button className="rounded-xl border text-gray-600 bg-white py-2 px-4 hover:bg-[#815846] hover:text-white">Hủy đơn hàng</button>
+                  <button disabled className="bg-gray-300 text-black px-4 py-2 rounded cursor-not-allowed">Hủy đơn hàng</button>
                 </p>
                
               </div>
