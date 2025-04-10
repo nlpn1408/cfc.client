@@ -133,7 +133,14 @@ export default function Register() {
                             type="password"
                             errors={errors}
                             placeholder="********"
+                            validateOptions={{
+                                minLength: {
+                                    value: 6,
+                                    message: "Password must be at least 6 characters",
+                                },
+                            }}
                         />
+
                         {!passwordMatch && (
                             <p className="text-red-500 text-sm">Passwords do not match</p>
                         )}

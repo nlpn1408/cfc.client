@@ -41,10 +41,58 @@ export default function Login() {
         const errorText = await loginResponse.text();
         let errorMessage = "Login failed";
         try {
-          const errorData = JSON.parse(errorText);
-          errorMessage = errorData.message || errorMessage;
-        } catch (e) {
-          console.error("Error parsing login error response:", errorText);
+          setIsLoading(true);
+          const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+          // 🔹 Gọi API login
+          const loginResponse = await fetch(`${API_URL}/auth/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include", // ✅ Quan trọng để gửi & nhận cookie
+            body: JSON.stringify(data),
+          });
+
+          if (!loginResponse.ok) {
+            const errorText = await loginResponse.text();
+            let errorMessage = "Login failed";
+            try {
+              const errorData = JSON.parse(errorText);
+              errorMessage = errorData.message || errorMessage;
+            } catch (e) {
+              console.error("Error parsing login error response:", errorText);
+            }
+            throw new Error(errorMessage);
+          }
+
+          // 🔹 Gọi API /auth/me để lấy thông tin user
+          const meResponse = await fetch(`${API_URL}/auth/me`, {
+            method: "GET",
+            credentials: "include", // ✅ Gửi cookie để backend xác thực
+          });
+
+          if (!meResponse.ok) {
+            throw new Error("Failed to fetch user data");
+          }
+
+          const userData = await meResponse.json();
+
+          // 🔹 Lưu thông tin user vào sessionStorage
+          sessionStorage.setItem("user", JSON.stringify(userData));
+
+          // 🔹 Gửi sự kiện để cập nhật user trên toàn ứng dụng
+          window.dispatchEvent(new Event("userChanged"));
+
+          toast.success("Login Successful");
+          window.location.href = "/";
+        } catch (error) {
+          console.error("Login error:", error);
+          toast.error(
+            error instanceof Error
+              ? error.message
+              : "An unexpected error occurred"
+          );
+        } finally {
+          setIsLoading(false);
         }
         throw new Error(errorMessage);
       }

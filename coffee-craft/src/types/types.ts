@@ -19,6 +19,7 @@ export interface TextInputProps {
   isRequired?: boolean
   disabled?: boolean
   defaultValue?: string
+  validateOptions?: any;
 }
 
 export interface TextAreaInputProps {
