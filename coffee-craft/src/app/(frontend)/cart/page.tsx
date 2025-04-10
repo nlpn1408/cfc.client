@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeftIcon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +9,7 @@ import { removeFromCart, updateQuantity } from "@/redux/features/cartSlice"; // 
 import CartInitializer from "@/components/CartInitializer";
 const Cart = () => {
   const dispatch = useDispatch();
-
+const router = useRouter();
   // 👇 Dữ liệu mẫu
   const cartItems = useSelector((state: RootState) => state.cart.cartItems);
   const handleUpdateQuantity = (productId: string, quantity: number) => {
@@ -21,6 +22,7 @@ const Cart = () => {
   };
   const handleCheckout = () => {
     console.log("Đặt hàng với:", cartItems);
+    router.push("/checkout");
     // Ví dụ: chuyển sang trang checkout hoặc gọi API lưu đơn hàng
   };
 
