@@ -73,7 +73,7 @@ export default function SiteHeader() {
           {!user ? (
             <Button asChild>
               <Link href="/login">
-                Login <LogInIcon size={16} className="ml-2" />
+                Đăng nhập <LogInIcon size={16} className="ml-2" />
               </Link>
             </Button>
           ) : (
@@ -115,7 +115,7 @@ export default function SiteHeader() {
                 <DropdownMenuItem>Support</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => handleLogout()}>
-                  Logout <LogOut size={15} className="ml-2" />
+                  Đăng xuất tài khoản <LogOut size={15} className="ml-2" />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
