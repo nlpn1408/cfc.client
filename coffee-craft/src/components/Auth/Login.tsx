@@ -9,6 +9,7 @@ import { HiInformationCircle } from "react-icons/hi"
 import TextInput from "../FromInput/TextInput"
 import { Alert } from "flowbite-react"
 import SubmitButton from "../FromInput/SubmitButton"
+import { Button } from "../ui/button"
 
 
 export const description =
@@ -84,16 +85,16 @@ export default function Login() {
             <div className="flex items-center justify-center py-12">
                 <div className="mx-auto grid w-[350px] gap-6">
                     <div className="grid gap-2 text-center">
-                        <h1 className="text-3xl font-bold">Login</h1>
+                        <h1 className="text-3xl font-bold">Đăng nhập</h1>
                         <p className="text-balance text-muted-foreground">
-                            Enter your email below to login to your account
+                            Nhập email của bạn bên dưới để đăng nhập vào tài khoản của bạn
                         </p>
                     </div>
                     <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)} action="#" method="POST">
                         {showNotification && (
                             <Alert color="failure" icon={HiInformationCircle}>
-                                <span className="font-medium">Sign-in error!</span> Please Check
-                                your credentials
+                                <span className="font-medium">Lỗi Đăng nhập!</span> Vui lòng
+                                kiểmm tra lại email và mật khẩu của bạn.
                             </Alert>
                         )}
                         <TextInput
@@ -107,25 +108,25 @@ export default function Login() {
                         <TextInput
                             type="password"
                             name="password"
-                            label="Password"
+                            label="Mật khẩu"
                             register={register}
                             errors={errors}
                             placeholder="********"
                             page="login"
                         />
                         <SubmitButton
-                            title="Login"
-                            loadingTitle="Logging you please wait..."
+                            title="Đăng nhập"
+                            loadingTitle="Đang đăng nhập vui lòng chờ..."
                             isLoading={isLoading}
                         />
-                        {/* <Button variant="outline" className="w-full">
+                        <Button variant="outline" className="w-full">
                             Login with Google
-                        </Button> */}
+                        </Button>
                     </form>
                     <div className="mt-4 text-center text-sm">
-                        Don&apos;t have an account?{" "}
+                        Bạn chưa có tài khoản?{" "}
                         <Link href="/register" className="underline">
-                            Sign up
+                            Đăng ký ngay 
                         </Link>
                     </div>
                 </div>

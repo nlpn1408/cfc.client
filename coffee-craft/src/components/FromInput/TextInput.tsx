@@ -22,12 +22,12 @@ export default function TextInput({
         <div className={cn('grid gap-2', className)}>
             {type === 'password' && page === 'login' ? (
                 <div className="flex items-center">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password">Mật khẩu</Label>
                     <Link
                         href="/forgot-password"
                         className="ml-auto inline-block text-sm underline"
                     >
-                        Forgot your password?
+                        Quên mật khẩu?
                     </Link>
                 </div>
             ) : (
