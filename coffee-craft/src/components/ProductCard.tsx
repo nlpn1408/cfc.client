@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { StarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Product } from "@/types/product";
+import { Category, Product } from "@/types/product";
 
 interface ProductCardProps {
   product: Product;
@@ -15,6 +15,32 @@ const ProductCard: React.FC<ProductCardProps> = ({
   if (!product || !product.id) {
     return null;
   }
+  // const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  // const [products, setProducts] = useState<Product[]>([]);
+  // const [categories, setCategories] = useState<Category[]>([]);
+
+  // const fetchCategories = async () => {
+  //   try {
+  //     const response = await fetch(`${API_URL}/categories`);
+  //     const result = await response.json();
+
+  //     if (Array.isArray(result.data)) {
+  //       setCategories(result.data);
+  //     } else {
+  //       console.error("Dữ liệu categories không đúng định dạng:", result);
+  //     }
+  //   } catch (error) {
+  //     console.error("Lỗi khi tải danh mục:", error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchCategories();
+  // }, []);
+  // const getCategoryName = (id: string) => {
+  //   const found = categories.find((cat) => cat.id === id);
+  //   return found ? found.name : "Không rõ danh mục";
+  // };
   return (
     <Link
       href={`/product/${product.id}`}
@@ -29,8 +55,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
       </div>
 
       {/* Thông tin sản phẩm */}
-      <div className="group-hover/item:hidden grid grid-cols-2 absolute top-3 left-2 right-2 z-20">
-        <div className="flex items-center gap-1">
+      <div className="group-hover/item:hidden grid grid-cols-2 absolute   left-1 right-2 z-20 ">
+        <div className="flex items-center gap-1  ">
           <p className="text-gray-700 font-medium text-sm">
             {product.avgRating.toFixed(1)}
           </p>
@@ -45,17 +71,17 @@ const ProductCard: React.FC<ProductCardProps> = ({
         {/* Bạn có thể bật điều kiện này khi cần */}
         <div className="flex justify-end">
           <div className="text-center">
-            <p className="bg-black text-white text-[0.6rem] leading-tight rounded-lg px-1 py-2">
-              <span>100%</span>
-              <br />
-              Arabica
-              <br />
-              Cầu Đất
-            </p>
+            {/* <p className="bg-black text-white text-[0.65rem] font-semibold leading-snug rounded-xl px-2 py-1.5 shadow-md shadow-gray-500/30">
+              <span className="block text-yellow-300">100%</span>
+              <span className="block">
+                {getCategoryName(product.categoryId)}
+              </span>
+              <span className="block italic text-gray-300">Nguyên chất</span>
+            </p> */}
             <img
               alt="Premium"
               src="https://taynguyensoul.vn/wp-content/uploads/2022/04/premium-label-300.png"
-              className="w-10 mx-auto mt-1"
+              className="w-12  mx-auto mt-1 drop-shadow-md"
             />
           </div>
         </div>

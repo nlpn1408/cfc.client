@@ -66,7 +66,7 @@ export default function ProductRelate({ productId }: ProductRelateProps) {
     <section className="lg:col-span-3 flex flex-col">
       {relatedProducts.length > 0 ? (
         <>
-          <div className="grid grid-cols-2 gap-4 p-4  md:grid-cols-3 lg:grid-cols-4 ">
+          <div className="grid grid-cols-2 gap-5 p-4  md:grid-cols-3 lg:grid-cols-4 ">
             {relatedProducts
               .slice(
                 currentPage * itemsPerPage,

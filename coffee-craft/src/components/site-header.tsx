@@ -16,9 +16,14 @@ import {
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
+import { useSelector } from "react-redux";
 
+import { RootState } from "@/redux/store";
 export default function SiteHeader() {
   const [user, setUser] = useState<any>(null);
+  const totalQuantity = useSelector((state: RootState) =>
+    state.cart.cartItems.reduce((total, item) => total + item.quantity, 0)
+  );
 
   useEffect(() => {
     const getUserFromStorage = () => {
@@ -121,8 +126,13 @@ export default function SiteHeader() {
             </DropdownMenu>
           )}
 
-          <Link href="/cart">
+          <Link href="/cart" className="relative">
             <ShoppingBagIcon size={34} />
+            {totalQuantity > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                {totalQuantity}
+              </span>
+            )}
           </Link>
           <nav>
             <ModeToggle />

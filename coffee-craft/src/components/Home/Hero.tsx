@@ -36,8 +36,8 @@ export const HeroData = [
 export default function Hero() {
   const [imageUrl, setImageUrl] = useState<string>();
   return (
-    <section className="container lg:px-16 md:px-8 px-4 ">
-      <div className="grid grid-cols-12 items-center gap-6 pb-8 pt-3 md:py-5">
+    <section className="container lg:px-16 md:px-8 px-4  ">
+      <div className="grid grid-cols-12 items-center gap-6 pb-10 pt-3 ">
         {/* Banner chính */}
         <div className="col-span-full lg:col-span-4 flex py-5 px-5 items-end space-y-4 relative bg-[url(/hero/hero1.png)] h-[500px] bg-cover bg-left bg-no-repeat rounded-lg shadow-lg">
           <Link
@@ -91,19 +91,6 @@ export default function Hero() {
               </div>
             </div>
           </Link>
-
-          <UploadButton
-            endpoint="imageUploader"
-            onClientUploadComplete={(res) => {
-              // Do something with the response
-              console.log("Files: ", res);
-              alert("Upload Completed");
-            }}
-            onUploadError={(error: Error) => {
-              // Do something with the error.
-              alert(`ERROR! ${error.message}`);
-            }}
-          />
         </div>
       </div>
     </section>

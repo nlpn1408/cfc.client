@@ -44,7 +44,7 @@ export default function ListProduct() {
               >
                 <div className="w-full max-w-xs px-4 border rounded-lg shadow-md border-gray-200 bg-white">
                   <ProductCard
-                    className="w-full"
+                    className="w-full "
                     key={product.id}
                     product={product}
                   />

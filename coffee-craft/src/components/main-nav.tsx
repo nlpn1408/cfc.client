@@ -51,6 +51,9 @@ export default function MainNav() {
           <Link href="/contact" className="hover:text-gray-900 transition">
             Liên hệ
           </Link>
+          <Link href="/blog" className="hover:text-gray-900 transition">
+            Tin tức
+          </Link>
         </div>
       </nav>
     </div>

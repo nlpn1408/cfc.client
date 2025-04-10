@@ -39,7 +39,7 @@ export default function OrderPage({
         </svg>
       ),
       name: "Chờ xác nhận",
-      Component: <OrderItems/>,
+      Component: <OrderItems />,
     },
     {
       icon: (
@@ -156,7 +156,9 @@ export default function OrderPage({
       {/* Nội dung Tabs */}
       {tabItems.map((item, idx) => (
         <Tabs.Content key={idx} className="py-6" value={item.name}>
-          <p className="text-xs md:text-sm leading-normal">{item.Component} </p>
+          <div className="text-xs md:text-sm leading-normal">
+            {item.Component}{" "}
+          </div>
         </Tabs.Content>
       ))}
     </Tabs.Root>

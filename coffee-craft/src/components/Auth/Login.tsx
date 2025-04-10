@@ -67,7 +67,7 @@ export default function Login() {
       // 🔹 Lưu user và chuyển trang
       sessionStorage.setItem("user", JSON.stringify(userData));
       window.dispatchEvent(new Event("userChanged"));
-      toast.success("Login Successful");
+      toast.success("Đăng nhập thành công");
       window.location.href = "/";
     } catch (error) {
       console.error("Login error:", error);

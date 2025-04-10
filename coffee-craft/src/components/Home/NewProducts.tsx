@@ -78,7 +78,7 @@ export default function NewProducts() {
                 >
                   <div className="relative overflow-hidden w-full border-gray-200 bg-white flex flex-col h-full">
                     {isNew && (
-                      <div className="absolute top-1 -left-7 bg-red-500 text-white text-xs font-bold px-10 py-1  z-30 -rotate-45">
+                      <div className="absolute top-1 -left-9 bg-red-500 text-white text-xs font-bold px-10 py-1  z-30 -rotate-45">
                         Mới
                       </div>
                     )}

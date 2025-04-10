@@ -5,6 +5,7 @@ import { ProductCardProps } from "@/types/nav";
 import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/features/cartSlice";
+import toast from "react-hot-toast";
 
 export default function Productdetail({ product }: { product: Product }) {
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
@@ -46,6 +47,7 @@ export default function Productdetail({ product }: { product: Product }) {
       grindType: selectedGrindType,
     };
     console.log("Thêm vào giỏ hàng:", cartItem);
+    toast.success("Thêm vào giỏ hàng thành công ");
     dispatch(addToCart(cartItem));
   };
   return (
