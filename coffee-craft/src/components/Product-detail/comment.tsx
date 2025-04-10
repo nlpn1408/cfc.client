@@ -69,13 +69,8 @@ export default function Reviews() {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
 
-  const handleSubmit = () => {
-    console.log("Bình luận:", comment, "Số sao:", rating);
-    setIsOpen(false);
-  };
-
   return (
-    <div className="p-4 bg-white rounded-lg shadow-md">
+    <div className="p-4 bg-white min-h-16 ">
       <h1 className="text-3xl font-extrabold pb-10">Đánh giá sản phẩm</h1>
       <div className="flex items-center gap-2">
         <span className="text-2xl font-bold text-orange-500">4.91</span>
@@ -84,12 +79,6 @@ export default function Reviews() {
         ))}
         <span className="text-gray-600">296 đánh giá của khách hàng</span>
       </div>
-      <Button
-        className="mt-3 bg-red-500 hover:bg-red-600"
-        onClick={() => setIsOpen(true)}
-      >
-        Đánh giá ngay
-      </Button>
 
       <div className="mt-4">
         {reviews
@@ -138,43 +127,6 @@ export default function Reviews() {
         activeClassName="px-3 py-2 bg-indigo-600 text-gray-500 rounded-lg"
         forcePage={currentPage}
       />
-
-      {/* Popup đánh giá */}
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Đánh giá sản phẩm</DialogTitle>
-          </DialogHeader>
-          <div className="flex gap-2">
-            {[...Array(5)].map((_, i) => (
-              <Star
-                key={i}
-                className={`cursor-pointer ${
-                  i < rating ? "text-yellow-500" : "text-gray-400"
-                }`}
-                fill={i < rating ? "currentColor" : "none"}
-                onClick={() => setRating(i + 1)}
-              />
-            ))}
-          </div>
-          <Textarea
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            placeholder="Nhập bình luận..."
-          />
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsOpen(false)}>
-              Hủy
-            </Button>
-            <Button
-              onClick={handleSubmit}
-              className="bg-blue-500 hover:bg-blue-600"
-            >
-              Gửi đánh giá
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }

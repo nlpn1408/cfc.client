@@ -44,7 +44,6 @@ export default function SiteHeader() {
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
-
   async function handleLogout() {
     try {
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -60,7 +59,6 @@ export default function SiteHeader() {
       console.error("Logout failed:", error);
     }
   }
-
 
   return (
     <header className="sticky top-0 z-50 w-full border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -88,9 +86,13 @@ export default function SiteHeader() {
                   <Avatar>
                     <AvatarImage
                       src={user?.image || "/default-avatar.png"}
-                      onError={(e) => (e.currentTarget.src = "/default-avatar.png")}
+                      onError={(e) =>
+                        (e.currentTarget.src = "/default-avatar.png")
+                      }
                     />
-                    <AvatarFallback>{user?.name?.charAt(0) || "?"}</AvatarFallback>
+                    <AvatarFallback>
+                      {user?.name?.charAt(0) || "?"}
+                    </AvatarFallback>
                   </Avatar>
 
                   <span className="sr-only">Toggle user menu</span>
@@ -98,7 +100,11 @@ export default function SiteHeader() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuSeparator />
-                <DropdownMenuItem><Link href={`/dashboard/${user.id}?page=profile`}>Dashboard</Link></DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link href={`/dashboard/${user.id}?page=profile`}>
+                    Dashboard
+                  </Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem>Support</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>

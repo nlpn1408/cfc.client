@@ -5,12 +5,13 @@ import Reviews from "../../../../components/Product-detail/comment";
 import ProductDetail from "../../../../components/Product-detail/Productdetail";
 import ListProduct from "../../../../components/ListProduct";
 import { useParams } from "next/dist/client/components/navigation";
-
+import ProductRelate from "../../../../components/Product-detail/productRelate";
+import { Product } from "../../../../types/product";
 const Detailpage: React.FC = () => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const params = useParams();
   const id = params?.id;
-  const [productData, setProductData] = useState(null);
+  const [productData, setProductData] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -51,19 +52,15 @@ const Detailpage: React.FC = () => {
 
   return (
     <section className="container max-w-screen-2xl ">
-      <div className="bg-white shadow-lg rounded-2xl ">
-        <ProductDetail product={productData} />
-      </div>
+      <ProductDetail product={productData} />
 
-      <div className="mt-10 bg-gray-100 rounded-2xl shadow-md">
-        <Reviews />
-      </div>
+      <Reviews />
 
       <div className="mt-10">
         <h2 className="text-3xl font-extrabold text-gray-800 pb-6 text-center">
           Sản phẩm liên quan
         </h2>
-        <ListProduct />
+        <ProductRelate productId={productData?.id} />
       </div>
 
       <div className="mt-16">

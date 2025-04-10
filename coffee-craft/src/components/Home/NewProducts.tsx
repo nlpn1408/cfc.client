@@ -74,7 +74,7 @@ export default function NewProducts() {
               return (
                 <CarouselItem
                   key={product.id}
-                  className="flex justify-center px-2 md:basis-1/3 lg:basis-1/4"
+                  className="flex justify-center  md:basis-1/3 lg:basis-1/4"
                 >
                   <div className="relative overflow-hidden w-full border-gray-200 bg-white flex flex-col h-full">
                     {isNew && (
@@ -82,16 +82,18 @@ export default function NewProducts() {
                         Mới
                       </div>
                     )}
-                    <div className="max-w-xs border rounded-lg shadow-md px-4">
-                      <ProductCard className="w-full" product={product} />
-                    </div>
+
+                    <ProductCard
+                      className="shadow-lg border border-slate-200 rounded-md"
+                      product={product}
+                    />
                   </div>
                 </CarouselItem>
               );
             })}
           </CarouselContent>
-          <CarouselPrevious className="absolute left-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-300 transition" />
-          <CarouselNext className="absolute right-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-300 transition" />
+          <CarouselPrevious className="absolute left-[1px] top-1/2 transform -translate-y-1/2 w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-300 transition" />
+          <CarouselNext className="absolute right-[1px] top-1/2 transform -translate-y-1/2 w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-300 transition" />
         </Carousel>
       ) : (
         <p className="text-center w-full py-5">Không có sản phẩm mới.</p>

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 // import { Category } from "@/types/types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -22,7 +22,6 @@ export default function MainNav() {
   // useEffect(() => {
   //   fetchCategories();
   // }, []);
-
 
   return (
     <div className="hidden md:flex justify-start items-center gap-6">
@@ -50,7 +49,7 @@ export default function MainNav() {
             </Link>
           ))} */}
           <Link href="/contact" className="hover:text-gray-900 transition">
-            Liên hệp
+            Liên hệ
           </Link>
         </div>
       </nav>
