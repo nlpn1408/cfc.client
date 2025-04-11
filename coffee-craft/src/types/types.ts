@@ -113,6 +113,16 @@ export type ContactFormProps = {
   email: string;
   message: string;
 };
+export interface Voucher {
+  id: string;
+  code: string;
+  discountPercent?: number;
+  discountAmount?: number;
+  maxDiscount?: number;
+  minimumOrderValue?: number;
+  type: "PERCENT" | "FIXED";
+}
+
 
 // export interface Category {
 //   id: string;
