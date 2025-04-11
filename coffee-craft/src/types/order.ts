@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 export interface Order {
     id: string;
     userId: string;
@@ -10,7 +9,7 @@ export interface Order {
     receiverName:string;
     voucherId:string;
     status:string;
-=======
+    }
 // types/order.ts
 export interface OrderItemInput {
     productId: string;
@@ -40,6 +39,5 @@ export interface OrderItemInput {
     note?: string;
     shippingAddress: ShippingAddressInput;
     items: OrderItemInput[];
->>>>>>> cb1b2d6 (update checkout, thankyou clear cart)
   }
   
