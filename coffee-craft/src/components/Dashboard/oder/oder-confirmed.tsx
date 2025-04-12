@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React, { useState, useEffect } from "react";
 import { Order } from "@/types/product";
 
-export default function OrderComplete() {
+export default function OrderConfirmed() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -27,12 +27,12 @@ export default function OrderComplete() {
 
       const result = await response.json();
 
-      // Lọc các đơn hàng có trạng thái "PENDING"
-      const pendingOrders = result.filter(
-        (order: Order) => order.status === "DELIVERED"
+      // Lọc các đơn hàng có trạng thái "CONFIRMED"
+      const confirmedOrders = result.filter(
+        (order: Order) => order.status === "CONFIRMED"
       );
 
-      setOrders(pendingOrders);
+      setOrders(confirmedOrders);
     } catch (err: any) {
       console.error("Lỗi khi tải đơn hàng:", err);
       setError(err.message || "Đã xảy ra lỗi.");
@@ -53,7 +53,7 @@ export default function OrderComplete() {
         <p className="text-center text-red-500">{error}</p>
       ) : orders.length === 0 ? (
         <p className="text-center text-gray-500">
-          Không có đơn hàng nào đã giao.
+          Không có đơn hàng nào đã xác nhận.
         </p>
       ) : (
         <div className="space-y-6">
@@ -104,7 +104,7 @@ export default function OrderComplete() {
                   Tổng cộng: {Number(order.finalTotal).toLocaleString()}đ
                 </div>
                 <button className="px-4 py-2 text-sm border rounded hover:bg-gray-100">
-                  Đánh giá
+                  Hủy đơn hàng
                 </button>
               </div>
             </div>

@@ -84,6 +84,7 @@ const SubmitBar = ({ address, paymentMethod, cartItems, user }: Props) => {
           productId: item.productId,
           quantity: item.quantity,
           productVariantId: null,
+          image: item.images?.[0]?.url, // hoặc imageUrl tùy vào cấu trúc ProductImage
         })),
       };
 

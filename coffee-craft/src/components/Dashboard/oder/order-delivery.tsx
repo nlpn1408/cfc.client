@@ -1,142 +1,113 @@
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import React, { useState, useEffect } from "react";
-import { Order } from "@/types/order";
-import { Product } from '@/types/product';
-
-const orderItems = [
-  {
-    id: 1,
-    products:[
-      {
-        id:"1",
-        name: "Wireless Headphones",
-        loaihang:"200gr",
-        price: "99.99",
-        quantity: 1,
-        image: "/images/headphones.jpg",
-      },
-      {
-        idsp:"2",
-        name: "Wireless Headphones",
-        loaihang:"200gr",
-        price: "99.99",
-        quantity: 1,
-        image: "/images/headphones.jpg",
-      },
-      {
-        idsp:"3",
-        name: "Wireless Headphones",
-        loaihang:"200gr",
-        price: "99.99",
-        quantity: 1,
-        image: "/images/headphones.jpg",
-      }
-    ],
-    tong:1200,
-
-  },
-  {
-    id: 2,
-    products:[
-      {
-        idsp:"1",
-        name: "Smartwatch",
-        loaihang:"200gr",
-        price: "$149.99",
-        quantity: 1,
-        image: "/images/smartwatch.jpg",
-      },
-      {
-        idsp:"2",
-        name: "Smartwatch",
-        loaihang:"200gr",
-        price: "$149.99",
-        quantity: 1,
-        image: "/images/smartwatch.jpg",
-      }
-    ],
-    tong:1200,
-
-  },
-  {
-    id: 3,
-    products:[
-      {
-        idsp:"1",
-        name: "Smartwatch",
-        loaihang:"200gr",
-        price: "$149.99",
-        quantity: 1,
-        image: "/images/smartwatch.jpg",
-      }
-    ],
-    tong:1200,
-
-  },
-];
-
-
-
+import { Order } from "@/types/product";
 
 export default function OrderDelivery() {
-
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const fetchOrders = async (userId: string | null) => {
+  const fetchOrders = async () => {
     try {
-      const url = `${API_URL}/orders${userId ? `?userId=${userId}` : ''}`;
-      const response = await fetch(url);
-      const result = await response.json();
-      if (Array.isArray(result.data)) {
-        setOrders(result.data);
+      setLoading(true);
+      const response = await fetch(`${API_URL}/orders/myorders`, {
+        method: "GET",
+        credentials: "include", // Gửi cookie nếu đang dùng session auth
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Không thể lấy dữ liệu đơn hàng.");
       }
-    } catch (error) {
-      console.error("Lỗi khi tải sản phẩm:", error);
+
+      const result = await response.json();
+
+      // Lọc các đơn hàng có trạng thái "CONFIRMED"
+      const confirmedOrders = result.filter(
+        (order: Order) => order.status === "SHIPPED"
+      );
+
+      setOrders(confirmedOrders);
+    } catch (err: any) {
+      console.error("Lỗi khi tải đơn hàng:", err);
+      setError(err.message || "Đã xảy ra lỗi.");
+    } finally {
+      setLoading(false);
     }
   };
-  // useEffect(() => {
-  //   fetchOrders(userId);
-  // }, [userId]);
+
+  useEffect(() => {
+    fetchOrders();
+  }, []);
 
   return (
-    <Card className="">
-      <CardHeader>
-        <CardTitle className="text-2xl font-semibold">Đang giao hàng</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <ul className="divide-y divide-gray-200">
-          {orderItems.map((order) => (
-            <li key={order.id} className="items-center gap-4 py-3">
-              {order.products.map((product, index) =>(
-              <li key={product.id || product.idsp || index} className="flex items-center gap-4 py-3">
-                <img src={product.image} alt=""className="w-16 h-16 object-cover rounded-lg"/>
-                 <div className="flex-1">
-                    <p className="font-medium text-gray-900">{product.name}</p>
-                    <p className="text-sm text-gray-600">
-                      Loại: {product.loaihang}
-                    </p>
-                    <p className="font-medium"> x {product.quantity}</p>
-                 </div>
-                 <p className="text-lg text-red-500">{product.price}đ</p>
-              </li>
-              ))}
-              <hr/>
-              <div className="flex justify-between my-4">
-                <div className="">
-                    <div className="text-red-600 font-medium text-xl mt-2 mx-5 flex " >Tổng: <div className="">{order.tong}</div></div> 
+    <div className="w-full">
+      {loading ? (
+        <p className="text-center text-gray-500">Đang tải...</p>
+      ) : error ? (
+        <p className="text-center text-red-500">{error}</p>
+      ) : orders.length === 0 ? (
+        <p className="text-center text-gray-500">
+          Không có đơn hàng đang giao.
+        </p>
+      ) : (
+        <div className="space-y-6">
+          {orders.map((order) => (
+            <div key={order.id} className="bg-white p-4">
+              <div className="flex justify-between items-center mb-2">
+                <div className="text-sm text-gray-600">
+                  Mã đơn hàng: <span className="font-medium">{order.id}</span>
                 </div>
-                <p className="text-base ">
-                  <button disabled className="bg-gray-300 text-black px-4 py-2 rounded cursor-not-allowed">Hủy đơn hàng</button>
-                </p>
-               
+                <div className="text-sm text-gray-600">
+                  Ngày đặt: {new Date(order.createdAt).toLocaleDateString()}
+                </div>
               </div>
-            </li>
-              
+
+              {order.orderItems.map((item, index) => (
+                <div
+                  key={item.id || index}
+                  className="flex items-center gap-4 py-3 border-t first:border-t-0"
+                >
+                  {item.product?.images?.[0]?.url ? (
+                    <img
+                      src={item.product.images[0].url}
+                      alt={item.product.name}
+                      className="w-16 h-16 object-cover rounded-md"
+                    />
+                  ) : (
+                    <div className="w-16 h-16 bg-gray-200 rounded-md flex items-center justify-center text-xs text-gray-500">
+                      Không có ảnh
+                    </div>
+                  )}
+                  <div className="flex-1">
+                    <p className="font-medium text-gray-900">
+                      {item.product?.name || "Sản phẩm không xác định"}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      Mã SP: {item.product?.sku || "N/A"}
+                    </p>
+                    <p className="text-sm">Số lượng: {item.quantity}</p>
+                  </div>
+                  <p className="text-red-500 font-semibold">
+                    {Number(item.priceAtOrder).toLocaleString()}đ
+                  </p>
+                </div>
+              ))}
+
+              <div className="flex justify-between items-center pt-4 mt-4 border-t">
+                <div className="text-red-600 font-medium text-lg">
+                  Tổng cộng: {Number(order.finalTotal).toLocaleString()}đ
+                </div>
+              </div>
+            </div>
           ))}
-        </ul>
-      </CardContent>
-    </Card>
+        </div>
+      )}
+    </div>
   );
 }
