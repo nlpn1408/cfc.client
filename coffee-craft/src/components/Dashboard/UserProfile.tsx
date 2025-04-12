@@ -66,7 +66,10 @@ export default function UserProfile() {
             </span>
           </div>
         </div>
-      {/* {user && (
+        {/* Sidebar - điều hướng các mục */}
+        <div className="lg:col-span-1 col-span-full flex lg:flex-col gap-3 divide-gray-200 h-full dark:bg-slate-900">
+          {/* Avatar
+               {user && (
             <div className="flex items-center gap-3 mb-4">
               <Avatar>
                 <AvatarImage src={user.imgUrl || undefined} />
@@ -79,8 +82,7 @@ export default function UserProfile() {
             </div>
           )} */}
 
-        {/* Sidebar - điều hướng các mục */}
-        <div className="lg:col-span-1 col-span-full flex lg:flex-col gap-3 divide-gray-200 h-full dark:bg-slate-900">
+          {/* Tab điều hướng */}
           {steps.map((step, i) => (
             <div key={i} className="py-1">
               <Link
