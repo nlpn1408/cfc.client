@@ -16,7 +16,6 @@ import { Button } from "../ui/button";
 
 export default function Profile({ title }: { title: string }) {
   const { id } = useParams();
-
   const [user, setUser] = useState<UserProfile | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -64,6 +63,7 @@ export default function Profile({ title }: { title: string }) {
         setUser(updatedUser);
         sessionStorage.setItem("user", JSON.stringify(updatedUser));
         resetFormState();
+        window.location.reload();
       } else {
         throw new Error("Update failed");
       }

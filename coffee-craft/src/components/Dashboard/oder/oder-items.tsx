@@ -109,31 +109,33 @@ export default function OrderItems() {
         <ul className="divide-y divide-gray-200">
           {orderItems.map((order) => (
             <li key={order.id} className="items-center gap-4 py-3">
-              {order.products.map((product, index) =>(
-              <li key={product.id || product.idsp || index} className="flex items-center gap-4 py-3">
-                <img src={product.image} alt=""className="w-16 h-16 object-cover rounded-lg"/>
-                 <div className="flex-1">
-                    <p className="font-medium text-gray-900">{product.name}</p>
-                    <p className="text-sm text-gray-600">
-                      Loại: {product.loaihang}
-                    </p>
-                    <p className="font-medium"> x {product.quantity}</p>
-                 </div>
-                 <p className="text-lg text-red-500">{product.price}đ</p>
-              </li>
-              ))}
-              <hr/>
-              <div className="flex justify-between my-4">
-                <div className="">
+              <ul>
+                {order.products.map((product, index) =>(
+                  <li key={product.id || product.idsp || index} className="flex items-center gap-4 py-3">
+                    <img src={product.image} alt=""className="w-16 h-16 object-cover rounded-lg"/>
+                    <div className="flex-1">
+                      <p className="font-medium text-gray-900">{product.name}</p>
+                      <p className="text-sm text-gray-600">
+                        Loại: {product.loaihang}
+                      </p>
+                      <p className="font-medium"> x {product.quantity}</p>
+                    </div>
+                    <p className="text-lg text-red-500">{product.price}đ</p>
+                  </li>
+                ))}
+              </ul>
+              <div>
+                <hr/>
+                <div className="flex justify-between my-4">
+                  <div className="">
                     <div className="text-red-600 font-medium text-xl mt-2 mx-5 flex " >Tổng: <div className="">{order.tong}</div></div> 
+                  </div>
+                  <p className="text-base ">
+                    <button className="rounded-xl border text-gray-600 bg-white py-2 px-4 hover:bg-[#815846] hover:text-white">Hủy đơn hàng</button>
+                  </p>
                 </div>
-                <p className="text-base ">
-                  <button className="rounded-xl border text-gray-600 bg-white py-2 px-4 hover:bg-[#815846] hover:text-white">Hủy đơn hàng</button>
-                </p>
-               
               </div>
             </li>
-              
           ))}
         </ul>
       </CardContent>
