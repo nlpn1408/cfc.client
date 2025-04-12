@@ -20,10 +20,8 @@ export default function ShowPro() {
       const response = await fetch(`${API_URL}/categories`);
       const result = await response.json();
 
-      console.log("Categories fetch result:", result); // debug
-
       if (Array.isArray(result.data)) {
-        setCategories(result.data); // dùng result.data thay vì result
+        setCategories(result.data);
       } else {
         console.error("Dữ liệu categories không đúng định dạng:", result);
       }
@@ -32,13 +30,14 @@ export default function ShowPro() {
     }
   };
 
-  // Fetch sản phẩm theo danh mục
-  const fetchProducts = async (categoryId: string | null) => {
+  const fetchProducts = async (categoryId: string | null, page: number) => {
     try {
-      const url = categoryId
-        ? `${API_URL}/products?categoryId=${categoryId}`
-        : `${API_URL}/products`;
-      const response = await fetch(url);
+      const url = new URL(`${API_URL}/products`);
+      if (categoryId) url.searchParams.append("categoryId", categoryId);
+      url.searchParams.append("page", (page + 1).toString()); // Backend thường bắt đầu từ 1
+      url.searchParams.append("limit", itemsPerPage.toString());
+
+      const response = await fetch(url.toString());
       const result = await response.json();
 
       if (Array.isArray(result.data)) {
@@ -52,12 +51,15 @@ export default function ShowPro() {
 
   useEffect(() => {
     fetchCategories();
-    fetchProducts(selectedCategory);
-  }, [selectedCategory]);
+  }, []);
+
+  useEffect(() => {
+    fetchProducts(selectedCategory, currentPage);
+  }, [selectedCategory, currentPage]);
 
   const handleCategoryClick = (categoryId: string | null) => {
     setSelectedCategory(categoryId);
-    setCurrentPage(0); // Reset trang về 0 khi chọn danh mục mới
+    setCurrentPage(0); // Reset lại trang đầu khi chọn danh mục mới
   };
 
   const handlePageClick = (event: any) => {
@@ -107,18 +109,13 @@ export default function ShowPro() {
       <section className="lg:col-span-3 flex flex-col ">
         {products.length > 0 ? (
           <div className="grid grid-cols-2 gap-4 p-4  md:grid-cols-3 lg:grid-cols-4 ">
-            {products
-              .slice(
-                currentPage * itemsPerPage,
-                (currentPage + 1) * itemsPerPage
-              )
-              .map((product) => (
-                <ProductCard
-                  className="shadow-lg border border-slate-200 rounded-md"
-                  key={product.id}
-                  product={product}
-                />
-              ))}
+            {products.map((product) => (
+              <ProductCard
+                className="shadow-lg border border-slate-200 rounded-md"
+                key={product.id}
+                product={product}
+              />
+            ))}
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center min-h-[400px] w-full bg-white border rounded-lg shadow-md">
@@ -140,7 +137,7 @@ export default function ShowPro() {
           previousLinkClassName="px-4 py-2 text-gray-700 bg-white border rounded-md hover:bg-gray-100"
           nextLinkClassName="px-4 py-2 text-gray-700 bg-white border rounded-md hover:bg-gray-100"
           disabledClassName="opacity-50 cursor-not-allowed"
-          activeClassName="px-4 py-2 text-gray-500 bg-indigo-600 rounded-md"
+          activeClassName="px-4 py-2 text-gray-600 bg-indigo-600 rounded-md"
           forcePage={currentPage}
         />
       </section>
