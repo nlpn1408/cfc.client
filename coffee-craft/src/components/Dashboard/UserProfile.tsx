@@ -1,22 +1,21 @@
 'use client'
 import React, { use, useEffect, useState } from 'react'
-import { Button } from '../ui/button'
 import { useParams, useRouter, useSearchParams } from 'next/navigation'
-import Profile from './Profile'
-import ChangePassword from './ChangePassword'
 import OrderPage from './Orderpage'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
 import { Separator } from "../ui/separator"
-import type { UserProfile } from '@/types/types'
-import { Avatar } from 'flowbite-react'
-import { AvatarFallback, AvatarImage } from '../ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import Profile from './Profile'
+import ChangePassword from './ChangePassword'
 
 export default function UserProfile() {
   const params = useSearchParams()
   const page = params.get('page') ?? 'profile'
   const router = useRouter()
-  
+  const userParams = useParams()
+  const userId = userParams.id
+  const [user, setUser] = useState<any>(null);
   // Các bước/tab điều hướng trong trang cá nhân
   const steps = [
     {
@@ -43,9 +42,16 @@ export default function UserProfile() {
       ),
     },
   ];
-
   // Xác định tab hiện tại
   const currentStep = steps.find((step) => step.page === page);
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, [setUser])
+
+
 
   return (
     <section className="max-w-screen-2xl container">
@@ -68,27 +74,24 @@ export default function UserProfile() {
         </div>
         {/* Sidebar - điều hướng các mục */}
         <div className="lg:col-span-1 col-span-full flex lg:flex-col gap-3 divide-gray-200 h-full dark:bg-slate-900">
-          {/* Avatar
-               {user && (
-            <div className="flex items-center gap-3 mb-4">
-              <Avatar>
-                <AvatarImage src={user.imgUrl || undefined} />
-                <AvatarFallback>{user?.name?.charAt(0) || "?"}</AvatarFallback>
-              </Avatar>
-              <div className="text-sm">
-                <p className="font-semibold">{user.name}</p>
-                <p className="text-xs text-gray-400">{user.email}</p>
-              </div>
+          <div className="flex items-center gap-3 px-4 py-3">
+            <Avatar className="w-12 h-12">
+              <AvatarImage src={user?.imgUrl ?? "/default-avatar.png"} alt={user?.name ?? "Avatar"} />
+              <AvatarFallback>{user?.name?.[0] ?? "U"}</AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col">
+              <span className="font-medium text-sm">{user?.name ?? "Khách"}</span>
+              <span className="text-xs text-gray-500">{user?.email}</span>
             </div>
-          )} */}
+          </div>
 
           {/* Tab điều hướng */}
           {steps.map((step, i) => (
             <div key={i} className="py-1">
               <Link
-                href={`/dashboard/1?page=${step.page}`}
+                href={`/dashboard/${userId}?page=${step.page}`}
                 className={cn(
-                  `block uppercase text-sm lg:col-span-full bg-[#b98362] rounded-lg col-span-1 py-3 px-4
+                  `block uppercase text-sm lg:col-span-full  rounded-lg col-span-1 py-3 px-4
                   hover:bg-[#935027] hover:text-slate-100`,
                   step.page === page
                     ? "bg-[#5C3D2F] text-slate-100"
