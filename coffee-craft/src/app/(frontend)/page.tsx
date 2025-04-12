@@ -17,7 +17,7 @@ export default function Home() {
         description="Khám phá những hạt cà phê tươi ngon nhất từ những vùng trồng cà phê danh tiếng. Hương vị đậm đà, chất lượng thượng hạng dành cho những tín đồ yêu cà phê thực thụ."
         buttonText="Mua ngay"
         buttonLink="/product"
-        image="bg-[url(/banner/banner3.png)] lg:py-10" 
+        image="bg-[url(/banner/banner3.png)] lg:py-10"
       />
       <NewProducts />
 
@@ -31,7 +31,13 @@ export default function Home() {
       <section className="container lg:px-16 md:px-8 px-4 py-10">
         <div className="flex justify-between mb-5">
           <h2 className="text-2xl font-bold">Sản Phẩm bán chạy</h2>
-          <Link href='/product' className="flex items-center text-xl hover:text-[#683122] font-semibold text-slate-500"> Xem thêm <ChevronRightIcon size={30} />  </Link>
+          <Link
+            href="/product"
+            className="flex items-center text-xl hover:text-[#683122] font-semibold text-slate-500"
+          >
+            {" "}
+            Xem thêm <ChevronRightIcon size={30} />{" "}
+          </Link>
         </div>
         <ListProduct />
       </section>
@@ -44,13 +50,11 @@ export default function Home() {
         image="bg-[url(/banner/banner1.png)]"
       />
       <section className="container lg:px-16 md:px-8 px-4 py-10">
-
         <ListProduct />
       </section>
 
       <Blogs />
       <NewsLetter />
-
     </>
   );
 }

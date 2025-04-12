@@ -22,14 +22,22 @@ type Props = {
 const SubmitBar = ({ address, paymentMethod, cartItems, user }: Props) => {
   const router = useRouter();
   const dispatch = useDispatch(); // ✅ Thêm dòng này
-  const voucher = useSelector((state: RootState) => state.voucher.selectedVoucher);
+  const voucher = useSelector(
+    (state: RootState) => state.voucher.selectedVoucher
+  );
 
   const shippingFee = 0;
-  const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const subtotal = cartItems.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
 
   const discount = voucher
     ? voucher.type === "PERCENT"
-      ? Math.min(((voucher.discountPercent ?? 0) / 100) * subtotal, voucher.maxDiscount ?? Infinity)
+      ? Math.min(
+          ((voucher.discountPercent ?? 0) / 100) * subtotal,
+          voucher.maxDiscount ?? Infinity
+        )
       : Number(voucher.discountAmount ?? 0)
     : 0;
 
@@ -106,10 +114,10 @@ const SubmitBar = ({ address, paymentMethod, cartItems, user }: Props) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md">
+    <div>
       <button
         onClick={handleSubmit}
-        className="w-full bg-[#723E1E] hover:bg-[#935027] text-white py-3 rounded-full text-sm font-medium transition duration-200 shadow"
+        className="w-full bg-[#723E1E] hover:bg-[#935027] text-white py-3 rounded-[8px] text-sm font-medium transition duration-200 shadow"
       >
         Xác nhận đặt hàng
       </button>
