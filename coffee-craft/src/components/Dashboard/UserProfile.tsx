@@ -1,22 +1,22 @@
-'use client'
-import React, { use, useEffect, useState } from 'react'
-import { Button } from '../ui/button'
-import { useParams, useRouter, useSearchParams } from 'next/navigation'
-import Profile from './Profile'
-import ChangePassword from './ChangePassword'
-import OrderPage from './Orderpage'
-import Link from 'next/link'
-import { cn } from '@/lib/utils'
-import { Separator } from "../ui/separator"
-import type { UserProfile } from '@/types/types'
-import { Avatar } from 'flowbite-react'
-import { AvatarFallback, AvatarImage } from '../ui/avatar'
+"use client";
+import React, { use, useEffect, useState } from "react";
+import { Button } from "../ui/button";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import Profile from "./Profile";
+import ChangePassword from "./ChangePassword";
+import OrderPage from "./Orderpage";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { Separator } from "../ui/separator";
+import type { UserProfile } from "@/types/types";
+import { Avatar } from "flowbite-react";
+import { AvatarFallback, AvatarImage } from "../ui/avatar";
 
 export default function UserProfile() {
-  const params = useSearchParams()
-  const page = params.get('page') ?? 'profile'
-  const router = useRouter()
-  
+  const params = useSearchParams();
+  const page = params.get("page") ?? "profile";
+  const router = useRouter();
+
   // Các bước/tab điều hướng trong trang cá nhân
   const steps = [
     {

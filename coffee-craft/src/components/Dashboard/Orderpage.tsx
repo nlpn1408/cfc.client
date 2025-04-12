@@ -9,9 +9,13 @@ import {
 } from "../ui/carousel";
 import { Component } from "lucide-react";
 import OrderItems from "./oder/oder-items";
+import Oderconfirmed from "./oder/oder-confirmed";
 import OrderDelivery from "./oder/order-delivery";
-import OrderCancel from "./oder/order-cancel";
 import OrderComplete from "./oder/order-complete";
+import OrderCancel from "./oder/order-cancel";
+// import OrderDelivery from "./oder/order-delivery";
+// import OrderCancel from "./oder/order-cancel";
+// import OrderComplete from "./oder/order-complete";
 
 export default function OrderPage({
   page,
@@ -39,7 +43,7 @@ export default function OrderPage({
         </svg>
       ),
       name: "Chờ xác nhận",
-      status:'pending',
+      status: "pending",
       Component: <OrderItems />,
     },
     {
@@ -59,9 +63,52 @@ export default function OrderPage({
           />
         </svg>
       ),
+      name: "Đã xác nhận",
+      status: "shipping",
+      Component: <Oderconfirmed />,
+    },
+    {
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-5 h-5"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"
+          />
+        </svg>
+      ),
       name: "Đang giao hàng",
-      status:'shipping',
+      status: "shipping",
       Component: <OrderDelivery />,
+    },
+
+    {
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-5 h-5"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
+          />
+        </svg>
+      ),
+      status: "complete",
+      name: "Đã giao hàng",
+      Component: <OrderComplete />,
     },
     {
       icon: (
@@ -81,33 +128,12 @@ export default function OrderPage({
         </svg>
       ),
       name: "Đã hủy",
-      status:'cancel',
+      status: "cancel",
       Component: <OrderCancel />,
-    },
-    {
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="w-5 h-5"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"
-          />
-        </svg>
-      ),
-      status:'complete',
-      name: "Đã giao hàng",
-      Component: <OrderComplete />,
     },
   ];
   return (
-    <Tabs.Root className="mx-auto px-4 md:px-8" defaultValue={tabItems[0].name}> 
+    <Tabs.Root className="mx-auto px-4 md:px-8" defaultValue={tabItems[0].name}>
       {/* Bọc Tabs trong Carousel */}
       <Carousel className="w-full">
         <CarouselContent className="flex w-full">
@@ -139,7 +165,7 @@ export default function OrderPage({
 
       {/* Nội dung Tabs */}
       {tabItems.map((item, idx) => (
-        <Tabs.Content key={idx} className="py-6" value={item.name} >
+        <Tabs.Content key={idx} className="py-6" value={item.name}>
           <div className="text-xs md:text-sm leading-normal">
             {item.Component}{" "}
           </div>
