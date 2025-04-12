@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import { clearCart } from "@/redux/features/cartSlice";
+import toast from "react-hot-toast";
+import { Button } from "../ui/button";
 
 type Props = {
   address: any;
@@ -102,26 +104,23 @@ const SubmitBar = ({ address, paymentMethod, cartItems, user }: Props) => {
         throw new Error(result.message || "Đặt hàng thất bại");
       }
 
-      // ✅ XÓA GIỎ HÀNG SAU KHI ĐẶT HÀNG THÀNH CÔNG
       dispatch(clearCart()); // Redux
       localStorage.removeItem("cart"); // Nếu có dùng localStorage
-
-      alert("Đặt hàng thành công!");
+      toast.success("Đặt hàng thành công!");
       router.push("/thankyou");
     } catch (err: any) {
-      console.error("Lỗi đặt hàng:", err);
-      alert("Đã xảy ra lỗi khi đặt hàng: " + err.message);
+      toast.error("Đã xảy ra lỗi khi đặt hàng: " + err.message);
     }
   };
 
   return (
     <div>
-      <button
+      <Button
         onClick={handleSubmit}
         className="w-full bg-[#723E1E] hover:bg-[#935027] text-white py-3 rounded-[8px] text-sm font-medium transition duration-200 shadow"
       >
         Xác nhận đặt hàng
-      </button>
+      </Button>
     </div>
   );
 };
