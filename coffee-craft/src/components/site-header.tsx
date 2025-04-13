@@ -68,17 +68,17 @@ export default function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container lg:px-16 md:px-8 px-4  flex h-14 items-center justify-between">
+      <div className="container lg:px-16 md:px-8 px-4 flex h-14 items-center justify-between">
         <MainNav />
         <MobileNav />
-        <div className="flex lg:flex-auto flex-1 justify-end items-center gap-2">
+        <div className="flex flex-1 justify-end items-center gap-2">
           <CommandMenu />
 
           {/* Login */}
           {!user ? (
             <Button asChild>
               <Link href="/login">
-                Đăng nhập <LogInIcon size={16} className="ml-2" />
+                Đăng nhập <LogInIcon className="lg:block hidden" size={16} />
               </Link>
             </Button>
           ) : (

@@ -44,31 +44,36 @@ export function MobileNav() {
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="max-h-[80svh] p-0">
+      <DrawerContent className="h-[80svh] p-0">
         <DrawerTitle className="sr-only">Navigation Menu</DrawerTitle>
         <div className="overflow-auto p-6">
           <div className="flex flex-col space-y-3">
             {/* link content */}
+            <Link
+              href="/"
+              className="hover:text-gray-900 transition text-2xl font-bold"
+            >
+              Coffee<span className="text-[#E1991D]">Cart</span>
+            </Link>
             <Link href="/" className="hover:text-gray-900 transition">
-              Home
+              Trang Chủ
             </Link>
             <Link
-              href="/all-products"
+              href="/products"
               className="hover:text-gray-900 transition"
             >
-              Shop
+              Cửa Hàng
             </Link>
-            <Link href="/" className="hover:text-gray-900 transition">
-              About Us
+            <Link href="/blog" className="hover:text-gray-900 transition">
+              Tin tức
             </Link>
-            <Link href="/" className="hover:text-gray-900 transition">
-              Contact
+            <Link href="/contact" className="hover:text-gray-900 transition">
+              Liên hệ
             </Link>
           </div>
-          <div className="flex flex-col space-y-2">
-            {/* link content */}
-            <Link href="#">user</Link>
-          </div>
+          <div className="flex flex-col space-y-3">
+            
+            </div>
         </div>
       </DrawerContent>
     </Drawer>

@@ -39,7 +39,7 @@ export default function NewsLetter() {
 
   return (
     <section className="relative">
-      <div className="relative z-10 container lg:px-16 md:px-8 px-4 py-5">
+      <div className="relative container z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-x-8 gap-y-4">
           <img src="/banner/poster1.png" className="col-span-1 w-full h-full" alt="" />
           <form onSubmit={handleSubmit} className="flex flex-col items-center gap-x-3 space-y-5 md:justify-end">
