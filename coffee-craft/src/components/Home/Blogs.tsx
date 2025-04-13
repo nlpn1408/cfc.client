@@ -95,7 +95,7 @@ export default function BlogCarousel() {
                     </div>
                   </div>
                   <div className="pt-3 px-4 pb-4">
-                    <h3 className="text-lg font-semibold text-gray-900 group-hover:text-green-700 transition-colors duration-300">
+                    <h3 className="text-lg font-semibold text-gray-900 group-hover:text-[#935027] transition-colors duration-300">
                       {item.title}
                     </h3>
                     <p
