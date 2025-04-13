@@ -106,7 +106,7 @@ export default function ShowPro() {
       </aside>
 
       {/* Danh sách sản phẩm */}
-      <section className="lg:col-span-3 flex flex-col ">
+      <section className="lg:col-span-3 flex flex-col min-w-[1100px] ">
         {products.length > 0 ? (
           <div className="grid grid-cols-2 gap-4 p-4  md:grid-cols-3 lg:grid-cols-4 ">
             {products.map((product) => (
@@ -119,7 +119,7 @@ export default function ShowPro() {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center min-h-[400px] w-full bg-white border rounded-lg shadow-md">
-            <p className="text-gray-500 text-lg">Không có sản phẩm nào.</p>
+            <p className="text-gray-500 text-lg">Sản phẩm đang tải vui lòng chờ. </p>
           </div>
         )}
 

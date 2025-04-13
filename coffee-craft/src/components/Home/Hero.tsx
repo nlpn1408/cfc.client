@@ -56,7 +56,7 @@ export default function Hero() {
               key={item.id}
               className="col-span-full md:col-span-2 lg:col-span-2 flex justify-around space-y-4 rounded-lg shadow-lg hover:scale-105 transition-all duration-300 ease-in-out"
             >
-              <div className="flex flex-col space-y-4 justify-around py-4 px-6">
+              <div className="flex flex-col space-y-4 justify-around py-4 pl-6">
                 <h1 className="text-3xl font-bold text-brown-900">
                   {item.title}
                 </h1>

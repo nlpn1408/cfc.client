@@ -40,9 +40,9 @@ export default function BlogCarousel() {
   }, []);
 
   return (
-    <div className="relative mt-12">
+    <div className="relative">
       <div className="text-center mb-6">
-        <h1 className="text-4xl md:text-6xl font-semibold text-gray-800">
+        <h1 className="text-4xl md:text-6xl font-bold text-gray-800">
           Tin tức
         </h1>
         <p className="mt-2 md:mt-3 text-gray-500 text-base md:text-lg">

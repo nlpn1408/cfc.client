@@ -38,7 +38,7 @@ export default function NewsLetter() {
 
 
   return (
-    <section className="relative">
+    <section className="relative my-5 ">
       <div className="relative container z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-x-8 gap-y-4">
           <img src="/banner/poster1.png" className="col-span-1 w-full h-full" alt="" />

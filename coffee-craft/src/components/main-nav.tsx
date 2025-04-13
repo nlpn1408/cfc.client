@@ -24,15 +24,14 @@ export default function MainNav() {
   // }, []);
 
   return (
-    <div className="hidden md:flex flex-1 justify-start items-center gap-3">
+    <div className="hidden md:flex md:flex-col lg:flex-row flex-1 md:al justify-start lg:items-center md:items-start md:gap-0 lg:gap-3">
       <Link
         href="/"
         className="hover:text-gray-900 transition text-2xl font-bold"
       >
         Coffee<span className="text-[#E1991D]">Cart</span>
       </Link>
-      <nav className="flex items-center justify-between px-4 py-3 text-gray-600 ">
-        <div className="flex items-center gap-0 lg:gap-4 overflow-auto">
+      <nav className="flex items-center justify-between gap-4 px-4  lg:py-3 text-gray-600 ">
           <Link href="/" className="hover:text-gray-900 transition text-base overflow-auto">
             Trang chủ
           </Link>
@@ -45,7 +44,6 @@ export default function MainNav() {
           <Link href="/blog" className="hover:text-gray-900 transition text-base overflow-auto">
             Tin tức
           </Link>
-        </div>
       </nav>
     </div>
   );

@@ -6,7 +6,9 @@ export default function HeroContact() {
         <section >
             <div className='container lg:px-16 md:px-8 px-4  space-y-10 '>
                 <div className="text-center space-y-5">
-                    <h1 className='text-5xl font-bold'>Contact</h1>
+                    <h1 className='text-5xl font-bold'>
+                        Liện hệ
+                    </h1>
                     <p className='text-base border-t-8 inline-block rounded-md border-slate-200 pt-5 '>Bất kỳ thắc mắc hay cần sự hỗ trợ, hãy liên hệ với Craft bằng <br /> cách tiện cho bạn nhất dưới đây:</p>
                 </div>
                 <div className='grid md:grid-cols-3 grid-cols-1 '>
