@@ -26,7 +26,7 @@ export default function Home() {
         description="Những loại cà phê được khách hàng yêu thích nhất. Hãy thử ngay những hương vị tuyệt hảo được tuyển chọn từ các nông trại cà phê hàng đầu."
         buttonText="Khám phá"
         buttonLink="/product"
-        image="bg-[url(/banner/banner2.png)]"
+        image="bg-[url(/banner/banner2.png)]  lg:py-10"
       />
       <section className="container lg:px-16 md:px-8 px-4 py-10">
         <div className="flex justify-between mb-5">
@@ -47,9 +47,9 @@ export default function Home() {
         description="Từ máy pha cà phê đến dụng cụ pha chế chuyên nghiệp, chúng tôi mang đến mọi thứ bạn cần để tạo ra những tách cà phê thơm ngon ngay tại nhà."
         buttonText="Xem ngay"
         buttonLink="/product"
-        image="bg-[url(/banner/banner1.png)]"
+        image="bg-[url(/banner/banner1.png)]  lg:py-10"
       />
-      <section className="container lg:px-16 md:px-8 px-4 py-10">
+      <section className="container lg:px-16 md:px-8 px-4 py-10 ">
         <ListProduct />
       </section>
 

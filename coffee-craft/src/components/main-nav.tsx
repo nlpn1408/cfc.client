@@ -24,37 +24,26 @@ export default function MainNav() {
   // }, []);
 
   return (
-    <div className="hidden md:flex justify-start items-center gap-6">
+    <div className="hidden md:flex md:flex-col lg:flex-row flex-1 md:al justify-start lg:items-center md:items-start md:gap-0 lg:gap-3">
       <Link
         href="/"
         className="hover:text-gray-900 transition text-2xl font-bold"
       >
         Coffee<span className="text-[#E1991D]">Cart</span>
       </Link>
-      <nav className="flex items-center justify-between px-4 md:px-8 py-3 text-gray-600">
-        <div className="flex items-center gap-4 lg:gap-8 max-md:hidden">
-          <Link href="/" className="hover:text-gray-900 transition">
+      <nav className="flex items-center justify-between gap-4 px-4  lg:py-3 text-gray-600 ">
+          <Link href="/" className="hover:text-gray-900 transition text-base overflow-auto">
             Trang chủ
           </Link>
-          <Link href="/product" className="hover:text-gray-900 transition">
+          <Link href="/product" className="hover:text-gray-900 transition text-base overflow-auto">
             Cửa hàng
           </Link>
-          {/* {categories.map((category) => (
-            <Link
-              key={category.id}
-              href={`/product?categoryId=${category.id}`}
-              className="hover:text-gray-900 transition"
-            >
-              {category.name}
-            </Link>
-          ))} */}
-          <Link href="/contact" className="hover:text-gray-900 transition">
+          <Link href="/contact" className="hover:text-gray-900 transition text-base overflow-auto">
             Liên hệ
           </Link>
-          <Link href="/blog" className="hover:text-gray-900 transition">
+          <Link href="/blog" className="hover:text-gray-900 transition text-base overflow-auto">
             Tin tức
           </Link>
-        </div>
       </nav>
     </div>
   );

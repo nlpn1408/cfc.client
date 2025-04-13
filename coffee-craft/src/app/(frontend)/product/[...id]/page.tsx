@@ -37,7 +37,7 @@ const Detailpage: React.FC = () => {
     );
 
   return (
-    <section className="container max-w-screen-2xl ">
+    <section className="container lg:px-18 md:px-8 px-4">
       <ProductDetail product={productData} />
 
       <Reviews />
