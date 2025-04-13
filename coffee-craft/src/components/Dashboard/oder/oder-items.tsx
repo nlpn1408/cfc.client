@@ -93,14 +93,14 @@ export default function OrderItems() {
                     </p>
                     <p className="text-sm">Số lượng: {item.quantity}</p>
                   </div>
-                  <p className="text-red-500 font-semibold">
+                  <p className="text-gray-900 font-semibold">
                     {Number(item.priceAtOrder).toLocaleString()}đ
                   </p>
                 </div>
               ))}
 
               <div className="flex justify-between items-center pt-4 mt-4 border-t">
-                <div className="text-red-600 font-medium text-lg">
+                <div className="text-gray-900 font-medium text-lg">
                   Tổng cộng: {Number(order.finalTotal).toLocaleString()}đ
                 </div>
                 <button className="px-4 py-2 text-sm border rounded hover:bg-gray-100">

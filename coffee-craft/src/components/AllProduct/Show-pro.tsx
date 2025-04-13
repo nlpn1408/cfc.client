@@ -82,8 +82,8 @@ export default function ShowPro() {
           <button
             className={`block w-full py-2 px-4 text-left rounded-lg transition duration-300 ${
               selectedCategory === null
-                ? "bg-gray-600 text-white"
-                : "hover:bg-gray-600 hover:text-white"
+                ? "bg-[#723E1E]  text-white"
+                : "hover:bg-[#935027] hover:text-white"
             }`}
             onClick={() => handleCategoryClick(null)}
           >
@@ -94,8 +94,8 @@ export default function ShowPro() {
               key={category.id}
               className={`block w-full py-2 px-4 text-left rounded-lg transition duration-300 ${
                 selectedCategory === category.id
-                  ? "bg-gray-600 text-white"
-                  : "hover:bg-gray-600 hover:text-white"
+                  ? "bg-[#723E1E]  text-white"
+                  : "hover:bg-[#935027] hover:text-white"
               }`}
               onClick={() => handleCategoryClick(category.id)}
             >
