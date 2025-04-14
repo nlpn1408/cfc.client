@@ -16,6 +16,7 @@ export interface Product {
   updatedAt: string;
   images: ProductImage[];
   tags: Tag[];
+  reviews: Review[];
   variants: Variant[];
 }
 
