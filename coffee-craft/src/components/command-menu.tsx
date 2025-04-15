@@ -116,16 +116,16 @@ export function CommandMenu({ ...props }: DialogProps) {
         onClick={() => setOpen(true)}
         {...props}
       >
-        <span className="hidden lg:inline-flex">Search products...</span>
-        <span className="inline-flex lg:hidden">Search...</span>
+        <span className="hidden lg:inline-flex">Tìm kiếm...</span>
+        <span className="inline-flex lg:hidden">Tìm kiếm...</span>
         <kbd className="pointer-events-none absolute right-[0.3rem] top-[0.5rem] hidden h-5 select-none items-center gap-1 rounded px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
           <Search size={24} className="flex-shrink-0" />
         </kbd>
       </Button>
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <DialogTitle className="sr-only">Search commands</DialogTitle>
+        <DialogTitle className="sr-only">Tìm kiếm</DialogTitle>
         <CommandInput
-          placeholder="Type a product name to search..."
+          placeholder="Tìm kiếm sản phẩm"
           value={searchTerm}
           onValueChange={(value) => {
             console.log("User Input:", value);
@@ -134,7 +134,7 @@ export function CommandMenu({ ...props }: DialogProps) {
         />
 
         <CommandList>
-          <CommandEmpty>No products found.</CommandEmpty>
+          <CommandEmpty>Không có sản phẩm</CommandEmpty>
           <CommandGroup heading="Search Results">
             {filteredResults.map((product) => (
               <Link key={product.id} href={`/product/${product.id}`} passHref>

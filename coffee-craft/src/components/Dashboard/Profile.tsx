@@ -49,7 +49,7 @@ export default function Profile({ title }: { title: string }) {
     setIsLoading(true);
     try {
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
-      const { email, imgUrl, ...putData } = data
+      const { email, imgUrl, ...putData } = data;
       const response = await fetch(`${API_URL}/users/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -83,7 +83,9 @@ export default function Profile({ title }: { title: string }) {
 
   return (
     <div>
-      <h2 className="text-3xl font-semibold text-center pt-2">Thông tin cá nhân</h2>
+      <h2 className="text-3xl font-semibold text-center pt-2">
+        Thông tin cá nhân
+      </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="px-5" method="PUT">
         <div className="grid grid-cols-3 gap-6">
           {/* Form thông tin người dùng */}
@@ -175,13 +177,18 @@ export default function Profile({ title }: { title: string }) {
               >
                 Huỷ
               </Button>
-              <SubmitButton title="Lưu thay đổi" className="col-span-1" isLoading={isLoading} loadingTitle="Đang lưu..." />
+              <SubmitButton
+                title="Lưu thay đổi"
+                className="col-span-1"
+                isLoading={isLoading}
+                loadingTitle="Đang lưu..."
+              />
             </div>
           ) : (
             <button
               type="button"
               onClick={() => setIsEditing(true)}
-              className="bg-blue-500 text-white px-6 py-3 rounded-lg text-lg"
+              className="bg-[#723E1E] hover:bg-[#935027] text-white px-6 py-3 rounded-lg text-lg"
             >
               Chỉnh sửa
             </button>

@@ -27,23 +27,35 @@ export default function MainNav() {
     <div className="hidden md:flex md:flex-col lg:flex-row flex-1 md:al justify-start lg:items-center md:items-start md:gap-0 lg:gap-3">
       <Link
         href="/"
-        className="hover:text-gray-900 transition text-2xl font-bold"
+        className="hover:text-[#412019] text-[#412017] transition text-2xl font-bold"
       >
         Coffee<span className="text-[#E1991D]">Cart</span>
       </Link>
       <nav className="flex items-center justify-between gap-4 px-4  lg:py-3 text-gray-600 ">
-          <Link href="/" className="hover:text-gray-900 transition text-base overflow-auto">
-            Trang chủ
-          </Link>
-          <Link href="/product" className="hover:text-gray-900 transition text-base overflow-auto">
-            Cửa hàng
-          </Link>
-          <Link href="/contact" className="hover:text-gray-900 transition text-base overflow-auto">
-            Liên hệ
-          </Link>
-          <Link href="/blog" className="hover:text-gray-900 transition text-base overflow-auto">
-            Tin tức
-          </Link>
+        <Link
+          href="/"
+          className="hover:text-gray-900 transition text-base overflow-auto"
+        >
+          Trang chủ
+        </Link>
+        <Link
+          href="/product"
+          className="hover:text-gray-900 transition text-base overflow-auto"
+        >
+          Cửa hàng
+        </Link>
+        <Link
+          href="/contact"
+          className="hover:text-gray-900 transition text-base overflow-auto"
+        >
+          Liên hệ
+        </Link>
+        <Link
+          href="/blog"
+          className="hover:text-gray-900 transition text-base overflow-auto"
+        >
+          Tin tức
+        </Link>
       </nav>
     </div>
   );
