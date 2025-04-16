@@ -1,24 +1,53 @@
-"use client";
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// components/OrderComplete.tsx
 import React, { useState, useEffect } from "react";
+import OrderList from "@/components/oder-complete/OrderList";
+import ReviewPopup from "@/components/oder-complete/ReviewPopup";
 import { Order } from "@/types/product";
+import toast from "react-hot-toast";
 
 export default function OrderComplete() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [rating, setRating] = useState<number | null>(null);
+  const [comment, setComment] = useState<string>("");
+  const [showPopup, setShowPopup] = useState<boolean>(false);
+  const [selectedOrderItemId, setSelectedOrderItemId] = useState<string | null>(
+    null
+  );
 
+  // Fetch the current userId (session info)
+  const fetchUserInfo = async () => {
+    try {
+      const response = await fetch(`${API_URL}/auth/me`, {
+        method: "GET",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!response.ok) {
+        throw new Error("Không thể lấy thông tin người dùng.");
+      }
+
+      const user = await response.json();
+      if (user?.id) {
+        setUserId(user.id);
+      }
+    } catch (err) {
+      setError("Đã xảy ra lỗi khi lấy thông tin người dùng.");
+    }
+  };
+
+  // Fetch orders
   const fetchOrders = async () => {
     try {
       setLoading(true);
       const response = await fetch(`${API_URL}/orders/myorders`, {
         method: "GET",
-        credentials: "include", // Gửi cookie nếu đang dùng session auth
-        headers: {
-          "Content-Type": "application/json",
-        },
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
       });
 
       if (!response.ok) {
@@ -26,22 +55,63 @@ export default function OrderComplete() {
       }
 
       const result = await response.json();
-
-      // Lọc các đơn hàng có trạng thái "PENDING"
-      const pendingOrders = result.filter(
+      const deliveredOrders = result.filter(
         (order: Order) => order.status === "DELIVERED"
       );
-
-      setOrders(pendingOrders);
-    } catch (err: any) {
-      console.error("Lỗi khi tải đơn hàng:", err);
-      setError(err.message || "Đã xảy ra lỗi.");
+      setOrders(deliveredOrders);
+    } catch (err) {
+      setError("Đã xảy ra lỗi khi tải đơn hàng.");
     } finally {
       setLoading(false);
     }
   };
 
+  // Handle review submission
+  const handleReviewSubmit = async () => {
+    if (!rating || !comment || !userId || !selectedOrderItemId) {
+      alert("Vui lòng nhập đầy đủ thông tin đánh giá.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/reviews`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          rating,
+          comment,
+          orderItemId: selectedOrderItemId,
+          userId,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Lỗi khi gửi đánh giá.");
+      }
+
+      toast.success("Đánh giá sản phẩm thành công");
+      setRating(null);
+      setComment("");
+      setShowPopup(false);
+    } catch (error) {
+      alert("Đã xảy ra lỗi khi gửi đánh giá.");
+    }
+  };
+
+  const handleOpenPopup = (orderItemId: string) => {
+    setSelectedOrderItemId(orderItemId);
+    setShowPopup(true);
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+    setRating(null);
+    setComment("");
+  };
+
   useEffect(() => {
+    fetchUserInfo();
     fetchOrders();
   }, []);
 
@@ -56,60 +126,18 @@ export default function OrderComplete() {
           Không có đơn hàng nào đã giao.
         </p>
       ) : (
-        <div className="space-y-6">
-          {orders.map((order) => (
-            <div key={order.id} className="bg-white p-4">
-              <div className="flex justify-between items-center mb-2">
-                <div className="text-sm text-gray-600">
-                  Mã đơn hàng: <span className="font-medium">{order.id}</span>
-                </div>
-                <div className="text-sm text-gray-600">
-                  Ngày đặt: {new Date(order.createdAt).toLocaleDateString()}
-                </div>
-              </div>
+        <OrderList orders={orders} onReviewClick={handleOpenPopup} />
+      )}
 
-              {order.orderItems.map((item, index) => (
-                <div
-                  key={item.id || index}
-                  className="flex items-center gap-4 py-3 border-t first:border-t-0"
-                >
-                  {item.product?.images?.[0]?.url ? (
-                    <img
-                      src={item.product.images[0].url}
-                      alt={item.product.name}
-                      className="w-16 h-16 object-cover rounded-md"
-                    />
-                  ) : (
-                    <div className="w-16 h-16 bg-gray-200 rounded-md flex items-center justify-center text-xs text-gray-500">
-                      Không có ảnh
-                    </div>
-                  )}
-                  <div className="flex-1">
-                    <p className="font-medium text-gray-900">
-                      {item.product?.name || "Sản phẩm không xác định"}
-                    </p>
-                    <p className="text-sm text-gray-600">
-                      Mã SP: {item.product?.sku || "N/A"}
-                    </p>
-                    <p className="text-sm">Số lượng: {item.quantity}</p>
-                  </div>
-                  <p className="text-gray-900 font-semibold">
-                    {Number(item.priceAtOrder).toLocaleString()}đ
-                  </p>
-                </div>
-              ))}
-
-              <div className="flex justify-between items-center pt-4 mt-4 border-t">
-                <div className="text-gray-900 font-medium text-lg">
-                  Tổng cộng: {Number(order.finalTotal).toLocaleString()}đ
-                </div>
-                <button className="px-4 py-2 text-sm border rounded hover:bg-gray-100">
-                  Đánh giá
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
+      {showPopup && (
+        <ReviewPopup
+          rating={rating}
+          comment={comment}
+          onRatingChange={setRating}
+          onCommentChange={setComment}
+          onSubmit={handleReviewSubmit}
+          onClose={handleClosePopup}
+        />
       )}
     </div>
   );

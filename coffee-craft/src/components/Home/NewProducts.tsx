@@ -10,12 +10,21 @@ import {
 } from "../ui/carousel";
 import { Product } from "@/types/product";
 import Link from "next/link";
-import { ChevronRight, ChevronRightIcon } from "lucide-react";
+import { ChevronRightIcon } from "lucide-react";
 
 export default function NewProducts() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Hàm kiểm tra sản phẩm có phải mới trong 1 tháng không
+  const isNewProduct = (createdAt: string) => {
+    const productDate = new Date(createdAt);
+    const now = new Date();
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(now.getMonth() - 1);
+    return productDate >= oneMonthAgo;
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -24,15 +33,10 @@ export default function NewProducts() {
         const result = await response.json();
 
         if (Array.isArray(result.data)) {
-          const now = new Date();
-          const sevenDaysAgo = new Date();
-          sevenDaysAgo.setDate(now.getDate() - 7); // Lấy sản phẩm trong 7 ngày gần nhất
-
-          // Lọc sản phẩm mới trong vòng 7 ngày
-          const newProducts = result.data.filter((product: any) => {
-            const productDate = new Date(product.createdAt);
-            return productDate >= sevenDaysAgo;
-          });
+          // Lọc sản phẩm mới trong vòng 1 tháng gần nhất
+          const newProducts = result.data.filter((product: any) =>
+            isNewProduct(product.createdAt)
+          );
 
           setProducts(newProducts);
         }
@@ -47,7 +51,7 @@ export default function NewProducts() {
   }, []);
 
   return (
-    <section className="container lg:px-16 md:px-8 px-4  py-10 relative">
+    <section className="container lg:px-16 md:px-8 px-4 py-10 relative">
       <div className="flex justify-between">
         <h2 className="text-2xl font-bold mb-5">Sản phẩm mới</h2>
         <Link
@@ -64,21 +68,16 @@ export default function NewProducts() {
         <Carousel className="flex justify-center relative">
           <CarouselContent className="flex items-center">
             {products.map((product) => {
-              const productDate = new Date(product.createdAt);
-              const now = new Date();
-              const sevenDaysAgo = new Date();
-              sevenDaysAgo.setDate(now.getDate() - 7);
-              // Kiểm tra xem sản phẩm có phải là "Mới" không
-              const isNew = productDate >= sevenDaysAgo;
+              const isNew = isNewProduct(product.createdAt);
 
               return (
                 <CarouselItem
                   key={product.id}
-                  className="flex justify-center  md:basis-1/3 lg:basis-1/4"
+                  className="flex justify-center md:basis-1/3 lg:basis-1/4"
                 >
                   <div className="relative overflow-hidden w-full border-gray-200 bg-white flex flex-col h-full">
                     {isNew && (
-                      <div className="absolute top-1 -left-9 bg-red-500 text-white text-xs font-bold px-10 py-1  z-30 -rotate-45">
+                      <div className="absolute top-1 -left-9 bg-red-500 text-white text-xs font-bold px-10 py-1 z-30 -rotate-45">
                         Mới
                       </div>
                     )}

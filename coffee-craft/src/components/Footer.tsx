@@ -10,8 +10,8 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Thông tin thương hiệu */}
           <div>
-            <h1 className="font-extrabold text-orange-900 text-3xl">
-              Coffee <span className="text-black">Cart</span>
+            <h1 className="font-extrabold text-[#412017]  text-3xl">
+              Coffee <span className="text-[#E1991D]">Cart</span>
             </h1>
             <p className="mt-6 text-sm leading-relaxed">
               Coffee Cart chuyên cung cấp cà phê nguyên chất và phụ kiện pha chế
@@ -121,7 +121,7 @@ const Footer = () => {
             </h2>
             <div className="text-sm space-y-2">
               <p>
-                📞 <span className="font-medium">0909-xxx-xxx</span>
+                📞 <span className="font-medium">0909-410-965</span>
               </p>
               <p>
                 📧 <span className="font-medium">support@coffeecart.com</span>

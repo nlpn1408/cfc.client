@@ -16,6 +16,7 @@ export interface Product {
   updatedAt: string;
   images: ProductImage[];
   tags: Tag[];
+  reviews: Review[];
   variants: Variant[];
 }
 
@@ -75,15 +76,6 @@ export interface Category {
   };
 }
 
-export interface Review {
-  id: string;
-  productId: string;
-  rating: number;
-  comment: string;
-  userId: string;
-  createdAt: string;
-}
-
 export interface OrderItem {
   id: string;
   productId: string;
@@ -92,6 +84,7 @@ export interface OrderItem {
   subTotal: number;
   discountAmount: number;
   product: Product; // 👈 Thêm dòng này để fix lỗi
+  review?: Review;
 }
 
 export interface Order {
@@ -114,4 +107,47 @@ export interface Order {
   };
   voucherId: string | null;
   note?: string;
+}
+export interface User {
+  id: string;
+  name: string;
+  imgUrl: string;
+}
+
+export interface Review {
+  id: string;
+  rating: number; // 1-5
+  comment?: string;
+  orderItemId: string;
+  // Nếu bạn vẫn muốn có relation đến OrderItem, giữ nguyên:
+  orderItem: OrderItem;
+
+  userId: string;
+  user: User; // now includes { id, name, imgUrl }
+
+  productId: string;
+  product: Product; // giữ nếu bạn include product trong query
+
+  productVariantId?: string;
+  productVariant?: ProductVariant;
+
+  createdAt: string; // JSON trả về là ISO string
+  updatedAt: string;
+}
+
+export type UserProfile = {
+  id?: string;
+  name: string;
+  email: string;
+  phone?: string;
+  address?: string;
+  gender?: string;
+  imgUrl?: string;
+};
+export interface ProductVariant {
+  id: string;
+  name: string; // ví dụ: "Size M - Màu đen"
+  sku?: string;
+  price?: number;
+  // ... các trường khác tùy bạn thiết kế
 }
