@@ -15,7 +15,7 @@ export default function UserProfile() {
   const page = params.get('page') ?? 'profile'
   const router = useRouter()
   const userParams = useParams()
-  const userId = userParams.id
+  const userId = userParams.id?.toString()
   const [user, setUser] = useState<any>(null);
   // Các bước/tab điều hướng trong trang cá nhân
   const steps = [
@@ -33,6 +33,7 @@ export default function UserProfile() {
           title="Đổi mật khẩu"
           page="changepassword"
           description=""
+          userId={userId}
         />
       ),
     },
@@ -114,4 +115,5 @@ export default function UserProfile() {
       </div>
     </section>
   );
+
 }
