@@ -41,7 +41,7 @@ export default function ChangePassword({ page,
   return (
     <div >
       <div className=" text-center border border-gray-200 pb-4">
-        <h2 className="text-4xl font-semibold scroll-m-20 tracking-tight lg:text-5xl">
+        <h2 className="text-4xl font-semibold scroll-m-20 tracking-tight lg:text-4xl py-4">
           {title}
         </h2>
         <p className="text-balance text-muted-foreground">
@@ -52,7 +52,7 @@ export default function ChangePassword({ page,
         <form action=""
           onSubmit={handleSubmit(onSubmit)} className=' lg:col-span-1 p-10 col-span-full  flex flex-col gap-5'>
           <TextInput
-            label='Old Password'
+            label='Nhập mật khẩu cũ'
             name='Password'
             placeholder='**********'
             type='password'
@@ -60,7 +60,7 @@ export default function ChangePassword({ page,
             register={register}
           />
           <TextInput
-            label='New Password'
+            label='Nhập mật khẩu mới'
             name='newPassword'
             type='password'
             placeholder='**********'
@@ -72,14 +72,14 @@ export default function ChangePassword({ page,
           )}
           <TextInput
             type='password'
-            label='Confirm Password'
+            label='Xác nhận mật khẩu'
             name='confirmPassword'
             placeholder='**********'
             errors={errors}
             register={register}
           />
           <SubmitButton
-            title='Save Password'
+            title='Lưu Mật Khẩu'
             loadingTitle="Logging you please wait..."
             isLoading={isLoading}
           />
