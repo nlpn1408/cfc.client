@@ -6,6 +6,7 @@ import ListProduct from "@/components/ListProduct";
 import NewProducts from "../../components/Home/NewProducts";
 import Link from "next/link";
 import { ChevronRightIcon } from "lucide-react";
+import CategoryProducts from "../../components/Home/CategoryProducts";
 
 export default function Home() {
   return (
@@ -33,10 +34,10 @@ export default function Home() {
           <h2 className="text-2xl font-bold">Sản Phẩm bán chạy</h2>
           <Link
             href="/product"
-            className="flex items-center text-xl hover:text-[#683122] font-semibold text-slate-500"
+            className="flex items-center text-md text-slate-800 hover:text-[#683122]"
           >
             {" "}
-            Xem thêm <ChevronRightIcon size={30} />{" "}
+            Xem thêm <ChevronRightIcon size={20} />{" "}
           </Link>
         </div>
         <ListProduct />
@@ -50,7 +51,17 @@ export default function Home() {
         image="bg-[url(/banner/banner1.png)]  lg:py-10"
       />
       <section className="container lg:px-16 md:px-8 px-4 py-10 ">
-        <ListProduct />
+        <div className="flex justify-between mb-5">
+          <h2 className="text-2xl font-bold">Phụ kiện pha chế</h2>
+          <Link
+            href="/product"
+            className="flex items-center text-md text-slate-800 hover:text-[#683122]"
+          >
+            {" "}
+            Xem thêm <ChevronRightIcon size={20} />{" "}
+          </Link>
+        </div>
+        <CategoryProducts />
       </section>
 
       <Blogs />

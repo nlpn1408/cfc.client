@@ -158,22 +158,26 @@ export default function Productdetail({ product }: { product: Product }) {
 
         {/* Grind Type Selection */}
         <div>
-          <h2 className="text-lg font-semibold">Yêu cầu:</h2>
-          <div className="flex gap-4 mt-2">
-            {["Xay sẵn", "Nguyên hạt"].map((type) => (
-              <span
-                key={type}
-                onClick={() => setSelectedGrindType(type)}
-                className={`border px-4 py-2 rounded-md cursor-pointer transition-all duration-300 ${
-                  selectedGrindType === type
-                    ? "bg-orange-600 text-white shadow-md scale-105"
-                    : "bg-gray-100 hover:bg-gray-200 hover:scale-105 hover:shadow-md border-b-2 border-[#a52f21] box-shadow-custom"
-                }`}
-              >
-                {type}
-              </span>
-            ))}
-          </div>
+          {product.categoryId === "f62f3cb9-d54c-4df0-91dc-802a3f12b211" && (
+            <>
+              <h2 className="text-lg font-semibold">Yêu cầu:</h2>
+              <div className="flex gap-4 mt-2">
+                {["Xay sẵn", "Nguyên hạt"].map((type) => (
+                  <span
+                    key={type}
+                    onClick={() => setSelectedGrindType(type)}
+                    className={`border px-4 py-2 rounded-md cursor-pointer transition-all duration-300 ${
+                      selectedGrindType === type
+                        ? "bg-orange-600 text-white shadow-md scale-105"
+                        : "bg-gray-100 hover:bg-gray-200 hover:scale-105 hover:shadow-md border-b-2 border-[#a52f21] box-shadow-custom"
+                    }`}
+                  >
+                    {type}
+                  </span>
+                ))}
+              </div>
+            </>
+          )}
         </div>
 
         {/* Buttons */}
