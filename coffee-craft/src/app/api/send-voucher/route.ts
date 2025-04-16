@@ -14,13 +14,13 @@ export async function POST(req: NextRequest) {
 
   try {
     const result = await resend.emails.send({
-      from: 'Claridy <no-reply@sixcom.io.vn>',
+      from: 'CoffeeCraft <CoffeeCraft@sixcom.io.vn>',
       to: email,
       subject: '🎁 Mã giảm 10% dành cho bạn!',
       react: VoucherEmail({
         email,
-        voucherCode: 'GIA10ABC',
-        message: 'Cảm ơn bạn đã đăng ký nhận tin!',
+        voucherCode: 'PERCENT10NOMAX',
+        message: 'Cảm ơn bạn đã đăng ký nhận tin từ CoffeeCraft!',
         previewText: 'Nhận ngay mã giảm 10% cho đơn hàng đầu tiên.',
       }),
     });

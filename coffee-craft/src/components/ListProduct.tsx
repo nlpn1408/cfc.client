@@ -40,7 +40,7 @@ export default function ListProduct() {
             products.map((product, index) => (
               <CarouselItem
                 key={index}
-                className="flex justify-center px-2 basis-1/2 md:basis-1/3 lg:basis-1/4"
+                className="flex justify-center px-2 basis-1/2 md:basis-1/4 lg:basis-1/5"
               >
                 <div className="w-full max-w-xs px-4 border rounded-lg shadow-md border-gray-200 bg-white">
                   <ProductCard
