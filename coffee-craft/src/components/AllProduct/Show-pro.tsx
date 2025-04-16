@@ -106,9 +106,9 @@ export default function ShowPro() {
       </aside>
 
       {/* Danh sách sản phẩm */}
-      <section className="lg:col-span-3 flex flex-col min-w-[1100px] ">
+      <section className="lg:col-span-3 flex flex-col ">
         {products.length > 0 ? (
-          <div className="grid grid-cols-2 gap-4 p-4  md:grid-cols-3 lg:grid-cols-4 ">
+          <div className="grid grid-cols-2 gap-4 p-4 md:grid-cols-3 lg:grid-cols-4  ">
             {products.map((product) => (
               <ProductCard
                 className="shadow-lg border border-slate-200 rounded-md"

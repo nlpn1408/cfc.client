@@ -34,10 +34,10 @@ const AddressForm = ({ user, onChange }: Props) => {
           className="input disabled rounded-[4px] "
         />
         <input
-          disabled
+          type="email"
           value={user.email}
           className="rounded-[4px] disabled col-span-2"
-        />
+        /> 
         <input
           placeholder="Tỉnh/Thành phố"
           className="input rounded-[4px] "

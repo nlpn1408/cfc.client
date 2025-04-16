@@ -45,16 +45,6 @@ const AddAddress = () => {
             errors={errors}
           />
 
-          {/* Mã bưu điện */}
-          <TextInput
-            label="Pin Code"
-            name="pincode"
-            type="text"
-            placeholder="Enter your pin code"
-            register={register}
-            errors={errors}
-          />
-
           {/* Địa chỉ */}
           <TextAreaInput
             label="Address (Area and Street)"
@@ -65,27 +55,6 @@ const AddAddress = () => {
             errors={errors}
           />
 
-          {/* Thành phố */}
-          <TextInput
-            label="City"
-            name="city"
-            type="text"
-            placeholder="Enter your city"
-            register={register}
-            errors={errors}
-            className="col-span-1"
-          />
-
-          {/* Bang/tiểu bang */}
-          <TextInput
-            label="State"
-            name="state"
-            type="text"
-            placeholder="Enter your state"
-            register={register}
-            errors={errors}
-            className="col-span-1"
-          />
         </div>
 
         {/* Nút gửi */}
