@@ -20,7 +20,7 @@ export default function Banner({
       >
         <div className="container lg:px-16 md:px-8 px-4 grid grid-cols-12">
           <div className="col-span-full md:col-span-9 lg:col-span-7 flex flex-col space-y-5 py-5">
-            <h1 className="text-4xl md:text-5xl lg:text-8xl font-extrabold hit-the-floor">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold hit-the-floor">
               {title}
             </h1>
             <p className="text-white w-2/3">{description}</p>
