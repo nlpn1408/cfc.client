@@ -14,7 +14,7 @@ export default function ThankYouPage() {
     <div className={`flex flex-col items-center justify-center p-8 text-center min-h-screen transition-opacity duration-700 ${show ? "opacity-100" : "opacity-0"}`}>
       {/* 🎉 Animated success image */}
       <img
-        src="/success.gif" // 👉 bạn có thể đổi thành ảnh động khác nếu muốn
+        src="/tick.png" // 👉 bạn có thể đổi thành ảnh động khác nếu muốn
         alt="Success"
         className="w-32 h-32 mb-6"
       />
