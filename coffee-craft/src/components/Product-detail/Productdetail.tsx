@@ -61,11 +61,10 @@ export default function Productdetail({ product }: { product: Product }) {
               key={image.url}
               src={image.url}
               alt="Slide"
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
-                product.images.indexOf(image) === currentSlide
+              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${product.images.indexOf(image) === currentSlide
                   ? "opacity-100"
                   : "opacity-0"
-              }`}
+                }`}
             />
           ))}
           {/* Nút điều hướng */}
@@ -92,11 +91,10 @@ export default function Productdetail({ product }: { product: Product }) {
                 key={image.url}
                 src={image.url}
                 alt="Thumbnail"
-                className={`w-20 h-20 object-cover cursor-pointer rounded-lg border-2 transition-all duration-300 ${
-                  index === currentSlide
+                className={`w-20 h-20 object-cover cursor-pointer rounded-lg border-2 transition-all duration-300 ${index === currentSlide
                     ? "border-blue-500 scale-110"
                     : "border-gray-300"
-                }`}
+                  }`}
                 onClick={() => setCurrentSlide(index)}
               />
             );
@@ -109,8 +107,8 @@ export default function Productdetail({ product }: { product: Product }) {
         <div>
           <h1 className="text-4xl font-bold pb-4">{product.name}</h1>
           <p className="text-gray-700 text-lg pb-4">
-            {product.longDescription}
           </p>
+          {product.longDescription}
 
           <div className="flex items-center text-yellow-500 pb-4">
             {[...Array(product.avgRating)].map((_, i) => (
@@ -164,11 +162,10 @@ export default function Productdetail({ product }: { product: Product }) {
               <span
                 key={type}
                 onClick={() => setSelectedGrindType(type)}
-                className={`border px-4 py-2 rounded-md cursor-pointer transition-all duration-300 ${
-                  selectedGrindType === type
+                className={`border px-4 py-2 rounded-md cursor-pointer transition-all duration-300 ${selectedGrindType === type
                     ? "bg-orange-600 text-white shadow-md scale-105"
                     : "bg-gray-100 hover:bg-gray-200 hover:scale-105 hover:shadow-md border-b-2 border-[#a52f21] box-shadow-custom"
-                }`}
+                  }`}
               >
                 {type}
               </span>
