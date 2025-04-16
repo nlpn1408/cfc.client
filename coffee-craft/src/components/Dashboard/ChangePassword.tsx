@@ -40,8 +40,8 @@ export default function ChangePassword({ page,
   }
   return (
     <div >
-      <div className=" text-center border border-gray-200 pb-4">
-        <h2 className="text-4xl font-semibold scroll-m-20 tracking-tight lg:text-5xl">
+      <div className=" text-center border border-gray-200 py-4">
+        <h2 className="text-4xl font-semibold tracking-tight lg:text-5xl">
           {title}
         </h2>
         <p className="text-balance text-muted-foreground">

@@ -8,6 +8,7 @@ import { Separator } from "../ui/separator"
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import Profile from './Profile'
 import ChangePassword from './ChangePassword'
+import { description } from '../Auth/Login'
 
 export default function UserProfile() {
   const params = useSearchParams()
@@ -21,6 +22,7 @@ export default function UserProfile() {
     {
       title: "Thông tin cá nhân",
       page: "profile",
+      description: "Thông tin cá nhân của bạn",
       component: <Profile title="Thông tin cá nhân" />,
     },
     {
@@ -54,7 +56,7 @@ export default function UserProfile() {
 
 
   return (
-    <section className="max-w-screen-2xl container">
+    <section className="lg:px-16 md:px-8 px-4 container">
       <div className="grid grid-cols-4 gap-5">
         {/* Tiêu đề trang */}
         <div className="col-span-full bg-slate-200 rounded-lg p-5">

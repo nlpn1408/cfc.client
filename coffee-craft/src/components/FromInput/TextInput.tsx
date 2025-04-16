@@ -51,7 +51,7 @@ export default function TextInput({
                 />
                 {errors[name] && (
                     <span className='text-red-600 text-sm'>
-                        {errors[name]?.message || `${label} is required`}
+                        {errors[name]?.message || `vui lòng không bỏ trống ${label}`}
                     </span>
                 )}
             </div>
