@@ -27,7 +27,7 @@ export default function TextAreaInput({
                 placeholder={`${placeholder}`}
             />
             {errors[`${name}`] && (
-                <span className='text-red-600 text-sm'>{label} is required</span>
+                <span className='text-red-600 text-sm'>vui lòng không bỏ trống {label}</span>
             )}
         </div>
     )

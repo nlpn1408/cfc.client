@@ -93,7 +93,7 @@ export type UserPageProps = {
 
 export type ChangePasswordProps = {
   password: string
-  newpassword: string
+  oldPassword: string
   confirmPassword: string;
 }
 

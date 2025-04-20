@@ -63,7 +63,7 @@ export default function OrderPage({
           />
         </svg>
       ),
-      name: "Đã xác nhận",
+      name: "Chờ lấy hàng",
       status: "shipping",
       Component: <Oderconfirmed />,
     },
