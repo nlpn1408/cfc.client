@@ -1,5 +1,5 @@
 "use client";
-
+import toast from "react-hot-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React, { useState, useEffect } from "react";
 import { Order } from "@/types/product";
@@ -38,6 +38,30 @@ export default function OrderConfirmed() {
       setError(err.message || "Đã xảy ra lỗi.");
     } finally {
       setLoading(false);
+    }
+  };
+  const handleCancelOrder = async (orderId: string) => {
+    const confirmed = window.confirm("Bạn có chắc chắn muốn hủy đơn hàng này?");
+    if (!confirmed) return;
+
+    try {
+      const response = await fetch(`${API_URL}/orders/${orderId}/cancel`, {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Không thể hủy đơn hàng.");
+      }
+
+      toast.success("Hủy đơn hàng thành công");
+      fetchOrders();
+    } catch (err: any) {
+      console.error("Lỗi khi hủy đơn hàng:", err);
+      toast.error(err.message || "Đã xảy ra lỗi khi hủy đơn hàng.");
     }
   };
 
@@ -103,7 +127,10 @@ export default function OrderConfirmed() {
                 <div className="text-gray-900 font-medium text-lg">
                   Tổng cộng: {Number(order.finalTotal).toLocaleString()}đ
                 </div>
-                <button className="px-4 py-2 text-sm border rounded hover:bg-gray-100">
+                <button
+                  onClick={() => handleCancelOrder(order.id)}
+                  className="px-4 py-2 text-sm border rounded hover:bg-gray-100"
+                >
                   Hủy đơn hàng
                 </button>
               </div>
