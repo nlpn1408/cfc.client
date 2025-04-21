@@ -75,7 +75,7 @@ export type RegisterInputProps = {
   phone: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
 };
 
 export type LoginInputProps = {
@@ -123,15 +123,3 @@ export interface Voucher {
   type: "PERCENT" | "FIXED";
 }
 
-
-// export interface Category {
-//   id: string;
-//   name: string;
-//   description: string;
-//   parentId: string | null;
-//   createdAt: string;
-//   updatedAt: string;
-//   _count: {
-//     products: number;
-//   };
-// }

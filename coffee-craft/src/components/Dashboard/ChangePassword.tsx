@@ -1,7 +1,7 @@
 'use client'
 
 import { ChangePasswordProps, UserPageProps } from '@/types/types'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import TextInput from '../FromInput/TextInput'
 import { useForm } from 'react-hook-form'
 import SubmitButton from '../FromInput/SubmitButton'
@@ -22,16 +22,14 @@ export default function ChangePassword({
     formState: { errors }
   } = useForm<ChangePasswordProps>()
 
-  const [isLoading, setIsLoading] = React.useState(false)
-
+  const [isLoading, setIsLoading] = useState(false)
+  const [passwordMatch, setPasswordMatch] = useState(true)
   const password = watch("password")
   const confirmPassword = watch("confirmPassword")
-  const [passwordMatch, setPasswordMatch] = React.useState(true)
 
   const router = useRouter()
 
-  // Theo dõi mật khẩu để kiểm tra trùng khớp
-  React.useEffect(() => {
+  useEffect(() => {
     setPasswordMatch(password === confirmPassword)
   }, [password, confirmPassword])
 
@@ -41,7 +39,6 @@ export default function ChangePassword({
       toast.error("Mật khẩu xác nhận không khớp!")
       return
     }
-
     setIsLoading(true)
 
     try {
@@ -60,18 +57,15 @@ export default function ChangePassword({
 
       if (!res.ok) {
         const result = await res.json()
-        throw new Error(result.message || 'Đổi mật khẩu thất bại')
+        toast.error(result.message || 'Đổi mật khẩu thất bại')
       }
 
       toast.success('Đổi mật khẩu thành công!')
       router.refresh()
     } catch (err: any) {
       toast.error(err.message || 'Lỗi không xác định')
-    } finally {
-      setIsLoading(false)
     }
   }
-
   return (
     <div>
       <div className="text-center border border-gray-200 pb-4">
