@@ -40,8 +40,6 @@ const Detailpage: React.FC = () => {
     <section className="container lg:px-18 md:px-8 px-4">
       <ProductDetail product={productData} />
 
-      <Reviews />
-
       <div className="mt-10">
         <h2 className="text-3xl font-extrabold text-gray-800 pb-6 text-center">
           Sản phẩm liên quan

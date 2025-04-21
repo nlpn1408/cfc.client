@@ -6,12 +6,23 @@ import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/features/cartSlice";
 import toast from "react-hot-toast";
-
+import ReactPaginate from "react-paginate";
+import { ThumbsUp, CheckCircle } from "lucide-react";
 export default function Productdetail({ product }: { product: Product }) {
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
 
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedGrindType, setSelectedGrindType] = useState("Xay sẵn");
+  const commentsPerPage = 2;
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const handlePageClick = ({ selected }: { selected: number }) => {
+    setCurrentPage(selected);
+  };
+
+  const reviews = product.reviews || [];
+  const pageCount = Math.ceil(reviews.length / commentsPerPage);
+  const avgRating = product.avgRating || 0;
   const nextSlide = () => {
     setCurrentSlide((prev) =>
       prev === product.images.length - 1 ? 0 : prev + 1
@@ -113,10 +124,15 @@ export default function Productdetail({ product }: { product: Product }) {
 
           <div className="flex items-center text-yellow-500 pb-4">
             {[...Array(product.avgRating)].map((_, i) => (
-              <Star key={i} size={24} className="text-yellow-500" />
+              <Star
+                key={i}
+                size={24}
+                fill="currentColor"
+                className="text-yellow-500"
+              />
             ))}
             <span className="ml-2 text-gray-700">
-              ({product.avgRating} đánh giá)
+              ({product.reviews.length} đánh giá)
             </span>
           </div>
           <p className="text-red-600 text-2xl font-semibold pb-4">
@@ -189,6 +205,99 @@ export default function Productdetail({ product }: { product: Product }) {
           </Button>
         </div>
       </div>
+      {/* Reviews Section */}
+      {product.reviews && product.reviews.length > 0 && (
+        <div className="mt-10 w-full col-span-2 bg-white p-6 ">
+          <h2 className="text-2xl font-extrabold mb-6 text-gray-800">
+            Đánh giá sản phẩm
+          </h2>
+          <div className="flex items-center gap-2 mb-6">
+            <span className="text-3xl font-bold text-orange-500">
+              {avgRating.toFixed(2)}
+            </span>
+            {[...Array(5)].map((_, i) => (
+              <Star
+                key={i}
+                size={24}
+                className={`${
+                  i < avgRating ? "text-yellow-500" : "text-gray-300"
+                }`}
+                fill="currentColor"
+              />
+            ))}
+            <span className="text-gray-600 text-sm">
+              {product.reviews.length} đánh giá của khách hàng
+            </span>
+          </div>
+
+          <div className="space-y-6">
+            {product.reviews
+              .slice(
+                currentPage * commentsPerPage,
+                (currentPage + 1) * commentsPerPage
+              )
+              .map((review) => (
+                <div
+                  key={review.id}
+                  className="  p-4  flex gap-4 border-b pb-3 mb-3"
+                >
+                  <img
+                    src={review.user.imgUrl}
+                    alt={review.user.name}
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between">
+                      <p className="font-semibold text-gray-800 flex items-center gap-1">
+                        {review.user.name}
+                      </p>
+
+                      <div className="flex space-x-1 text-yellow-500">
+                        {[...Array(review.rating)].map((_, i) => (
+                          <Star
+                            key={i}
+                            size={18}
+                            fill="currentColor"
+                            className="text-yellow-500"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <p className="text-gray-600 whitespace-pre-line mt-2">
+                      {review.comment}
+                    </p>
+                    <p className="text-sm text-gray-400 mt-1">
+                      {new Date(review.createdAt).toLocaleString("vi-VN", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </p>
+                  </div>
+                </div>
+              ))}
+          </div>
+
+          <ReactPaginate
+            previousLabel={"<"}
+            nextLabel={">"}
+            breakLabel={"..."}
+            pageCount={pageCount}
+            marginPagesDisplayed={1}
+            pageRangeDisplayed={3}
+            onPageChange={handlePageClick}
+            containerClassName="flex justify-center items-center mt-8 space-x-2"
+            pageClassName="px-3 py-2 bg-white border rounded-lg text-black"
+            previousLinkClassName="px-4 py-2 bg-white border rounded-lg text-black"
+            nextLinkClassName="px-4 py-2 bg-white border rounded-lg text-black"
+            disabledClassName="opacity-50 cursor-not-allowed"
+            activeClassName="px-3 py-2 bg-indigo-600 text-white rounded-lg"
+            forcePage={currentPage}
+          />
+        </div>
+      )}
     </div>
   );
 }
