@@ -14,18 +14,18 @@ export default function Banner({
   return (
       <section
         className={cn(
-          "w-full h-full bg-no-repeat bg-right lg:bg-left object-fit bg-cover",
+          "w-full h-full bg-no-repeat bg-center lg:bg-left object-fit bg-cover",
           image
         )}
       >
-        <div className="container lg:px-16 md:px-8 px-4 grid grid-cols-12">
+        <div className="container lg:px-16 md:px-8 px-4 grid grid-cols-12 lg:py-0 py-5">
           <div className="col-span-full md:col-span-9 lg:col-span-7 flex flex-col space-y-5">
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-extrabold hit-the-floor">
               {title}
             </h1>
             <p className="text-white w-2/3">{description}</p>
             <Link href={buttonLink}>
-              <Button className="w-1/5 bg-white text-black hover:bg-[#935027] hover:text-white font-bold py-5 rounded">
+              <Button className="md:w-1/5 w-1/3 md:text-base text-sm bg-white text-black hover:bg-[#935027] hover:text-white font-bold py-5 rounded">
                 {buttonText} <ShoppingCart   size={30} />
               </Button>
             </Link>
