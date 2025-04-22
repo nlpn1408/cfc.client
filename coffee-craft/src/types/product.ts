@@ -17,7 +17,7 @@ export interface Product {
   images: ProductImage[];
   tags: Tag[];
   reviews: Review[];
-  variants: Variant[];
+  variants: ProductVariant[];
 }
 
 export interface ProductImage {
@@ -37,8 +37,23 @@ export interface Tag {
   updatedAt: string;
 }
 
-export interface Variant {
-  // Định nghĩa Variant nếu có dữ liệu chi tiết
+export interface ProductVariant {
+  id: string;
+  productId: string;
+  sku?: string;
+  price: string;
+  discountPrice?: number;
+  stock: number;
+  name: string;
+  color?: string;
+  weight?: string;
+  material?: string;
+  createdAt: Date;
+  updatedAt: Date;
+
+  product: Product; // Kiểu Product mà bạn cần định nghĩa trước
+  orderItems: OrderItem[]; // Kiểu OrderItem mà bạn cần định nghĩa trước
+  review: Review[]; // Kiểu Review mà bạn cần định nghĩa trước
 }
 
 export interface CartItem {
@@ -49,7 +64,7 @@ export interface CartItem {
   quantity: number;
   discountPrice: string;
   price: number;
-  grindType?: string;
+  variant?: ProductVariant | null;
 }
 
 // 🛒 Cập nhật `CartState` để dùng `CartItem` thay vì `OrderItem`
@@ -144,10 +159,3 @@ export type UserProfile = {
   gender?: string;
   imgUrl?: string;
 };
-export interface ProductVariant {
-  id: string;
-  name: string; // ví dụ: "Size M - Màu đen"
-  sku?: string;
-  price?: number;
-  // ... các trường khác tùy bạn thiết kế
-}

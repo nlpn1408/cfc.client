@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { removeFromCart, updateQuantity } from "@/redux/features/cartSlice";
 import CartInitializer from "@/components/CartInitializer";
+
 const Cart = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -23,7 +24,6 @@ const Cart = () => {
   const handleCheckout = () => {
     console.log("Đặt hàng với:", cartItems);
     router.push("/checkout");
-    // Ví dụ: chuyển sang trang checkout hoặc gọi API lưu đơn hàng
   };
 
   const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
@@ -42,7 +42,6 @@ const Cart = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Danh sách sản phẩm */}
         <div className="lg:col-span-2 flex flex-col">
-          {/* Scroll chỉ phần danh sách */}
           <div className="flex-1 max-h-[700px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
             {cartItems.length === 0 ? (
               <div className="flex flex-col items-center justify-center text-center py-20 bg-white rounded-lg shadow-sm border border-gray-100">
@@ -69,7 +68,7 @@ const Cart = () => {
               <div className="space-y-6">
                 {cartItems.map((item) => (
                   <div
-                    key={`${item.productId}-${item.grindType || "default"}`}
+                    key={`${item.productId}-${item.variant?.id || "default"}`}
                     className="flex flex-col md:flex-row items-center border p-4 rounded-lg shadow-sm"
                   >
                     <img
@@ -94,9 +93,9 @@ const Cart = () => {
                         </button>
                       </div>
 
-                      {item.grindType && (
+                      {item.variant?.name && (
                         <p className="text-sm text-gray-500 mt-1">
-                          Loại xay: {item.grindType}
+                          Loại sản phẩm: {item.variant.name}
                         </p>
                       )}
 
@@ -104,7 +103,6 @@ const Cart = () => {
                         {item.price.toLocaleString("vi-VN")}₫ x {item.quantity}
                       </p>
 
-                      {/* Điều chỉnh số lượng */}
                       <div className="flex items-center mt-2 gap-2">
                         <button
                           onClick={() =>
@@ -143,7 +141,6 @@ const Cart = () => {
             )}
           </div>
 
-          {/* Nút tiếp tục mua sắm – luôn hiển thị bên dưới */}
           {cartItems.length > 0 && (
             <div className="mt-6">
               <Link href="/">
@@ -156,7 +153,6 @@ const Cart = () => {
           )}
         </div>
 
-        {/* Thông tin đơn hàng */}
         <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 flex flex-col">
           <h2 className="text-xl font-semibold text-gray-800 mb-2">
             Thông tin đơn hàng
@@ -164,16 +160,16 @@ const Cart = () => {
           <div className="pr-2 mb-6 space-y-4 text-sm text-gray-700 max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
             {cartItems.map((item) => (
               <div
-                key={`${item.productId}-${item.grindType || "default"}`}
+                key={`${item.productId}-${item.variant?.id || "default"}`}
                 className="flex justify-between items-start border-b pb-2 last:border-b-0 "
               >
                 <div className="max-w-[75%]">
                   <p className="font-medium text-gray-800 leading-snug">
                     {item.product.name}
                   </p>
-                  {item.grindType && (
+                  {item.variant?.name && (
                     <p className="text-xs text-gray-500">
-                      Loại xay: {item.grindType}
+                      Loại sản phẩm: {item.variant.name}
                     </p>
                   )}
                   <p className="text-xs text-gray-500">
@@ -187,7 +183,6 @@ const Cart = () => {
             ))}
           </div>
 
-          {/* Tổng kết đơn hàng */}
           <div className="space-y-4 text-sm text-gray-700 border-t border-gray-200 pt-4">
             <div className="flex justify-between">
               <span>Tổng số sản phẩm</span>

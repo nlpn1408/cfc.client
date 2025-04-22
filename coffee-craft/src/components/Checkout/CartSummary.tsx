@@ -70,28 +70,21 @@ const CartSummary = () => {
       <div className="space-y-4 text-sm text-gray-700 mb-4 max-h-64 overflow-y-auto pr-2">
         {cartItems.map((item) => (
           <div
-            key={`${item.productId}-${item.grindType || "default"}`}
-            className="flex justify-between items-start gap-3"
+            key={`${item.productId}-${item.variant?.id || "default"}`}
+            className="flex justify-between items-start border-b pb-2 last:border-b-0 "
           >
-            <div className="flex items-start gap-3">
-              <img
-                src={item.images?.[0]?.url || item.product.images?.[0]?.url}
-                alt={item.product.name}
-                className="w-12 h-12 object-cover rounded-md border"
-              />
-              <div className="space-y-1">
-                <p className="font-medium text-gray-800 text-sm">
-                  {item.product.name}
-                </p>
-                {item.grindType && (
-                  <p className="text-xs text-gray-500">
-                    Loại xay: {item.grindType}
-                  </p>
-                )}
+            <div className="max-w-[75%]">
+              <p className="font-medium text-gray-800 leading-snug">
+                {item.product.name}
+              </p>
+              {item.variant?.name && (
                 <p className="text-xs text-gray-500">
-                  {item.quantity} x {item.price.toLocaleString("vi-VN")}₫
+                  Loại xay: {item.variant.name}
                 </p>
-              </div>
+              )}
+              <p className="text-xs text-gray-500">
+                {item.quantity} x {item.price.toLocaleString("vi-VN")}₫
+              </p>
             </div>
             <span className="text-sm font-semibold text-gray-800 whitespace-nowrap">
               {(item.price * item.quantity).toLocaleString("vi-VN")}₫

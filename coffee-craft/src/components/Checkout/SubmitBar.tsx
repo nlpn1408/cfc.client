@@ -30,7 +30,10 @@ const SubmitBar = ({ address, paymentMethod, cartItems, user }: Props) => {
 
   const shippingFee = 0;
   const subtotal = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+    (acc, item) =>
+      acc +
+      item.quantity *
+        parseFloat(item.variant?.discountPrice?.toString() || "0"),
     0
   );
 
@@ -85,9 +88,11 @@ const SubmitBar = ({ address, paymentMethod, cartItems, user }: Props) => {
         orderItems: cartItems.map((item) => ({
           productId: item.productId,
           quantity: item.quantity,
-          productVariantId: null,
+          productVariantId: item.variant?.id ?? null,
+          priceAtOrder: Number(item.variant?.discountPrice ?? item.price),
         })),
       };
+      console.log("📝 Order Payload:", orderPayload);
 
       const orderRes = await fetch(`${API}/orders`, {
         method: "POST",

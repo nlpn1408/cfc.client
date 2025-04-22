@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import NewsLetter from "../../../../components/Home/NewsLetter";
-import Reviews from "../../../../components/Product-detail/comment";
+
 import ProductDetail from "../../../../components/Product-detail/Productdetail";
 import ListProduct from "../../../../components/ListProduct";
 import { useParams } from "next/dist/client/components/navigation";

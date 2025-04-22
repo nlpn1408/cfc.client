@@ -29,7 +29,7 @@ const cartSlice = createSlice({
       const existingIndex = state.cartItems.findIndex(
         (item) =>
           item.productId === action.payload.productId &&
-          item.grindType === action.payload.grindType
+          item.variant?.id === action.payload.variant?.id
       );
 
       if (existingIndex >= 0) {
@@ -78,7 +78,9 @@ const cartSlice = createSlice({
       );
       state.totalPrice = state.cartItems.reduce(
         (acc, item) =>
-          acc + item.quantity * parseFloat(item.discountPrice || "0"),
+          acc +
+          item.quantity *
+            parseFloat(item.variant?.discountPrice?.toString() || "0"), // Chuyển discountPrice thành string
         0
       );
     },
