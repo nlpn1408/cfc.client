@@ -64,7 +64,8 @@ export default function BlogCarousel() {
                     <img
                       src={item.thumbnail || "/default-thumbnail.jpg"}
                       alt={item.title}
-                      className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105 group-hover:brightness-90"
+                      className="w-full h-48 object-cover transition-transform duration-300
+                      group-hover:scale-105 group-hover:brightness-90"
                     />
                   </div>
                   <div className="flex items-center mt-2 pt-3 px-4">
@@ -109,8 +110,16 @@ export default function BlogCarousel() {
           ))}
         </CarouselContent>
 
-        <CarouselPrevious className="absolute left-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-300 transition" />
-        <CarouselNext className="absolute right-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-300 transition" />
+        <CarouselPrevious
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 w-10 h-10
+                  bg-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-300 transition
+                dark:bg-slate-600 dark:hover:bg-slate-800 dark:text-slate-400 dark:hover:text-slate-500  "
+        />
+        <CarouselNext
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 w-10 h-10
+                bg-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-300 transition
+                dark:bg-slate-600 dark:hover:bg-slate-800 dark:text-slate-400 dark:hover:text-slate-500"
+        />
       </Carousel>
     </div>
   );

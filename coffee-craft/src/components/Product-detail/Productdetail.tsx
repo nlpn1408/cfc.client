@@ -145,8 +145,7 @@ export default function Productdetail({ product }: { product: Product }) {
               onClick={() =>
                 setSelectedQuantity((prev) => Math.max(1, prev - 1))
               }
-              className="w-10 h-10 text-lg font-bold bg-gray-200 hover:bg-gray-300 rounded"
-            >
+              className="w-10 h-10 text-lg font-bold bg-gray-200 hover:bg-gray-300 rounded">
               −
             </button>
             <span>{selectedQuantity}</span>
@@ -154,8 +153,7 @@ export default function Productdetail({ product }: { product: Product }) {
               onClick={() =>
                 setSelectedQuantity((prev) => Math.min(product.stock, prev + 1))
               }
-              className="w-10 h-10 text-lg font-bold bg-gray-200 hover:bg-gray-300 rounded"
-            >
+              className="w-10 h-10 text-lg font-bold bg-gray-200 hover:bg-gray-300 rounded">
               +
             </button>
           </div>
@@ -175,8 +173,7 @@ export default function Productdetail({ product }: { product: Product }) {
                       selectedVariant?.id === variant.id
                         ? "bg-orange-600 text-white scale-105 shadow-md"
                         : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
-                    }`}
-                >
+                    }`}>
                   {variant.name}
                 </button>
               ))}
@@ -187,8 +184,7 @@ export default function Productdetail({ product }: { product: Product }) {
         <div>
           <Button
             onClick={handleAddToCart}
-            className="w-full bg-[#723E1E] hover:bg-[#935027] h-auto py-3 text-white rounded-lg text-lg font-semibold transition-transform duration-300 hover:scale-105 shadow-md"
-          >
+            className="w-full bg-[#723E1E] hover:bg-[#935027] h-auto py-3 text-white rounded-lg text-lg font-semibold transition-transform duration-300 hover:scale-105 shadow-md">
             Thêm vào giỏ hàng
           </Button>
         </div>
@@ -214,8 +210,7 @@ export default function Productdetail({ product }: { product: Product }) {
         <div className="mt-4 text-center">
           <button
             onClick={() => setShowFullDescription((prev) => !prev)}
-            className="text-sm font-medium text-[#723E1E] hover:underline"
-          >
+            className="text-sm font-medium text-[#723E1E] hover:underline">
             {showFullDescription ? "Thu gọn ▲" : "Xem thêm ▼"}
           </button>
         </div>

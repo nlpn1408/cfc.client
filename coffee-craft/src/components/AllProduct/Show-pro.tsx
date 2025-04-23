@@ -67,7 +67,7 @@ export default function ShowPro() {
   };
 
   return (
-    <div className="grid grid-cols-1 gap-6 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-3 lg:grid-cols-4">
       {/* Sidebar danh mục */}
       <aside className="bg-white text-black shadow-md rounded-lg p-6">
         <button
@@ -106,7 +106,7 @@ export default function ShowPro() {
       </aside>
 
       {/* Danh sách sản phẩm */}
-      <section className="lg:col-span-3 flex flex-col ">
+      <section className="lg:col-span-3 col-span-full  flex flex-col">
         {products.length > 0 ? (
           <div className="grid grid-cols-2 gap-4 p-4 md:grid-cols-3 lg:grid-cols-4  ">
             {products.map((product) => (
@@ -143,6 +143,7 @@ export default function ShowPro() {
           forcePage={currentPage}
         />
       </section>
+
     </div>
   );
 }

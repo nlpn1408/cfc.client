@@ -1,5 +1,6 @@
 "use client";
 
+import { Send } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -80,15 +81,18 @@ export default function NewsLetter() {
                   placeholder="Nhập email của bạn"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-12 pr-3 py-2 text-gray-500 bg-white outline-none border focus:border-[#935027] shadow-sm rounded-lg"
+                  className="w-full pl-12 pr-3 py-2 text-gray-500 bg-white 
+                  outline-none border focus:border-[#935027] shadow-sm rounded-l-lg"
                 />
               </div>
               <button
                 type="submit"
                 disabled={loading}
-                className="ml-2 block w-auto py-2 px-4 font-medium text-sm text-center text-white bg-[#723E1E] hover:bg-[#935027] active:bg-[#935027] active:shadow-none rounded-lg shadow"
+                className="rounded-r-lg block w-auto py-2 px-4
+                font-medium text-sm text-center text-white bg-[#723E1E]
+                hover:bg-[#935027] active:bg-[#935027] active:shadow-none shadow-md"
               >
-                {loading ? "Đang gửi..." : "Gửi"}
+                {loading ? "Đang gửi..." : <Send size={25}/>}
               </button>
             </div>
 

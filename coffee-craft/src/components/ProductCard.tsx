@@ -19,7 +19,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     <Link
       href={`/product/${product.id}`}
       className={cn(
-        "group/item bg-white flex flex-col gap-3 relative overflow-hidden rounded-xl shadow-sm transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-[2px] hover:scale-[1.01] will-change-transform",
+        "group/item bg-white flex flex-col gap-3 relative shadow-xl overflow-hidden rounded-xl transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-[2px] hover:scale-[1.01] will-change-transform",
         className
       )}
     >

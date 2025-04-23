@@ -33,9 +33,9 @@ const Cart = () => {
   );
 
   return (
-    <div className="container lg:px-16 md:px-8 px-4 py-14">
+    <div className="container min-h-screen lg:px-16 md:px-8 px-4 py-14">
       <CartInitializer />
-      <h1 className="text-3xl font-semibold text-gray-800 mb-10">
+      <h1 className="dark:text-[#723E1E] text-3xl font-semibold text-[#723E1E] hover:text-[#935027] mb-10">
         Giỏ hàng của bạn
       </h1>
 
@@ -69,7 +69,7 @@ const Cart = () => {
                 {cartItems.map((item) => (
                   <div
                     key={`${item.productId}-${item.variant?.id || "default"}`}
-                    className="flex flex-col md:flex-row items-center border p-4 rounded-lg shadow-sm"
+                    className="flex flex-col md:flex-row items-center border-slate-700 border p-4 rounded-lg shadow-sm"
                   >
                     <img
                       src={
@@ -82,7 +82,7 @@ const Cart = () => {
                     />
                     <div className="md:ml-6 flex-1 w-full mt-4 md:mt-0">
                       <div className="flex justify-between w-full">
-                        <h3 className="text-lg font-medium text-gray-700">
+                        <h3 className="dark:text-slate-200 text-lg font-medium text-gray-700">
                           {item.product.name}
                         </h3>
                         <button
@@ -94,12 +94,12 @@ const Cart = () => {
                       </div>
 
                       {item.variant?.name && (
-                        <p className="text-sm text-gray-500 mt-1">
+                        <p className="dark:text-slate-200 text-sm text-gray-500 mt-1">
                           Loại sản phẩm: {item.variant.name}
                         </p>
                       )}
 
-                      <p className="text-sm text-gray-500 mt-1">
+                      <p className="dark:text-slate-200 text-sm text-gray-500 mt-1">
                         {item.price.toLocaleString("vi-VN")}₫ x {item.quantity}
                       </p>
 
@@ -130,7 +130,7 @@ const Cart = () => {
                         </button>
                       </div>
 
-                      <p className="text-sm font-semibold text-gray-700 mt-2">
+                      <p className="dark:text-slate-200 text-sm font-semibold text-gray-700 mt-2">
                         Tạm tính:{" "}
                         {(item.price * item.quantity).toLocaleString("vi-VN")}₫
                       </p>
