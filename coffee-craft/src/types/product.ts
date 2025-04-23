@@ -100,6 +100,7 @@ export interface OrderItem {
   discountAmount: number;
   product: Product; // 👈 Thêm dòng này để fix lỗi
   review?: Review;
+  productVariant?: ProductVariant | null;
 }
 
 export interface Order {

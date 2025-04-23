@@ -43,7 +43,6 @@ export interface OrderItemInput {
   productId: string;
   quantity: number;
   price: number;
-  grindType?: string | null;
 }
 
 export interface ShippingAddressInput {

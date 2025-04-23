@@ -91,7 +91,14 @@ export default function OrderDelivery() {
                     <p className="text-sm text-gray-600">
                       Mã SP: {item.product?.sku || "N/A"}
                     </p>
-                    <p className="text-sm">Số lượng: {item.quantity}</p>
+                    {item.productVariant?.name && (
+                      <p className="text-sm text-gray-600">
+                        Loại sản phẩm: {item.productVariant.name}
+                      </p>
+                    )}
+                    <p className="text-sm text-gray-600">
+                      Số lượng: {item.quantity}
+                    </p>
                   </div>
                   <p className="text-gray-900 font-semibold">
                     {Number(item.priceAtOrder).toLocaleString()}đ

@@ -11,7 +11,7 @@ const Footer = () => {
           {/* Thông tin thương hiệu */}
           <div className="overflow-hidden max-h-60">
             <h1 className="font-extrabold hover:text-[#412019] text-[#412017] dark:text-white/80 lg:text-3xl md:text-2xl">
-              Coffee <span className="text-[#E1991D]">Cart</span>
+              Coffee <span className="text-[#E1991D]">Craft</span>
             </h1>
             <p className="mt-6 text-sm leading-relaxed">
               Coffee Cart chuyên cung cấp cà phê nguyên chất và phụ kiện pha chế
@@ -23,7 +23,9 @@ const Footer = () => {
 
           {/* Liên kết nhanh */}
           <div className="overflow-hidden max-h-60">
-            <h2 className="dark:text-white font-semibold text-gray-900 mb-5">Về chúng tôi</h2>
+            <h2 className="dark:text-white font-semibold text-gray-900 mb-5">
+              Về chúng tôi
+            </h2>
             <ul className="text-sm space-y-2">
               <li>
                 <Link href="/" className="hover:text-orange-600 transition">
