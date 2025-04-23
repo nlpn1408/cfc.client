@@ -17,7 +17,6 @@ export const description =
 export default function Login() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [showNotification, setShowNotification] = React.useState(false);
-  const router = useRouter();
   const {
     register,
     handleSubmit,
