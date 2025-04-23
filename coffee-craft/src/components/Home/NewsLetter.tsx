@@ -58,7 +58,7 @@ export default function NewsLetter() {
               <span className="font-bold"> 20k</span> <br />
               (Chỉ áp dụng cho <span className="font-bold">khách mới</span>)
             </p>
-            <div className="flex">
+            <div className="flex py-3">
               <div className="relative">
                 <svg
                   className="w-6 h-6 text-gray-400 absolute left-3 inset-y-0 my-auto"
@@ -100,7 +100,7 @@ export default function NewsLetter() {
           </form>
         </div>
       </div>
-      <div className="absolute inset-0 w-full h-full newsletter"></div>
+      <div className="absolute inset-0 w-full h-full newsletter rounded-[3rem]"></div>
     </section>
   );
 }

@@ -30,40 +30,44 @@ const metadata = [
 ];
 
 export default function Home() {
-  const [categories, setCategories] = useState<any>([]);
+// Hook state lưu danh sách categories
+const [categories, setCategories] = useState<any[]>([]);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const API_URL = process.env.NEXT_PUBLIC_API_URL;
-        const res = await fetch(`${API_URL}/categories`);
-        const data = await res.json();
+// Fetch danh sách category khi component mount
+useEffect(() => {
+  const fetchCategories = async () => {
+    try {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+      const res = await fetch(`${API_URL}/categories`);
+      const data = await res.json();
+
+      // Nếu có data dạng mảng thì cập nhật vào state
+      if (Array.isArray(data.data)) {
         setCategories(data.data);
-      } catch (error) {
-        console.error("Lỗi khi load category:", error);
+      } else {
+        console.warn("Dữ liệu trả về không hợp lệ:", data);
       }
-    };
-
-    fetchCategories();
-  }, []);
-
-
-  // Hàm tìm kiếm ID của category dựa trên tên
-  const getCategoryIdByName = (nameFromMetadata: string): string | null => {
-    if (!Array.isArray(categories)) return null;
-
-    const normalizedName = nameFromMetadata.trim().toLowerCase();
-
-    const matched = categories.find((category) =>
-      category.name.trim().toLowerCase() === normalizedName
-    );
-
-    if (matched) {
-      return matched.id;
+    } catch (error) {
+      console.error("Lỗi khi load category:", error);
     }
-
-    return null;
   };
+
+  fetchCategories();
+}, []);
+
+
+// Hàm tìm categoryId từ tên (case-insensitive)
+const getCategoryIdByName = (nameFromMetadata: string): string | null => {
+  if (!Array.isArray(categories)) return null;
+
+  const normalizedInput = nameFromMetadata.trim().toLowerCase();
+
+  const matchedCategory = categories.find(
+    (category) => category.name.trim().toLowerCase() === normalizedInput
+  );
+
+  return matchedCategory ? matchedCategory.id : null;
+};
 
   return (
     <>
@@ -92,7 +96,7 @@ export default function Home() {
                 <h2 className="text-2xl font-bold">{item.title}</h2>
                 <Link
                   href={item.buttonLink}
-                  className="flex items-center text-md text-slate-800 hover:text-[#683122]"
+                  className="flex items-center dark:text-white dark:hover:text-[#683122] text-md text-slate-700 hover:text-[#683122]"
                 >
                   Xem thêm <ChevronRightIcon size={20} />
                 </Link>

@@ -76,8 +76,8 @@ export default function SiteHeader() {
 
           {/* Login */}
           {!user ? (
-            <Button asChild>
-              <Link href="/login">
+            <Button asChild className="bg-[#723E1E] text-white hover:bg-[#935027] dark:text-[#723E1E] dark:hover:text-white dark:bg-white dark:hover:bg-[#935027]">
+              <Link href="/login" >
                 Đăng nhập <LogInIcon className="lg:block hidden" size={16} />
               </Link>
             </Button>
