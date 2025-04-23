@@ -29,7 +29,7 @@ export default function MainNav() {
         href="/"
         className="hover:text-[#412019] text-[#412017] dark:text-white/80 transition text-2xl font-bold"
       >
-        Coffee<span className="text-[#E1991D]">Cart</span>
+        Coffee<span className="text-[#E1991D]">Craft</span>
       </Link>
       <nav className="flex items-center justify-between gap-4 px-4  xl:py-3 text-gray-600 ">
         <Link

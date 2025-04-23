@@ -64,11 +64,13 @@ export default function Productdetail({ product }: { product: Product }) {
         <div className="relative w-full h-[450px] rounded-xl overflow-hidden shadow-sm">
           {product.images.map((image, index) => (
             <img
-              key={image.url}
+              key={`${image.url}-${index}`}
               src={image.url}
               alt="Slide"
               className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
-                index === currentSlide ? "opacity-100" : "opacity-0"
+                product.images.indexOf(image) === currentSlide
+                  ? "opacity-100"
+                  : "opacity-0"
               }`}
             />
           ))}
@@ -79,7 +81,7 @@ export default function Productdetail({ product }: { product: Product }) {
             const index = product.images.indexOf(image);
             return (
               <img
-                key={image.url}
+                key={`${image.url}-${index}`} // đảm bảo key luôn duy nhất
                 src={image.url}
                 alt="Thumbnail"
                 onClick={() => setCurrentSlide(index)}
@@ -138,28 +140,26 @@ export default function Productdetail({ product }: { product: Product }) {
           </p>
         </div>
         {/* Số lượng */}
-        <div className="space-y-2">
+        <div className="space-y-2 flex items-center gap-2">
           <h2 className="font-semibold text-gray-700">Chọn số lượng:</h2>
           <div className="flex items-center space-x-4">
-            <button
-              onClick={() =>
-                setSelectedQuantity((prev) => Math.max(1, prev - 1))
-              }
-              className="w-10 h-10 text-lg font-bold bg-gray-200 hover:bg-gray-300 rounded"
-            >
-              −
-            </button>
-            <span>{selectedQuantity}</span>
-            <button
-              onClick={() =>
-                setSelectedQuantity((prev) => Math.min(product.stock, prev + 1))
-              }
-              className="w-10 h-10 text-lg font-bold bg-gray-200 hover:bg-gray-300 rounded"
-            >
-              +
-            </button>
+            <input
+              type="number"
+              min={1}
+              max={product.stock}
+              value={selectedQuantity}
+              onChange={(e) => {
+                const value = Math.max(
+                  1,
+                  Math.min(product.stock, Number(e.target.value))
+                );
+                setSelectedQuantity(value);
+              }}
+              className="w-16 text-center border rounded h-10"
+            />
           </div>
         </div>
+
         {/* Biến thể */}
         {product.variants && product.variants.length > 0 && (
           <div className="space-y-2">
