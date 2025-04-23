@@ -7,6 +7,7 @@ import ListProduct from "../../../../components/ListProduct";
 import { useParams } from "next/dist/client/components/navigation";
 import ProductRelate from "../../../../components/Product-detail/productRelate";
 import { Product } from "../../../../types/product";
+import ProductReviews from "../../../../components/Product-detail/ProductReviews";
 const Detailpage: React.FC = () => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const params = useParams();
@@ -39,7 +40,10 @@ const Detailpage: React.FC = () => {
   return (
     <section className="container lg:px-18 md:px-8 px-4">
       <ProductDetail product={productData} />
-
+      <ProductReviews
+        reviews={productData.reviews || []}
+        avgRating={productData.avgRating || 0}
+      />
       <div className="mt-10">
         <h2 className="text-3xl font-extrabold text-gray-800 pb-6 text-center">
           Sản phẩm liên quan

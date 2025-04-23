@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 export default function NewsLetter() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -14,20 +14,20 @@ export default function NewsLetter() {
     setSuccess(false);
 
     try {
-      const res = await fetch('/api/send-voucher', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/send-voucher", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.message || 'Lỗi không xác định');
+        throw new Error(data.message || "Lỗi không xác định");
       }
 
       setSuccess(true);
-      toast.success('🎉 Mã giảm giá đã được gửi đến email của bạn!');
+      toast.success("🎉 Mã giảm giá đã được gửi đến email của bạn!");
     } catch (err: any) {
       console.error(err);
       toast.error(`Lỗi: ${err.message}`);
@@ -36,14 +36,22 @@ export default function NewsLetter() {
     }
   };
 
-
   return (
     <section className="relative my-5 ">
       <div className="relative container z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-x-8 gap-y-4">
-          <img src="/banner/poster1.png" className="col-span-1 w-full h-full" alt="" />
-          <form onSubmit={handleSubmit} className="flex flex-col items-center gap-x-3 space-y-5 md:justify-end">
-            <h1 className="text-2xl lg:text-4xl text-[#A52F21] font-extrabold text-center">NHẬN NGAY MÃ GIẢM 10%</h1>
+          <img
+            src="/banner/poster1.png"
+            className="col-span-1 w-full h-full"
+            alt=""
+          />
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col items-center gap-x-3 space-y-5 md:justify-end"
+          >
+            <h1 className="text-2xl lg:text-4xl text-[#A52F21] font-extrabold text-center">
+              NHẬN NGAY MÃ GIẢM 10%
+            </h1>
             <p className="text-center text-sm">
               Nhập email để nhận mã
               <span className="font-bold"> giảm 10%</span> tối đa
@@ -69,18 +77,18 @@ export default function NewsLetter() {
                 <input
                   type="email"
                   required
-                  placeholder="Enter your email"
+                  placeholder="Nhập email của bạn"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-12 pr-3 py-2 text-gray-500 bg-white outline-none border focus:border-indigo-600 shadow-sm rounded-lg"
+                  className="w-full pl-12 pr-3 py-2 text-gray-500 bg-white outline-none border focus:border-[#935027] shadow-sm rounded-lg"
                 />
               </div>
               <button
                 type="submit"
                 disabled={loading}
-                className="ml-2 block w-auto py-2 px-4 font-medium text-sm text-center text-white bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 active:shadow-none rounded-lg shadow"
+                className="ml-2 block w-auto py-2 px-4 font-medium text-sm text-center text-white bg-[#723E1E] hover:bg-[#935027] active:bg-[#935027] active:shadow-none rounded-lg shadow"
               >
-                {loading ? "Đang gửi..." : "Subscribe"}
+                {loading ? "Đang gửi..." : "Gửi"}
               </button>
             </div>
 

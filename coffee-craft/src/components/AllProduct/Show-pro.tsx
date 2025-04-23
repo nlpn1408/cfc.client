@@ -119,7 +119,9 @@ export default function ShowPro() {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center min-h-[400px] w-full bg-white border rounded-lg shadow-md">
-            <p className="text-gray-500 text-lg">Sản phẩm đang tải vui lòng chờ. </p>
+            <p className="text-gray-500 text-lg">
+              Sản phẩm đang tải vui lòng chờ.{" "}
+            </p>
           </div>
         )}
 
@@ -137,7 +139,7 @@ export default function ShowPro() {
           previousLinkClassName="px-4 py-2 text-gray-700 bg-white border rounded-md hover:bg-gray-100"
           nextLinkClassName="px-4 py-2 text-gray-700 bg-white border rounded-md hover:bg-gray-100"
           disabledClassName="opacity-50 cursor-not-allowed"
-          activeClassName="px-4 py-2 text-gray-600 bg-indigo-600 rounded-md"
+          activeClassName="px-4 py-2 text-gray-500 bg-gray-400 rounded-md"
           forcePage={currentPage}
         />
       </section>
