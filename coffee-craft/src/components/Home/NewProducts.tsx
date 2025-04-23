@@ -56,7 +56,7 @@ export default function NewProducts() {
         <h2 className="text-2xl font-bold mb-5">Sản phẩm mới</h2>
         <Link
           href="/product"
-          className="flex items-center text-md text-slate-800 hover:text-[#683122]"
+          className="flex items-center dark:text-white dark:hover:text-[#683122] text-md text-slate-700 hover:text-[#683122]"
         >
           Xem thêm <ChevronRightIcon size={20} />
         </Link>
@@ -73,9 +73,9 @@ export default function NewProducts() {
               return (
                 <CarouselItem
                   key={product.id}
-                  className="flex justify-center md:basis-1/3 lg:basis-1/4"
+                  className=" flex justify-center md:basis-1/3 lg:basis-1/4"
                 >
-                  <div className="relative overflow-hidden w-full border-gray-200 bg-white flex flex-col h-full">
+                  <div className="relative overflow-hidden w-full border-gray-200 flex flex-col h-full">
                     {isNew && (
                       <div className="absolute top-1 -left-9 bg-red-500 text-white text-xs font-bold px-10 py-1 z-30 -rotate-45">
                         Mới

@@ -10,11 +10,8 @@ import {
 } from "../ui/carousel";
 import { Product } from "@/types/product";
 
-type Props = {
-  categoryId: string;
-};
+export default function CategoryProducts({ categoryId }: { categoryId: string }) {
 
-export default function CategoryProducts({ categoryId }: Props) {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -45,7 +42,7 @@ export default function CategoryProducts({ categoryId }: Props) {
   return (
     <div className="relative">
       <Carousel className="flex justify-center relative">
-        <CarouselContent className="flex items-center space-x-4">
+        <CarouselContent className="flex items-center">
           {loading ? (
             <p className="text-center w-full py-5">Đang tải sản phẩm...</p>
           ) : products.length > 0 ? (

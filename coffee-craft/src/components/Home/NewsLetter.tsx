@@ -42,7 +42,7 @@ export default function NewsLetter() {
       <div className="relative container z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-x-8 gap-y-4">
           <img src="/banner/poster1.png" className="col-span-1 w-full h-full" alt="" />
-          <form onSubmit={handleSubmit} className="flex flex-col items-center gap-x-3 space-y-5 md:justify-end">
+          <form onSubmit={handleSubmit} className="flex flex-col items-center gap-x-3 space-y-5   md:justify-end">
             <h1 className="text-2xl lg:text-4xl text-[#A52F21] font-extrabold text-center">NHẬN NGAY MÃ GIẢM 10%</h1>
             <p className="text-center text-sm">
               Nhập email để nhận mã
@@ -50,7 +50,7 @@ export default function NewsLetter() {
               <span className="font-bold"> 20k</span> <br />
               (Chỉ áp dụng cho <span className="font-bold">khách mới</span>)
             </p>
-            <div className="flex">
+            <div className="flex py-3">
               <div className="relative">
                 <svg
                   className="w-6 h-6 text-gray-400 absolute left-3 inset-y-0 my-auto"
@@ -92,7 +92,7 @@ export default function NewsLetter() {
           </form>
         </div>
       </div>
-      <div className="absolute inset-0 w-full h-full newsletter"></div>
+      <div className="absolute inset-0 w-full h-full newsletter rounded-[3rem]"></div>
     </section>
   );
 }

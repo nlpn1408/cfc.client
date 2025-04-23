@@ -24,7 +24,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       )}
     >
       {/* Số lượng đã bán */}
-      <div className="group-hover/item:hidden absolute -left-1 bottom-1/3 z-20 bg-white text-[#040707] text-xs font-bold px-2 py-1 rounded-lg shadow-md border-b-2 border-[#a52f21]">
+      <div className="group-hover/item:hidden absolute left-3 bottom-1/3 z-20 bg-white text-[#040707] text-xs font-bold px-2 py-1 rounded-lg shadow-md border-b-2 border-[#a52f21]">
         Đã bán {Math.floor(Math.random() * 10000) + 100}+
       </div>
 
@@ -67,13 +67,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
 
       {/* Tên sản phẩm */}
       <div className="px-2">
-        <h1 className="text-sm min-h-10 xs:text-lg font-semibold text-gray-900 group-hover/item:text-[#935027] transition-colors duration-300 ease-in-out line-clamp-2">
+        <h1 className="text-sm text-center min-h-10 xs:text-lg font-semibold text-gray-900 group-hover/item:text-[#935027] transition-colors duration-300 ease-in-out line-clamp-2">
           {product.name}
         </h1>
       </div>
 
       {/* Giá sản phẩm */}
-      <h2 className="flex md:flex-col lg:flex-row pb-4 text-base sm:text-xl font-semibold text-center">
+      <h2 className="flex md:flex-col lg:flex-row pb-4 text-base sm:text-xl font-semibold justify-center">
         <span className="text-sm text-gray-400 line-through opacity-60 mr-1">
           {new Intl.NumberFormat("vi-VN", {
             style: "currency",
