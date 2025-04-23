@@ -5,8 +5,8 @@ import React from 'react'
 export default function page() {
   return (
     <>
-    <HeroContact />
     <FormContact />
+    <HeroContact />
     </>
 )
 }
