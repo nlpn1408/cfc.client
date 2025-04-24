@@ -111,7 +111,7 @@ const SubmitBar = ({ address, paymentMethod, cartItems, user }: Props) => {
       dispatch(clearCart()); // Redux
       localStorage.removeItem("cart"); // Nếu có dùng localStorage
       toast.success("Đặt hàng thành công!");
-      router.push("/thankyou");
+      router.push("/");
     } catch (err: any) {
       toast.error("Đã xảy ra lỗi khi đặt hàng: " + err.message);
     }
