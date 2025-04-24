@@ -1,13 +1,15 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeftIcon } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { removeFromCart, updateQuantity } from "@/redux/features/cartSlice";
 import CartInitializer from "@/components/CartInitializer";
-
+import toast from "react-hot-toast";
+import { AlertTriangle } from "lucide-react";
+import { checkAuth } from "@/utils/checkAuth";
 const Cart = () => {
   const dispatch = useDispatch();
   const router = useRouter();
@@ -18,11 +20,43 @@ const Cart = () => {
       dispatch(updateQuantity({ productId, quantity }));
     }
   };
+
   const handleRemoveItem = (productId: string) => {
     dispatch(removeFromCart(productId));
   };
-  const handleCheckout = () => {
-    console.log("Đặt hàng với:", cartItems);
+
+  const handleCheckout = async () => {
+    if (cartItems.length === 0) {
+      toast.custom(() => (
+        <div className="flex items-start gap-3 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg shadow-md max-w-sm">
+          <AlertTriangle className="w-5 h-5 mt-0.5 text-red-500" />
+          <div className="text-sm">
+            <p className="font-semibold">Giỏ hàng đang trống</p>
+            <p className="text-xs text-red-700 mt-0.5">
+              Vui lòng thêm sản phẩm để đặt hàng.
+            </p>
+          </div>
+        </div>
+      ));
+      return;
+    }
+
+    const user = await checkAuth();
+    console.log("Thông tin người dùng:", user);
+    if (!user) {
+      toast.custom(() => (
+        <div className="flex items-start gap-3 bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-lg shadow-md max-w-sm">
+          <AlertTriangle className="w-5 h-5 mt-0.5 text-yellow-600" />
+          <div className="text-sm">
+            <p className="font-semibold">Bạn chưa đăng nhập</p>
+            <p className="text-xs text-yellow-700 mt-0.5">
+              Vui lòng đăng nhập để tiếp tục đặt hàng.
+            </p>
+          </div>
+        </div>
+      ));
+      return;
+    }
     router.push("/checkout");
   };
 
@@ -38,9 +72,7 @@ const Cart = () => {
       <h1 className="dark:text-[#723E1E] text-3xl font-semibold text-[#723E1E] hover:text-[#935027] mb-10">
         Giỏ hàng của bạn
       </h1>
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Danh sách sản phẩm */}
         <div className="lg:col-span-2 flex flex-col">
           <div className="flex-1 max-h-[700px] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
             {cartItems.length === 0 ? (
