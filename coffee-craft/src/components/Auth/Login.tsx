@@ -80,7 +80,7 @@ export default function Login() {
 
   return (
     <div className="w-full lg:grid h-screen lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-      <div className="flex items-center justify-center py-12">
+      <div className="flex items-center justify-center">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
             <h1 className="text-3xl font-bold">Đăng nhập</h1>
@@ -134,7 +134,7 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <div className="hidden bg-muted lg:block">
+      <div className="hidden lg:block">
         <img
           src="/hero/hero1.png"
           alt="Image"

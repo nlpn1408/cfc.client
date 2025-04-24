@@ -9,11 +9,9 @@ const AllProducts: React.FC = () => {
   return (
     <>
       <Banner />
-      <section className="container py-10 grid gap-3  lg:px-18 md:px-8 px-4">
+      <section className="container min-h-screen lg:px-16 md:px-8 px-4 py-10">
         <ProductFilter />
-        <CardContent className="flex items-center px-4 justify-center">
-          <ShowPro />
-        </CardContent>
+        <ShowPro />
         <NewsLetter />
       </section>
     </>

@@ -49,13 +49,16 @@ export default function FormContact() {
             className="w-full col-span-full lg:col-span-1 object-cover"
           />
           <div className="lg:p-10 flex flex-col justify-center gap-5 lg:col-span-1 col-span-full ">
-            <h1 className="text-center text-3xl lg:text-5xl font-extrabold">
+            <h1 className="text-center dark:text-[#935027] text-3xl lg:text-5xl font-extrabold">
               Liên hệ / Hợp tác
             </h1>
-            <p className="text-center text-sm lg:text-md">
+            <p className="text-center dark:text-[#935027] text-sm lg:text-md">
               Thông tin sẽ được gửi trực tiếp đến bộ phận CSKH của CoffeeCraft
             </p>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 px-3">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-5 px-3 dark:text-slate-950 "
+            >
               <TextInput
                 label="Họ và tên"
                 name="name"

@@ -141,8 +141,10 @@ export default function Productdetail({ product }: { product: Product }) {
         </div>
         {/* Số lượng */}
         <div className="space-y-2 flex items-center gap-2">
-          <h2 className="font-semibold text-gray-700">Chọn số lượng:</h2>
           <div className="flex items-center space-x-4">
+            <label className="font-semibold text-gray-700">
+              Chọn số lượng:
+            </label>
             <input
               type="number"
               min={1}

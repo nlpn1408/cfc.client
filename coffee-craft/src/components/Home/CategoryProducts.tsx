@@ -10,8 +10,11 @@ import {
 } from "../ui/carousel";
 import { Product } from "@/types/product";
 
-export default function CategoryProducts({ categoryId }: { categoryId: string }) {
-
+export default function CategoryProducts({
+  categoryId,
+}: {
+  categoryId: string;
+}) {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -19,7 +22,9 @@ export default function CategoryProducts({ categoryId }: { categoryId: string })
   useEffect(() => {
     const fetchProductsByCategory = async () => {
       try {
-        const response = await fetch(`${API_URL}/products?categoryId=${categoryId}`);
+        const response = await fetch(
+          `${API_URL}/products?categoryId=${categoryId}`
+        );
         const result = await response.json();
 
         if (Array.isArray(result.data)) {
@@ -49,9 +54,8 @@ export default function CategoryProducts({ categoryId }: { categoryId: string })
             products.map((product) => (
               <CarouselItem
                 key={product.id}
-                className="flex justify-center px-2 basis-1/2 md:basis-1/3 lg:basis-1/4"
-              >
-                <div className="w-full max-w-xs px-4 border rounded-lg shadow-md border-gray-200 bg-white">
+                className="flex justify-center shadow-lg basis-1/2 md:basis-1/3 lg:basis-1/4">
+                <div className="w-full max-w-xs border rounded-lg border-gray-200 bg-white">
                   <ProductCard className="w-full" product={product} />
                 </div>
               </CarouselItem>
@@ -61,8 +65,16 @@ export default function CategoryProducts({ categoryId }: { categoryId: string })
           )}
         </CarouselContent>
 
-        <CarouselPrevious className="absolute left-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-300 transition" />
-        <CarouselNext className="absolute right-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-300 transition" />
+        <CarouselPrevious
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 w-10 h-10
+           bg-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-300 transition
+         dark:bg-slate-600 dark:hover:bg-slate-800 dark:text-slate-400 dark:hover:text-slate-500  "
+        />
+        <CarouselNext
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 w-10 h-10
+         bg-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-300 transition
+         dark:bg-slate-600 dark:hover:bg-slate-800 dark:text-slate-400 dark:hover:text-slate-500"
+        />
       </Carousel>
     </div>
   );

@@ -11,7 +11,7 @@ export const HeroData = [
     id: 1,
     title: "Cà phê mới về",
     image: "/product/product1.png",
-    link: "/shop",
+    link: "#1",
     description:
       "Những loại cà phê hảo hạng được chọn lọc từ các vùng trồng cà phê danh tiếng.",
   },
@@ -27,7 +27,7 @@ export const HeroData = [
     id: 3,
     title: "Phụ kiện pha chế",
     image: "/product/product3.png",
-    link: "/shop",
+    link: "#2",
     description:
       "Từ máy pha đến dụng cụ thủ công, giúp bạn pha chế tách cà phê hoàn hảo.",
   },
@@ -60,7 +60,7 @@ export default function Hero() {
                 </h1>
                 <p className="text-sm text-gray-600">{item.description}</p>
                 <h2 className="flex text-sm text-orange-700">
-                  Xem ngay <ArrowRight size={20} />
+                    Xem ngay <ArrowRight size={20} />
                 </h2>
               </div>
               <img

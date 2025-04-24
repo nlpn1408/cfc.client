@@ -22,10 +22,10 @@ const OrderItem: React.FC<OrderItemProps> = ({ item, onReviewClick }) => {
         </div>
       )}
       <div className="flex-1">
-        <p className="font-medium text-gray-900">
+        <p className="dark:text-slate-200 font-medium text-gray-900">
           {item.product?.name || "Sản phẩm không xác định"}
         </p>
-        <p className="text-sm text-gray-600">
+        <p className="dark:text-slate-200 text-sm text-gray-600">
           Mã SP: {item.product?.sku || "N/A"}
         </p>
         {item.productVariant?.name && (
@@ -35,7 +35,7 @@ const OrderItem: React.FC<OrderItemProps> = ({ item, onReviewClick }) => {
         )}
         <p className="text-sm text-gray-600">Số lượng: {item.quantity}</p>
       </div>
-      <p className="text-gray-900 font-semibold">
+      <p className="dark:text-slate-200 text-gray-900 font-semibold">
         {Number(item.priceAtOrder).toLocaleString()}đ
       </p>
       <button
