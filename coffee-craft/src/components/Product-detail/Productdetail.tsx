@@ -61,13 +61,13 @@ export default function Productdetail({ product }: { product: Product }) {
     <div className="grid grid-cols-1 md:grid-cols-2 items-center bg-white  p-4 gap-4">
       {/* Image Slider */}
       <div className="space-y-6">
-        <div className="relative w-full h-[450px] rounded-xl overflow-hidden shadow-sm">
+        <div className="relative w-full h-[480px] rounded-xl overflow-hidden shadow-sm">
           {product.images.map((image, index) => (
             <img
               key={`${image.url}-${index}`}
               src={image.url}
               alt="Slide"
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+              className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-700 ${
                 product.images.indexOf(image) === currentSlide
                   ? "opacity-100"
                   : "opacity-0"
