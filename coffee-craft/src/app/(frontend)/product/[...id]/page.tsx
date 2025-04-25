@@ -45,7 +45,7 @@ const Detailpage: React.FC = () => {
         avgRating={productData.avgRating || 0}
       />
       <div className="mt-10">
-        <h2 className="text-3xl font-extrabold text-gray-800 pb-6 text-center">
+        <h2 className="text-3xl font-extrabold text-slate-800 dark:text-slate-100 pb-6 text-center">
           Sản phẩm liên quan
         </h2>
         <ProductRelate productId={productData?.id} />

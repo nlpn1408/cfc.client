@@ -28,7 +28,7 @@ export default function ProductReviews({
   const roundedAvg = Math.round(avgRating);
 
   return (
-    <div className="mt-10 w-full col-span-2 bg-white p-6">
+    <div className="w-full col-span-2 bg-white p-6">
       <h2 className="text-2xl font-extrabold mb-6 text-gray-800">
         Đánh giá sản phẩm
       </h2>
@@ -47,7 +47,7 @@ export default function ProductReviews({
                 fill="currentColor"
               />
             ))}
-            <span className="text-gray-600 text-sm">
+            <span className="text-gray-600 text-sm ">
               {reviews.length} đánh giá của khách hàng
             </span>
           </div>
@@ -116,7 +116,7 @@ export default function ProductReviews({
           )}
         </>
       ) : (
-        <p className="text-gray-500 text-center">
+        <p className="text-gray-500 text-center min-h-10">
           Hiện tại chưa có đánh giá nào.
         </p>
       )}

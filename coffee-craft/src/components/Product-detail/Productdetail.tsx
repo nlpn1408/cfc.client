@@ -53,7 +53,6 @@ export default function Productdetail({ product }: { product: Product }) {
       ),
       variant: selectedVariant,
     };
-    console.log("Thêm vào giỏ hàng:", cartItem);
     toast.success("Thêm vào giỏ hàng thành công ");
     dispatch(addToCart(cartItem));
   };
@@ -158,7 +157,7 @@ export default function Productdetail({ product }: { product: Product }) {
                 );
                 setSelectedQuantity(value);
               }}
-              className="w-16 text-center border rounded h-10"
+              className="w-16 text-center border rounded h-10 dark:text-slate-950"
               title="Số lượng sản phẩm"
               placeholder="1"
             />
@@ -192,7 +191,7 @@ export default function Productdetail({ product }: { product: Product }) {
         <div>
           <Button
             onClick={handleAddToCart}
-            className="w-full bg-[#723E1E] hover:bg-[#935027] h-auto py-3 text-white rounded-lg text-lg font-semibold transition-transform duration-300 hover:scale-105 shadow-md"
+            className="w-full bg-[#723E1E] hover:bg-[#935027] h-auto py-3 text-white rounded-lg text-lg font-semibold transition-transform duration-300 shadow-md"
           >
             Thêm vào giỏ hàng
           </Button>
