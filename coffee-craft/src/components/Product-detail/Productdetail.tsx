@@ -142,10 +142,11 @@ export default function Productdetail({ product }: { product: Product }) {
         {/* Số lượng */}
         <div className="space-y-2 flex items-center gap-2">
           <div className="flex items-center space-x-4">
-            <label className="font-semibold text-gray-700">
+            <label htmlFor="quantity" className="font-semibold text-gray-700">
               Chọn số lượng:
             </label>
             <input
+              id="quantity"
               type="number"
               min={1}
               max={product.stock}
@@ -158,6 +159,8 @@ export default function Productdetail({ product }: { product: Product }) {
                 setSelectedQuantity(value);
               }}
               className="w-16 text-center border rounded h-10"
+              title="Số lượng sản phẩm"
+              placeholder="1"
             />
           </div>
         </div>
@@ -224,4 +227,5 @@ export default function Productdetail({ product }: { product: Product }) {
       </div>
     </div>
   );
+
 }
