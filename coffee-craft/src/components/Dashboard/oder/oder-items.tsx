@@ -23,7 +23,9 @@ export default function OrderItems() {
       if (!res.ok) throw new Error("Không thể lấy đơn hàng.");
 
       const data = await res.json();
-      const pendingOrders = data.filter((order: Order) => order.status === "PENDING");
+      const pendingOrders = data.filter(
+        (order: Order) => order.status === "PENDING"
+      );
       setOrders(pendingOrders);
     } catch (err: any) {
       setError(err.message || "Đã xảy ra lỗi.");
@@ -56,7 +58,8 @@ export default function OrderItems() {
 
   if (loading) return <p className="text-center text-gray-500">Đang tải...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
-  if (orders.length === 0) return <p className="text-center text-gray-500">Không có đơn hàng nào.</p>;
+  if (orders.length === 0)
+    return <p className="text-center text-gray-500">Không có đơn hàng nào.</p>;
   return (
     <div className="w-full space-y-6">
       {orders.map((order) => (
@@ -66,22 +69,37 @@ export default function OrderItems() {
           onClick={() => setSelectedOrder(order)}
         >
           <div className="flex justify-between mb-2">
-            <div>Mã: <span className="font-medium">{order.id}</span></div>
-            <div>Ngày đặt: {new Date(order.createdAt).toLocaleDateString()}</div>
+            <div>
+              Mã: <span className="font-medium">{order.id}</span>
+            </div>
+            <div>
+              Ngày đặt: {new Date(order.createdAt).toLocaleDateString()}
+            </div>
           </div>
 
           {order.orderItems.map((item, index) => (
-            <div key={item.id || index} className="flex gap-4 py-3 border-t first:border-t-0">
+            <div
+              key={item.id || index}
+              className="flex gap-4 py-3 border-t first:border-t-0"
+            >
               {item.product?.images?.[0]?.url ? (
-                <img src={item.product.images[0].url} alt={item.product.name} className="w-16 h-16 object-cover rounded" />
+                <img
+                  src={item.product.images[0].url}
+                  alt={item.product.name}
+                  className="w-16 h-16 object-cover rounded"
+                />
               ) : (
                 <div className="w-16 h-16 bg-gray-200 flex items-center justify-center text-xs text-gray-500">
                   Không có ảnh
                 </div>
               )}
               <div className="flex-1">
-                <p className="font-medium">{item.product?.name || "Sản phẩm không xác định"}</p>
-                <p className="text-sm text-gray-600">Số lượng: {item.quantity}</p>
+                <p className="font-medium">
+                  {item.product?.name || "Sản phẩm không xác định"}
+                </p>
+                <p className="text-sm text-gray-600">
+                  Số lượng: {item.quantity}
+                </p>
               </div>
               <div className="font-semibold">
                 {Number(item.priceAtOrder).toLocaleString()}đ
@@ -90,13 +108,15 @@ export default function OrderItems() {
           ))}
 
           <div className="flex justify-between pt-4 mt-4 border-t">
-            <div className="text-lg font-medium">Tổng: {Number(order.finalTotal).toLocaleString()}đ</div>
+            <div className="text-lg font-medium">
+              Tổng: {Number(order.finalTotal).toLocaleString()}đ
+            </div>
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 handleCancelOrder(order.id);
               }}
-              className="px-4 py-2 text-sm border rounded-md hover:bg-red-700 hover:text-white "
+              className="px-4 py-2 text-sm border rounded-md hover:bg-gray-100  "
             >
               Hủy đơn
             </button>
@@ -106,7 +126,10 @@ export default function OrderItems() {
 
       {/* Hiển thị popup chi tiết */}
       {selectedOrder && (
-        <OrderDetailPopup order={selectedOrder} onClose={() => setSelectedOrder(null)} />
+        <OrderDetailPopup
+          order={selectedOrder}
+          onClose={() => setSelectedOrder(null)}
+        />
       )}
     </div>
   );

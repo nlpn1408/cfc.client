@@ -3,13 +3,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React, { useState, useEffect } from "react";
 import { Order } from "@/types/product";
+import OrderDetailPopup from "./oder-detail";
 
 export default function OrderCancel() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const fetchOrders = async () => {
     try {
       setLoading(true);
@@ -58,7 +59,11 @@ export default function OrderCancel() {
       ) : (
         <div className="space-y-6">
           {orders.map((order) => (
-            <div key={order.id} className="bg-white p-4">
+            <div
+              key={order.id}
+              onClick={() => setSelectedOrder(order)}
+              className="bg-white p-4 cursor-pointer border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+            >
               <div className="flex justify-between items-center mb-2">
                 <div className="text-sm text-gray-600">
                   Mã đơn hàng: <span className="font-medium">{order.id}</span>
@@ -117,6 +122,13 @@ export default function OrderCancel() {
             </div>
           ))}
         </div>
+      )}
+      {/* Hiển thị popup chi tiết */}
+      {selectedOrder && (
+        <OrderDetailPopup
+          order={selectedOrder}
+          onClose={() => setSelectedOrder(null)}
+        />
       )}
     </div>
   );
