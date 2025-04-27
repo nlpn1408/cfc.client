@@ -19,6 +19,7 @@ export interface TextInputProps {
   isRequired?: boolean
   disabled?: boolean
   defaultValue?: string
+  validateOptions?: any;
 }
 
 export interface TextAreaInputProps {
@@ -74,7 +75,7 @@ export type RegisterInputProps = {
   phone: string;
   email: string;
   password: string;
-  confirmPassword: string;
+  confirmPassword?: string;
 };
 
 export type LoginInputProps = {
@@ -92,17 +93,18 @@ export type UserPageProps = {
 
 export type ChangePasswordProps = {
   password: string
-  newpassword: string
+  oldPassword: string
   confirmPassword: string;
 }
 
 export type UserProfile = {
+  id?: string;
   name: string;
   email: string;
-  phone: string;
-  address: string;
-  imgUrl: string;
-  gender: string;
+  phone?: string;
+  address?: string;
+  gender?: string;
+  imgUrl?: string
 }
 
 export type ContactFormProps = {
@@ -111,15 +113,13 @@ export type ContactFormProps = {
   email: string;
   message: string;
 };
+export interface Voucher {
+  id: string;
+  code: string;
+  discountPercent?: number;
+  discountAmount?: number;
+  maxDiscount?: number;
+  minimumOrderValue?: number;
+  type: "PERCENT" | "FIXED";
+}
 
-// export interface Category {
-//   id: string;
-//   name: string;
-//   description: string;
-//   parentId: string | null;
-//   createdAt: string;
-//   updatedAt: string;
-//   _count: {
-//     products: number;
-//   };
-// }

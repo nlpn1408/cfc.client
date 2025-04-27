@@ -13,44 +13,48 @@ export default function TextInput({
     type,
     placeholder,
     page,
-    className ="col-span-full",
-    isRequired=true,
+    className = "col-span-full",
+    isRequired = true,
     disabled,
+    validateOptions
 }: TextInputProps) {
     return (
-        <div className={cn('grid gap-2',className)}>
-            {type === 'password' && page === 'login'
-                ? (
-                    <div className="flex items-center">
-                        <Label htmlFor="password">Password</Label>
-                        <Link
-                            href="/forgot-password"
-                            className="ml-auto inline-block text-sm underline"
-                        >
-                            Forgot your password?
-                        </Link>
-                    </div>
-                ) : (
-                    <Label className='text-base' htmlFor={`${name}`} >
-                        {label}
-                    </Label>
-                )}
+        <div className={cn('grid gap-2', className)}>
+            {type === 'password' && page === 'login' ? (
+                <div className="flex items-center">
+                    <Label htmlFor="password">Mật khẩu</Label>
+                    <Link
+                        href="/forgot-password"
+                        className="ml-auto inline-block text-sm underline"
+                    >
+                        Quên mật khẩu?
+                    </Link>
+                </div>
+            ) : (
+                <Label className='text-base' htmlFor={name}>
+                    {label}
+                </Label>
+            )}
 
             <div className="mt-2">
                 <Input
-                    {...register(`${name}`, { required: isRequired })}
-                    id={`${name}`}
-                    name={`${name}`}
+                    {...register(name, {
+                        required: isRequired && `${label} is required`,
+                        ...validateOptions, // ✅ điều kiện mở rộng
+                    })}
+                    id={name}
+                    name={name}
                     type={type}
                     autoComplete="name"
                     disabled={disabled}
-                    placeholder={`${placeholder}`}
+                    placeholder={placeholder}
                 />
-                {errors[`${name}`]&& isRequired && (
-                    <span className='text-red-600 text-sm'>{label} is required</span>
+                {errors[name] && (
+                    <span className='text-red-600 text-sm'>
+                        {errors[name]?.message || `vui lòng không bỏ trống ${label}`}
+                    </span>
                 )}
             </div>
         </div>
-
     )
 }

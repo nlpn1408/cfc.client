@@ -1,8 +1,7 @@
 import React from "react";
 export default function ProductFilter() {
   return (
-    <>
-      <div className="flex flex-col md:flex-row justify-between items-center py-5 border-b gap-3">
+      <div className="container flex flex-col md:flex-row justify-between items-center py-5 border-b gap-3">
         <span className="text-sm text-gray-600">
           Trang chủ &gt; Shop &gt; Cà phê nguyên chất
         </span>
@@ -28,6 +27,5 @@ export default function ProductFilter() {
           </option>
         </select>
       </div>
-    </>
   );
 }

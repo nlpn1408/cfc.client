@@ -7,14 +7,14 @@ import ProductFilter from "../../../components/AllProduct/ProductFilter";
 import { CardContent } from "../../../components/ui/card";
 const AllProducts: React.FC = () => {
   return (
-    <section className="container max-w-screen-2xl py-10 grid gap-3  md:px-8">
+    <>
       <Banner />
-      <ProductFilter />
-      <CardContent className="flex items-center px-4 justify-center">
+      <section className="container min-h-screen lg:px-16 md:px-8 px-4 py-10">
+        <ProductFilter />
         <ShowPro />
-      </CardContent>
-      <NewsLetter />
-    </section>
+        <NewsLetter />
+      </section>
+    </>
   );
 };
 

@@ -1,115 +1,49 @@
 "use client";
-import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ShoppingCart, CreditCard } from "lucide-react";
 
-const CheckoutPage = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    address: "",
-    city: "",
-    zip: "",
-    paymentMethod: "cod",
-  });
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import AddressForm from "@/components/Checkout/AddressForm";
+import CartSummary from "@/components/Checkout/CartSummary";
+import PaymentMethod from "@/components/Checkout/Paymentmethod";
+import SubmitBar from "@/components/Checkout/SubmitBar";
+import CartInitializer from "@/components/CartInitializer";
+import { RootState } from "@/redux/store";
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+export default function CheckoutPage() {
+  const cartItems = useSelector((state: RootState) => state.cart.cartItems);
+  const [user, setUser] = useState({ id: "", name: "", phone: "", email: "" });
+  const [address, setAddress] = useState<any>({});
+  const [paymentMethod, setPaymentMethod] = useState("cod");
+
+  useEffect(() => {
+    const stored = sessionStorage.getItem("user");
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      setUser({
+        id: parsed.id,
+        name: parsed.name,
+        phone: parsed.phone,
+        email: parsed.email,
+      });
+    }
+  }, []);
 
   return (
-    <div className="container mx-auto p-6">
-      <h2 className="text-3xl font-bold mb-6 text-center">Checkout</h2>
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* Thông tin giao hàng */}
-        <Card>
-          <CardContent className="p-6">
-            <h3 className="text-xl font-semibold mb-4">Thông tin giao hàng</h3>
-            <form className="space-y-4">
-              <Input
-                name="name"
-                placeholder="Họ và tên"
-                onChange={handleChange}
-              />
-              <Input
-                name="email"
-                type="email"
-                placeholder="Email"
-                onChange={handleChange}
-              />
-              <Input
-                name="address"
-                placeholder="Địa chỉ"
-                onChange={handleChange}
-              />
-              <Input
-                name="city"
-                placeholder="Thành phố"
-                onChange={handleChange}
-              />
-              <Input
-                name="zip"
-                placeholder="Mã bưu điện"
-                onChange={handleChange}
-              />
-            </form>
-          </CardContent>
-        </Card>
-
-        {/* Tóm tắt đơn hàng */}
-        <Card>
-          <CardContent className="p-6">
-            <h3 className="text-xl font-semibold mb-4">Tóm tắt đơn hàng</h3>
-            <div className="flex justify-between border-b pb-2 mb-2">
-              <span>Sản phẩm</span>
-              <span className="font-semibold">$120</span>
-            </div>
-            <div className="flex justify-between border-b pb-2 mb-2">
-              <span>Phí vận chuyển</span>
-              <span className="font-semibold">$10</span>
-            </div>
-            <div className="flex justify-between text-lg font-bold">
-              <span>Tổng cộng</span>
-              <span>$130</span>
-            </div>
-
-            {/* Phương thức thanh toán */}
-            <h3 className="text-lg font-semibold mt-4">
-              Phương thức thanh toán
-            </h3>
-            <div className="space-y-2 mt-2">
-              <label className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="paymentMethod"
-                  value="cod"
-                  checked={formData.paymentMethod === "cod"}
-                  onChange={handleChange}
-                />
-                Thanh toán khi nhận hàng
-              </label>
-              <label className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="paymentMethod"
-                  value="paypal"
-                  checked={formData.paymentMethod === "paypal"}
-                  onChange={handleChange}
-                />
-                Thanh toán qua PayPal
-              </label>
-            </div>
-
-            <Button className="w-full mt-4 flex items-center gap-2 bg-green-600 hover:bg-green-700">
-              <CreditCard size={18} /> Thanh toán ngay
-            </Button>
-          </CardContent>
-        </Card>
+    <section className="container lg:px-16 md:px-8 px-4">
+      <CartInitializer />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 bg-gray-100 min-h-screen">
+        <div className="md:col-span-2 space-y-6 bg-white p-6 rounded-lg shadow flex flex-col gap-5">
+          <AddressForm user={user} onChange={setAddress} />
+          <PaymentMethod selected={paymentMethod} onChange={setPaymentMethod} />
+          <SubmitBar
+            user={user}
+            address={address}
+            paymentMethod={paymentMethod}
+            cartItems={cartItems}
+          />
+        </div>
+        <CartSummary />
       </div>
-    </div>
+    </section>
   );
-};
-
-export default CheckoutPage;
+}

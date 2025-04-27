@@ -5,13 +5,13 @@ import { Facebook, Instagram, Twitter } from "lucide-react"; // Import icons
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-50 text-gray-600 ">
-      <div className="container lg:px-16 md:px-8 px-4 py-5 border-b border-gray-300">
+    <footer className="text-gray-600 ">
+      <div className="container lg:px-16 md:px-8 px-4 py-5 border-b dark:border-gray-500 border-gray-300">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Thông tin thương hiệu */}
-          <div>
-            <h1 className="font-extrabold text-orange-900 text-3xl">
-              Coffee <span className="text-black">Cart</span>
+          <div className="overflow-hidden max-h-60">
+            <h1 className="font-extrabold hover:text-[#412019] text-[#412017] dark:text-white/80 lg:text-3xl md:text-2xl">
+              Coffee <span className="text-[#E1991D]">Craft</span>
             </h1>
             <p className="mt-6 text-sm leading-relaxed">
               Coffee Cart chuyên cung cấp cà phê nguyên chất và phụ kiện pha chế
@@ -22,8 +22,10 @@ const Footer = () => {
           </div>
 
           {/* Liên kết nhanh */}
-          <div>
-            <h2 className="font-semibold text-gray-900 mb-5">Về chúng tôi</h2>
+          <div className="overflow-hidden max-h-60">
+            <h2 className="dark:text-white font-semibold text-gray-900 mb-5">
+              Về chúng tôi
+            </h2>
             <ul className="text-sm space-y-2">
               <li>
                 <Link href="/" className="hover:text-orange-600 transition">
@@ -66,8 +68,8 @@ const Footer = () => {
           </div>
 
           {/* Sản phẩm & Dịch vụ */}
-          <div>
-            <h2 className="font-semibold text-gray-900 mb-5">
+          <div className="overflow-hidden max-h-60">
+            <h2 className="dark:text-white font-semibold text-gray-900 mb-5">
               Sản phẩm & Dịch vụ
             </h2>
             <ul className="text-sm space-y-2">
@@ -115,13 +117,13 @@ const Footer = () => {
           </div>
 
           {/* Thông tin liên hệ */}
-          <div>
-            <h2 className="font-semibold text-gray-900 mb-5">
+          <div className="overflow-hidden max-h-60">
+            <h2 className="dark:text-white font-semibold text-gray-900 mb-5">
               Liên hệ với chúng tôi
             </h2>
             <div className="text-sm space-y-2">
               <p>
-                📞 <span className="font-medium">0909-xxx-xxx</span>
+                📞 <span className="font-medium">0909-410-965</span>
               </p>
               <p>
                 📧 <span className="font-medium">support@coffeecart.com</span>
@@ -144,7 +146,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <p className="py-4 text-center text-xs md:text-sm bg-gray-100">
+      <p className="py-4 text-center text-xs md:text-sm">
         Copyright 2025 © Coffee Cart. All Rights Reserved.
       </p>
     </footer>

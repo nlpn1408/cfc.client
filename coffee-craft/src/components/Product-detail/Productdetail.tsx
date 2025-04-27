@@ -1,16 +1,22 @@
 import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
 import { Product } from "@/types/product";
-import { ProductCardProps } from "@/types/nav";
 import { Button } from "../ui/button";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/redux/features/cartSlice";
-
+import toast from "react-hot-toast";
 export default function Productdetail({ product }: { product: Product }) {
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
-
+  const [showFullDescription, setShowFullDescription] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [selectedGrindType, setSelectedGrindType] = useState("Xay sẵn");
+  const [selectedVariant, setSelectedVariant] = useState(
+    product.variants && product.variants.length > 0 ? product.variants[0] : null
+  );
+  const totalPrice =
+    selectedQuantity *
+    parseFloat(
+      String(selectedVariant?.discountPrice ?? product.discountPrice ?? 0)
+    );
   const nextSlide = () => {
     setCurrentSlide((prev) =>
       prev === product.images.length - 1 ? 0 : prev + 1
@@ -22,14 +28,12 @@ export default function Productdetail({ product }: { product: Product }) {
       prev === 0 ? product.images.length - 1 : prev - 1
     );
   };
-
   // Auto chuyển slide mỗi 500ms
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
     }, 3500); // 500ms
-
-    return () => clearInterval(interval); // Cleanup khi unmount
+    return () => clearInterval(interval);
   }, [currentSlide]); // Lắng nghe thay đổi của currentSlide
 
   const dispatch = useDispatch();
@@ -41,149 +45,186 @@ export default function Productdetail({ product }: { product: Product }) {
       product: product,
       images: product.images,
       quantity: selectedQuantity,
-      price: parseFloat(product.price),
-      discountPrice: product.discountPrice,
-      grindType: selectedGrindType,
+      price: parseFloat(
+        String(selectedVariant?.discountPrice ?? product.discountPrice ?? 0)
+      ),
+      discountPrice: String(
+        selectedVariant?.discountPrice ?? product.discountPrice ?? 0
+      ),
+      variant: selectedVariant,
     };
-    console.log("Thêm vào giỏ hàng:", cartItem);
+    toast.success("Thêm vào giỏ hàng thành công ");
     dispatch(addToCart(cartItem));
   };
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 items-center bg-white shadow-lg rounded-lg p-4 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 items-center bg-white  p-4 gap-4">
       {/* Image Slider */}
-      <div className="w-full max-w-3xl mx-auto">
-        {/* Hình ảnh chính */}
-        <div className="relative w-full h-[500px] overflow-hidden rounded-lg">
-          {product.images.map((image) => (
+      <div className="space-y-6">
+        <div className="relative w-full h-[480px] rounded-xl overflow-hidden shadow-sm">
+          {product.images.map((image, index) => (
             <img
-              key={image.url}
+              key={`${image.url}-${index}`}
               src={image.url}
               alt="Slide"
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+              className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-700 ${
                 product.images.indexOf(image) === currentSlide
                   ? "opacity-100"
                   : "opacity-0"
               }`}
             />
           ))}
-          {/* Nút điều hướng */}
-          <button
-            onClick={prevSlide}
-            className="absolute top-1/2 left-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-40"
-          >
-            ◀
-          </button>
-          <button
-            onClick={nextSlide}
-            className="absolute top-1/2 right-4 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 opacity-40"
-          >
-            ▶
-          </button>
         </div>
-
-        {/* Danh sách ảnh nhỏ */}
-        <div className="flex justify-center space-x-3 mt-5">
+        {/* Thumbnails */}
+        <div className="flex justify-center gap-3">
           {product.images.map((image) => {
             const index = product.images.indexOf(image);
             return (
               <img
-                key={image.url}
+                key={`${image.url}-${index}`} // đảm bảo key luôn duy nhất
                 src={image.url}
                 alt="Thumbnail"
-                className={`w-20 h-20 object-cover cursor-pointer rounded-lg border-2 transition-all duration-300 ${
-                  index === currentSlide
-                    ? "border-blue-500 scale-110"
-                    : "border-gray-300"
-                }`}
                 onClick={() => setCurrentSlide(index)}
+                className={`w-16 h-16 rounded-lg cursor-pointer object-cover border-2 transition-all duration-300 ${
+                  index === currentSlide
+                    ? "border-orange-500 scale-110"
+                    : "border-gray-300 hover:scale-105"
+                }`}
               />
             );
           })}
         </div>
       </div>
-
       {/* Product Info */}
-      <div className="flex flex-col justify-between gap-5">
-        <div>
-          <h1 className="text-4xl font-bold pb-4">{product.name}</h1>
-          <p className="text-gray-700 text-lg pb-4">
-            {product.shortDescription}
-          </p>
+      <div className="flex flex-col justify-between gap-6">
+        <div className="space-y-3">
+          <h1 className="text-3xl font-bold text-gray-800">{product.name}</h1>
 
-          <div className="flex items-center text-yellow-500 pb-4">
+          <div
+            className="prose prose-sm sm:prose lg:prose-base text-gray-600 max-w-none"
+            dangerouslySetInnerHTML={{ __html: product.shortDescription }}
+          />
+          <div className="flex items-center gap-2 text-yellow-500">
             {[...Array(product.avgRating)].map((_, i) => (
-              <Star key={i} size={24} className="text-yellow-500" />
+              <Star key={i} size={20} fill="currentColor" />
             ))}
-            <span className="ml-2 text-gray-700">
-              ({product.avgRating} đánh giá)
+            <span className="text-sm text-gray-700">
+              ({product.reviews.length} đánh giá)
             </span>
           </div>
-          <p className="text-red-600 text-2xl font-semibold pb-4">
-            Giá: <span className="line-through text-gray-500">400.000 ₫</span>{" "}
-            {parseInt(product.price).toLocaleString()} ₫
+          <p className="text-2xl font-bold text-red-600">
+            {(
+              selectedQuantity *
+              parseFloat(
+                String(
+                  selectedVariant?.discountPrice ?? product.discountPrice ?? 0
+                )
+              )
+            ).toLocaleString()}{" "}
+            ₫
+            {(selectedVariant?.price ?? product.price) &&
+              selectedVariant?.discountPrice !== selectedVariant?.price && (
+                <span className="line-through text-gray-400 text-base ml-2">
+                  {(
+                    selectedQuantity *
+                    parseFloat(
+                      String(selectedVariant?.price ?? product.price ?? 0)
+                    )
+                  ).toLocaleString()}{" "}
+                  ₫
+                </span>
+              )}
           </p>
-          <p className="text-gray-700 pb-4">Kho: {product.stock} sản phẩm</p>
+          <p className="text-gray-500 text-sm">
+            Kho: {selectedVariant?.stock ?? product.stock ?? 0} sản phẩm
+          </p>
         </div>
-        {/* Chọn số lượng */}
-        <div>
-          <h2 className="text-lg font-semibold mb-2">Chọn số lượng:</h2>
+        {/* Số lượng */}
+        <div className="space-y-2 flex items-center gap-2">
           <div className="flex items-center space-x-4">
-            <button
-              onClick={() =>
-                setSelectedQuantity((prev) => Math.max(1, prev - 1))
-              }
-              className="w-10 h-10 text-xl font-bold text-gray-700 bg-gray-200 rounded hover:bg-gray-300"
-            >
-              −
-            </button>
-            <span className="text-lg font-medium">{selectedQuantity}</span>
-            <button
-              onClick={() =>
-                setSelectedQuantity((prev) => Math.min(product.stock, prev + 1))
-              }
-              className="w-10 h-10 text-xl font-bold text-gray-700 bg-gray-200 rounded hover:bg-gray-300"
-            >
-              +
-            </button>
+            <label htmlFor="quantity" className="font-semibold text-gray-700">
+              Chọn số lượng:
+            </label>
+            <input
+              id="quantity"
+              type="number"
+              min={1}
+              max={product.stock}
+              value={selectedQuantity}
+              onChange={(e) => {
+                const value = Math.max(
+                  1,
+                  Math.min(product.stock, Number(e.target.value))
+                );
+                setSelectedQuantity(value);
+              }}
+              className="w-16 text-center border rounded h-10 dark:text-slate-950"
+              title="Số lượng sản phẩm"
+              placeholder="1"
+            />
           </div>
-          <p className="text-sm text-gray-500 mt-2">
-            Kho còn lại: {product.stock} sản phẩm
-          </p>
         </div>
 
-        {/* Grind Type Selection */}
+        {/* Biến thể */}
+        {product.variants && product.variants.length > 0 && (
+          <div className="space-y-2">
+            <h2 className="font-semibold text-gray-700">Chọn loại sản phẩm:</h2>
+            <div className="flex flex-wrap gap-2">
+              {product.variants.map((variant) => (
+                <button
+                  type="button"
+                  key={variant.id}
+                  onClick={() => setSelectedVariant(variant)}
+                  className={`px-4 py-2 rounded-lg cursor-pointer transition-all duration-200 font-medium border text-sm shadow-sm hover:bg-[#935027]
+                    ${
+                      selectedVariant?.id === variant.id
+                        ? "bg-orange-600 text-white scale-105 shadow-md"
+                        : "bg-white text-gray-700 border-gray-300 hover:bg-gray-100"
+                    }`}
+                >
+                  {variant.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        {/* Nút thêm vào giỏ */}
         <div>
-          <h2 className="text-lg font-semibold">Yêu cầu:</h2>
-          <div className="flex gap-4 mt-2">
-            {["Xay sẵn", "Nguyên hạt"].map((type) => (
-              <span
-                key={type}
-                onClick={() => setSelectedGrindType(type)}
-                className={`border px-4 py-2 rounded-md cursor-pointer transition-all duration-300 ${
-                  selectedGrindType === type
-                    ? "bg-orange-600 text-white shadow-md scale-105"
-                    : "bg-gray-100 hover:bg-gray-200 hover:scale-105 hover:shadow-md"
-                }`}
-              >
-                {type}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Buttons */}
-        <div className="grid grid-cols-2 gap-4">
           <Button
             onClick={handleAddToCart}
-            className="col-span-1 bg-[#E1991D] h-auto text-white rounded-lg text-sm lg:text-lg font-semibold transition-all duration-300 hover:bg-[#ffa200] hover:scale-105 hover:shadow-lg"
+            className="w-full bg-[#723E1E] hover:bg-[#935027] h-auto py-3 text-white rounded-lg text-lg font-semibold transition-transform duration-300 shadow-md"
           >
             Thêm vào giỏ hàng
           </Button>
-          <Button className="col-span-1 bg-[#683122] text-white h-auto px-6 py-3 rounded-lg text-sm lg:text-lg font-semibold transition-all duration-300 hover:bg-[#351811] hover:scale-105 hover:shadow-lg">
-            Mua ngay
-          </Button>
+        </div>
+      </div>
+      <div className="col-span-2 w-full bg-white p-8 mt-12 border-t border-gray-200 rounded-xl shadow-sm">
+        <h2 className="text-2xl font-extrabold mb-4 text-gray-800">
+          Mô tả sản phẩm
+        </h2>
+
+        <div className="relative">
+          <div
+            className={`prose prose-sm sm:prose lg:prose-lg xl:prose-xl max-w-none text-gray-800 transition-all duration-300 ${
+              showFullDescription ? "" : "max-h-[200px] overflow-hidden"
+            }`}
+            dangerouslySetInnerHTML={{ __html: product.longDescription }}
+          />
+          {/* Hiệu ứng mờ khi thu gọn */}
+          {!showFullDescription && (
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent pointer-events-none" />
+          )}
+        </div>
+
+        <div className="mt-4 text-center">
+          <button
+            onClick={() => setShowFullDescription((prev) => !prev)}
+            className="text-sm font-medium text-[#723E1E] hover:underline"
+          >
+            {showFullDescription ? "Thu gọn ▲" : "Xem thêm ▼"}
+          </button>
         </div>
       </div>
     </div>
   );
+
 }

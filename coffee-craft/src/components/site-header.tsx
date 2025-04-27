@@ -10,14 +10,20 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
+import { useSelector } from "react-redux";
 
+import { RootState } from "@/redux/store";
 export default function SiteHeader() {
   const [user, setUser] = useState<any>(null);
+  const totalQuantity = useSelector((state: RootState) =>
+    state.cart.cartItems.reduce((total, item) => total + item.quantity, 0)
+  );
 
   useEffect(() => {
     const getUserFromStorage = () => {
@@ -44,7 +50,6 @@ export default function SiteHeader() {
     return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
-
   async function handleLogout() {
     try {
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -61,20 +66,22 @@ export default function SiteHeader() {
     }
   }
 
-
   return (
     <header className="sticky top-0 z-50 w-full border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container lg:px-16 md:px-8 px-4  flex h-14 items-center justify-between">
+      <div className="container lg:px-16 md:px-8 px-4 flex h-14 items-center justify-between">
         <MainNav />
         <MobileNav />
-        <div className="flex lg:flex-auto flex-1 justify-end items-center gap-2">
+        <div className="flex flex-1 justify-end items-center gap-2">
           <CommandMenu />
 
           {/* Login */}
           {!user ? (
-            <Button asChild>
+            <Button
+              asChild
+              className="bg-[#723E1E] text-white hover:bg-[#935027] dark:text-[#723E1E] dark:hover:text-white dark:bg-white dark:hover:bg-[#935027]"
+            >
               <Link href="/login">
-                Login <LogInIcon size={16} className="ml-2" />
+                Đăng nhập <LogInIcon className="lg:block hidden" size={16} />
               </Link>
             </Button>
           ) : (
@@ -86,30 +93,49 @@ export default function SiteHeader() {
                   className="rounded-full"
                 >
                   <Avatar>
-                    <AvatarImage
-                      src={user?.image || "/default-avatar.png"}
-                      onError={(e) => (e.currentTarget.src = "/default-avatar.png")}
-                    />
-                    <AvatarFallback>{user?.name?.charAt(0) || "?"}</AvatarFallback>
+                    {user.imgUrl ? (
+                      <Avatar>
+                        <AvatarImage src={user.imgUrl ?? "/avatars/01.png"} />
+                        <AvatarFallback>{user.name}</AvatarFallback>
+                      </Avatar>
+                    ) : (
+                      <AvatarFallback>
+                        {user?.name?.charAt(0) || "?"}
+                      </AvatarFallback>
+                    )}
                   </Avatar>
-
                   <span className="sr-only">Toggle user menu</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                <DropdownMenuLabel className="text-center">
+                  {user.name}
+                </DropdownMenuLabel>
+                <DropdownMenuLabel className="text-center font-light text-sm text-slate-500">
+                  {user.email}
+                </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem><Link href={`/dashboard/${user.id}?page=profile`}>Dashboard</Link></DropdownMenuItem>
-                <DropdownMenuItem>Support</DropdownMenuItem>
+                <Link href={`/dashboard/${user.id}?page=profile`}>
+                  <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                </Link>
+                <Link href="/contact">
+                  <DropdownMenuItem>Support</DropdownMenuItem>
+                </Link>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout}>
-                  Logout <LogOut size={15} className="ml-2" />
+                <DropdownMenuItem onClick={() => handleLogout()}>
+                  Đăng xuất tài khoản <LogOut size={15} className="ml-2" />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           )}
 
-          <Link href="/cart">
+          <Link href="/cart" className="relative">
             <ShoppingBagIcon size={34} />
+            {totalQuantity > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                {totalQuantity}
+              </span>
+            )}
           </Link>
           <nav>
             <ModeToggle />

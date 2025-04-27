@@ -16,7 +16,8 @@ export interface Product {
   updatedAt: string;
   images: ProductImage[];
   tags: Tag[];
-  variants: Variant[];
+  reviews: Review[];
+  variants: ProductVariant[];
 }
 
 export interface ProductImage {
@@ -36,8 +37,23 @@ export interface Tag {
   updatedAt: string;
 }
 
-export interface Variant {
-  // Định nghĩa Variant nếu có dữ liệu chi tiết
+export interface ProductVariant {
+  id: string;
+  productId: string;
+  sku?: string;
+  price: string;
+  discountPrice?: number;
+  stock: number;
+  name: string;
+  color?: string;
+  weight?: string;
+  material?: string;
+  createdAt: Date;
+  updatedAt: Date;
+
+  product: Product; // Kiểu Product mà bạn cần định nghĩa trước
+  orderItems: OrderItem[]; // Kiểu OrderItem mà bạn cần định nghĩa trước
+  review: Review[]; // Kiểu Review mà bạn cần định nghĩa trước
 }
 
 export interface CartItem {
@@ -48,7 +64,7 @@ export interface CartItem {
   quantity: number;
   discountPrice: string;
   price: number;
-  grindType?: string;
+  variant?: ProductVariant | null;
 }
 
 // 🛒 Cập nhật `CartState` để dùng `CartItem` thay vì `OrderItem`
@@ -75,11 +91,72 @@ export interface Category {
   };
 }
 
-export interface Review {
+export interface OrderItem {
   id: string;
   productId: string;
-  rating: number;
-  comment: string;
-  userId: string;
-  createdAt: string;
+  quantity: number;
+  priceAtOrder: number;
+  subTotal: number;
+  discountAmount: number;
+  product: Product; // 👈 Thêm dòng này để fix lỗi
+  review?: Review;
+  productVariant?: ProductVariant | null;
 }
+
+export interface Order {
+  id: string;
+  userId: string;
+  total: string; // Có thể cân nhắc chuyển thành number nếu backend trả số
+  shippingFee: string;
+  discountAmount: string;
+  finalTotal: string;
+  status: string;
+  paymentStatus: string;
+  paymentMethod: string;
+  createdAt: string;
+  updatedAt: string;
+  orderItems: OrderItem[];
+  shippingAddress: {
+    receiverName: string;
+    receiverPhone: string;
+    address: string;
+  };
+  voucherId: string | null;
+  note?: string;
+}
+export interface User {
+  id: string;
+  name: string;
+  imgUrl: string;
+}
+
+export interface Review {
+  id: string;
+  rating: number; // 1-5
+  comment?: string;
+  orderItemId: string;
+  // Nếu bạn vẫn muốn có relation đến OrderItem, giữ nguyên:
+  orderItem: OrderItem;
+
+  userId: string;
+  user: User; // now includes { id, name, imgUrl }
+
+  productId: string;
+  product: Product; // giữ nếu bạn include product trong query
+
+  productVariantId?: string;
+  productVariant?: ProductVariant;
+
+  createdAt: string; // JSON trả về là ISO string
+  updatedAt: string;
+}
+
+export type UserProfile = {
+  id?: string;
+  name: string;
+  email: string;
+  phone?: string;
+  address?: string;
+  gender?: string;
+  imgUrl?: string;
+};

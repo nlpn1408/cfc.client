@@ -1,4 +1,4 @@
-"use client"
+"use client";
 // import { Category } from "@/types/types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -23,36 +23,39 @@ export default function MainNav() {
   //   fetchCategories();
   // }, []);
 
-
   return (
-    <div className="hidden md:flex justify-start items-center gap-6">
+    <div className="hidden md:flex md:flex-col xl:flex-row flex-1 justify-start xl:items-center md:items-start md:gap-0 xl:gap-3">
       <Link
         href="/"
-        className="hover:text-gray-900 transition text-2xl font-bold"
+        className="hover:text-[#412019] text-[#412017] dark:text-white/80 transition text-2xl font-bold"
       >
-        Coffee<span className="text-[#E1991D]">Cart</span>
+        Coffee<span className="text-[#E1991D]">Craft</span>
       </Link>
-      <nav className="flex items-center justify-between px-4 md:px-8 py-3 text-gray-600">
-        <div className="flex items-center gap-4 lg:gap-8 max-md:hidden">
-          <Link href="/" className="hover:text-gray-900 transition">
-            Trang chủ
-          </Link>
-          <Link href="/product" className="hover:text-gray-900 transition">
-            Cửa hàng
-          </Link>
-          {/* {categories.map((category) => (
-            <Link
-              key={category.id}
-              href={`/product?categoryId=${category.id}`}
-              className="hover:text-gray-900 transition"
-            >
-              {category.name}
-            </Link>
-          ))} */}
-          <Link href="/contact" className="hover:text-gray-900 transition">
-            Liên hệp
-          </Link>
-        </div>
+      <nav className="flex items-center justify-between gap-4 px-4  xl:py-3 text-gray-600 ">
+        <Link
+          href="/"
+          className="hover:text-[#412019] dark:hover:text-white transition text-md dark:text-gray-400 overflow-auto"
+        >
+          Trang chủ
+        </Link>
+        <Link
+          href="/product"
+          className="hover:text-[#412019] dark:hover:text-white transition text-md dark:text-gray-400 overflow-auto"
+        >
+          Cửa hàng
+        </Link>
+        <Link
+          href="/contact"
+          className="hover:text-[#412019] dark:hover:text-white transition text-md dark:text-gray-400 overflow-auto"
+        >
+          Liên hệ
+        </Link>
+        <Link
+          href="/blog"
+          className="hover:text-[#412019] dark:hover:text-white transition text-md dark:text-gray-400 overflow-auto"
+        >
+          Tin tức
+        </Link>
       </nav>
     </div>
   );

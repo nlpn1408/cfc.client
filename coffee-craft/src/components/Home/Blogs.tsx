@@ -1,97 +1,126 @@
 "use client";
-import Image from "next/image";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import React from "react";
 
-export default function Blogs() {
-  const posts = [
-    {
-      title: "Cà phê pha máy vs pha phin: Đâu là lựa chọn của bạn?",
-      desc: "Khám phá sự khác biệt giữa cà phê pha máy và pha phin, đâu mới là phong cách pha chế phù hợp với bạn?",
-      img: "https://tse2.mm.bing.net/th?id=OIP.oje6KJ65WGwu3UM2Ii1vAgHaE7&pid=Api",
-      authorLogo: "https://randomuser.me/api/portraits/men/32.jpg",
-      authorName: "Nguyễn Minh",
-      date: "20 Tháng 3, 2025",
-      href: "/blogs/coffee-machine-vs-phin",
-    },
-    {
-      title: "Bí quyết làm Latte Art cho người mới bắt đầu",
-      desc: "Hướng dẫn từng bước giúp bạn tạo ra những ly latte đẹp mắt với nghệ thuật vẽ bọt sữa chuyên nghiệp.",
-      img: "https://rangcafe.vn/wp-content/uploads/2020/03/Cach-pha-ca-phe-phin-thom-ngon-1536x1023.jpg",
-      authorLogo: "https://randomuser.me/api/portraits/women/44.jpg",
-      authorName: "Trần Hà",
-      date: "18 Tháng 3, 2025",
-      href: "/blogs/latte-art-guide",
-    },
-    {
-      title: "Hạt Arabica và Robusta: Bạn hợp với loại nào?",
-      desc: "Tìm hiểu sự khác biệt giữa hạt cà phê Arabica và Robusta để chọn loại phù hợp với khẩu vị của bạn.",
-      img: "https://elmarspices.com/wp-content/uploads/2022/05/ca-phe-hat-arabica-la-gi-01.jpg",
-      authorLogo: "https://randomuser.me/api/portraits/men/46.jpg",
-      authorName: "Lê Huy",
-      date: "15 Tháng 3, 2025",
-      href: "/blogs/arabica-vs-robusta",
-    },
-    {
-      title: "Cách bảo quản cà phê đúng chuẩn tại nhà",
-      desc: "Lưu trữ cà phê như thế nào để giữ trọn hương vị tươi ngon lâu dài? Xem ngay hướng dẫn chi tiết!",
-      img: "https://lofita.vn/public/upload/files/ca-phe-Robusta-3.jpg",
-      authorLogo: "https://randomuser.me/api/portraits/women/50.jpg",
-      authorName: "Hoàng Yến",
-      date: "10 Tháng 3, 2025",
-      href: "/blogs/store-coffee-guide",
-    },
-  ];
+interface Blog {
+  id: string;
+  title: string;
+  content: string;
+  thumbnail?: string | null;
+  publicationDate: string;
+  author: {
+    name: string;
+    imgUrl?: string | null;
+  };
+}
+
+export default function BlogCarousel() {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const res = await fetch(`${API_URL}/blogs`);
+        const result = await res.json();
+        setBlogs(result.data);
+      } catch (error) {
+        console.error("Lỗi khi tải blog:", error);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
 
   return (
-    <section className="container lg:px-16 md:px-8 px-4 ">
-      <div className="text-center">
-        <h1 className="text-6xl text-gray-800 font-semibold">Tin tức</h1>
-        <p className="mt-3 text-gray-500">
+    <div className="relative">
+      <div className="text-center mb-6">
+        <h1 className="text-4xl md:text-6xl font-bold dark:text-white text-gray-800">
+          Tin tức
+        </h1>
+        <p className="mt-2 md:mt-3 text-gray-500 text-base md:text-lg">
           Những câu chuyện thú vị về cà phê và phong cách sống. Cập nhật mỗi
           tuần!
         </p>
       </div>
-      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {posts.map((item, index) => (
-          <article
-            className="max-w-md mx-auto shadow-lg border rounded-md duration-300 hover:shadow-xl transition-all"
-            key={index}
-          >
-            <Link href={item.href}>
-              <img
-                src={item.img}
-                loading="lazy"
-                alt={item.title}
-                className="w-full h-48 rounded-t-md object-cover"
-              />
-              <div className="flex items-center mt-2 pt-3 px-4">
-                <div className="w-10 h-10 rounded-full overflow-hidden">
-                  <img
-                    src={item.authorLogo}
-                    className="w-full h-full object-cover"
-                    alt={item.authorName}
-                  />
-                </div>
-                <div className="ml-3">
-                  <span className="block text-gray-900 font-medium">
-                    {item.authorName}
-                  </span>
-                  <span className="block text-gray-500 text-sm">
-                    {item.date}
-                  </span>
-                </div>
-              </div>
-              <div className="pt-3 px-4 pb-4">
-                <h3 className="text-xl text-gray-900 font-semibold">
-                  {item.title}
-                </h3>
-                <p className="text-gray-600 text-sm mt-2">{item.desc}</p>
-              </div>
-            </Link>
-          </article>
-        ))}
-      </div>
-    </section>
+
+      <Carousel className="relative w-full max-w-7xl mx-auto px-2">
+        <CarouselContent>
+          {blogs.map((item, index) => (
+            <CarouselItem
+              key={index}
+              className="md:basis-1/2 lg:basis-1/3 px-2"
+            >
+              <article className="bg-white border rounded-xl overflow-hidden shadow transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 hover:scale-[1.02]">
+                <Link href={`/blog/${item.id}`} className="block group">
+                  <div className="relative overflow-hidden rounded-t-xl">
+                    <img
+                      src={item.thumbnail || "/default-thumbnail.jpg"}
+                      alt={item.title}
+                      className="w-full h-48 object-cover transition-transform duration-300
+                      group-hover:scale-105 group-hover:brightness-90"
+                    />
+                  </div>
+                  <div className="flex items-center mt-2 pt-3 px-4">
+                    <div className="w-10 h-10 rounded-full overflow-hidden">
+                      <img
+                        src={
+                          item.author.imgUrl ||
+                          "https://randomuser.me/api/portraits/lego/2.jpg"
+                        }
+                        alt={item.author.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="ml-3">
+                      <span className="block text-gray-900 font-medium">
+                        {item.author.name}
+                      </span>
+                      <span className="block text-gray-500 text-sm">
+                        {new Date(item.publicationDate).toLocaleDateString(
+                          "vi-VN",
+                          {
+                            day: "2-digit",
+                            month: "long",
+                            year: "numeric",
+                          }
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="pt-3 px-4 pb-4">
+                    <h3 className="text-lg font-semibold text-gray-900 group-hover:text-[#935027] transition-colors duration-300">
+                      {item.title}
+                    </h3>
+                    <p
+                      className="text-gray-600 text-sm mt-2 line-clamp-3"
+                      dangerouslySetInnerHTML={{ __html: item.content }}
+                    />
+                  </div>
+                </Link>
+              </article>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+
+        <CarouselPrevious
+          className="absolute left-2 top-1/2 transform -translate-y-1/2 w-10 h-10
+                  bg-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-300 transition
+                dark:bg-slate-600 dark:hover:bg-slate-800 dark:text-slate-400 dark:hover:text-slate-500  "
+        />
+        <CarouselNext
+          className="absolute right-2 top-1/2 transform -translate-y-1/2 w-10 h-10
+                bg-gray-200 rounded-full flex items-center justify-center shadow-md hover:bg-gray-300 transition
+                dark:bg-slate-600 dark:hover:bg-slate-800 dark:text-slate-400 dark:hover:text-slate-500"
+        />
+      </Carousel>
+    </div>
   );
 }

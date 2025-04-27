@@ -1,16 +1,18 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import NewsLetter from "../../../../components/Home/NewsLetter";
-import Reviews from "../../../../components/Product-detail/comment";
+
 import ProductDetail from "../../../../components/Product-detail/Productdetail";
 import ListProduct from "../../../../components/ListProduct";
 import { useParams } from "next/dist/client/components/navigation";
-
+import ProductRelate from "../../../../components/Product-detail/productRelate";
+import { Product } from "../../../../types/product";
+import ProductReviews from "../../../../components/Product-detail/ProductReviews";
 const Detailpage: React.FC = () => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const params = useParams();
   const id = params?.id;
-  const [productData, setProductData] = useState(null);
+  const [productData, setProductData] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -28,42 +30,25 @@ const Detailpage: React.FC = () => {
     }
   }, [id]);
 
-  if (loading)
-    return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="flex flex-col items-center">
-          <div className="w-12 h-12 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
-          <p className="mt-2 text-lg font-semibold text-gray-700">
-            Đang tải dữ liệu sản phẩm...
-          </p>
-        </div>
-      </div>
-    );
-
   if (!productData)
     return (
       <div className="flex items-center justify-center h-screen">
-        <p className="text-lg font-semibold text-red-500">
-          Không tìm thấy sản phẩm.
-        </p>
+        <p className="text-lg font-semibol">Không tìm thấy sản phẩm.</p>
       </div>
     );
 
   return (
-    <section className="container max-w-screen-2xl ">
-      <div className="bg-white shadow-lg rounded-2xl ">
-        <ProductDetail product={productData} />
-      </div>
-
-      <div className="mt-10 bg-gray-100 rounded-2xl shadow-md">
-        <Reviews />
-      </div>
-
+    <section className="container lg:px-18 md:px-8 px-4">
+      <ProductDetail product={productData} />
+      <ProductReviews
+        reviews={productData.reviews || []}
+        avgRating={productData.avgRating || 0}
+      />
       <div className="mt-10">
-        <h2 className="text-3xl font-extrabold text-gray-800 pb-6 text-center">
+        <h2 className="text-3xl font-extrabold text-slate-800 dark:text-slate-100 pb-6 text-center">
           Sản phẩm liên quan
         </h2>
-        <ListProduct />
+        <ProductRelate productId={productData?.id} />
       </div>
 
       <div className="mt-16">
