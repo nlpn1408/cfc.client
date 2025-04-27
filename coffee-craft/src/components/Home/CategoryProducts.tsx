@@ -54,7 +54,8 @@ export default function CategoryProducts({
             products.map((product) => (
               <CarouselItem
                 key={product.id}
-                className="flex justify-center shadow-lg basis-1/2 md:basis-1/3 lg:basis-1/4">
+                className="flex justify-center shadow-lg basis-1/2 md:basis-1/3 lg:basis-1/4"
+              >
                 <div className="w-full max-w-xs border rounded-lg border-gray-200 bg-white">
                   <ProductCard className="w-full" product={product} />
                 </div>

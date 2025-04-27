@@ -33,59 +33,30 @@ export default function ShowPro() {
     try {
       let url = new URL(`${API_URL}/products`);
 
-      // Nếu không lọc, lấy theo phân trang thông thường
-      if (!priceRange && !rating) {
-        url.searchParams.append("page", (currentPage + 1).toString());
-        url.searchParams.append("limit", itemsPerPage.toString());
-      } else {
-        // Nếu có lọc, "giả vờ fetch tất cả dữ liệu"
-        url.searchParams.append("limit", "1000"); // Giới hạn lớn để lấy hết sản phẩm
-      }
-
+      // Thêm tham số lọc vào URL nếu có
       if (selectedCategory) {
         url.searchParams.append("categoryId", selectedCategory);
       }
 
+      if (priceRange) {
+        const [minPrice, maxPrice] = priceRange.split("-").map(Number);
+        url.searchParams.append("minPrice", minPrice.toString());
+        url.searchParams.append("maxPrice", maxPrice.toString());
+      }
+
+      // Thêm tham số phân trang
+      url.searchParams.append("page", (currentPage + 1).toString());
+      url.searchParams.append("limit", "12"); // Giới hạn số lượng sản phẩm mỗi trang là 12
+
       const response = await fetch(url.toString());
       const result = await response.json();
 
+      // Kiểm tra dữ liệu trả về
+      console.log(result);
+
       if (Array.isArray(result.data)) {
-        let allProducts = result.data as Product[];
-
-        // Nếu có lọc (priceRange hoặc rating)
-        if (priceRange || rating) {
-          // Áp dụng lọc giá
-          if (priceRange) {
-            const [minPrice, maxPrice] = priceRange.split("-").map(Number);
-            allProducts = allProducts.filter(
-              (product) =>
-                Number(product.price) >= minPrice &&
-                Number(product.price) <= maxPrice
-            );
-          }
-
-          // Áp dụng lọc đánh giá
-          if (rating) {
-            // Giả sử người dùng chọn từ 1 sao đến 3 sao
-            allProducts = allProducts.filter(
-              (product) =>
-                Number(product.avgRating) >= rating &&
-                Number(product.avgRating) < rating + 1
-            );
-          }
-
-          // Phân trang ở FE sau khi lọc
-          const startIndex = currentPage * itemsPerPage;
-          const endIndex = startIndex + itemsPerPage;
-          const paginatedProducts = allProducts.slice(startIndex, endIndex);
-
-          setProducts(paginatedProducts);
-          setPageCount(Math.ceil(allProducts.length / itemsPerPage)); // Tổng số trang
-        } else {
-          // Không lọc, hiển thị dữ liệu từ server
-          setProducts(allProducts);
-          setPageCount(Math.ceil(result.total / itemsPerPage));
-        }
+        setProducts(result.data); // Cập nhật danh sách sản phẩm
+        setPageCount(Math.ceil(result.total / 12)); // Sử dụng 12 sản phẩm mỗi trang
       }
     } catch (error) {
       console.error("Lỗi khi tải sản phẩm:", error);
@@ -193,42 +164,6 @@ export default function ShowPro() {
                 {option.label}
               </button>
             ))}
-          </div>
-
-          {/* Đánh giá */}
-          <div>
-            <h3 className="font-semibold mb-2">Đánh giá</h3>
-            <button
-              className="mt-4 w-full py-2 px-4 text-left rounded-lg hover:bg-[#935027] hover:text-white"
-              onClick={() => {
-                setRating(null); // Xóa bộ lọc sao
-                setCurrentPage(0); // Quay lại trang 1 khi xóa bộ lọc
-              }}
-            >
-              Tất cả
-            </button>
-            {/* Thanh trượt cho rating từ 1 đến 5 */}
-            <input
-              type="range"
-              min="1"
-              max="5"
-              step="1"
-              value={rating || 1} // Gán giá trị mặc định là 1 sao nếu chưa chọn rating
-              onChange={(e) => {
-                const newRating = Number(e.target.value);
-                setRating(newRating);
-                setCurrentPage(0); // Khi thay đổi rating, quay lại trang 1
-              }}
-              className="w-full h-2 bg-gray-200 rounded-lg focus:outline-none"
-            />
-
-            {/* Hiển thị giá trị rating đã chọn */}
-            <div className="flex justify-between mt-2 text-sm text-gray-700">
-              <span>1 sao</span>
-              <span>5 sao</span>
-            </div>
-
-            {/* Nút "Tất cả" để xóa bộ lọc sao */}
           </div>
         </div>
       </aside>
