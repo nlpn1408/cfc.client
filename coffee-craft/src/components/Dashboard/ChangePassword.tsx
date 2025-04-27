@@ -1,120 +1,103 @@
 'use client'
 
-import { ChangePasswordProps, UserPageProps } from '@/types/types'
-import React, { useEffect, useState } from 'react'
-import TextInput from '../FromInput/TextInput'
-import { useForm } from 'react-hook-form'
-import SubmitButton from '../FromInput/SubmitButton'
-import toast from 'react-hot-toast'
-import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
-export default function ChangePassword({
-  page,
-  title,
-  description,
-  userId,
-  formId,
-}: UserPageProps) {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors }
-  } = useForm<ChangePasswordProps>()
+import { ChangePasswordProps, UserPageProps } from '@/types/types';
+import TextInput from '@/components/FromInput/TextInput';
+import SubmitButton from '@/components/FromInput/SubmitButton';
 
-  const [isLoading, setIsLoading] = useState(false)
-  const [passwordMatch, setPasswordMatch] = useState(true)
-  const password = watch("password")
-  const confirmPassword = watch("confirmPassword")
+export default function ChangePassword({ title, userId }: UserPageProps) {
+  const { register, handleSubmit, watch, formState: { errors } } = useForm<ChangePasswordProps>();
+  const [isLoading, setIsLoading] = useState(false);
+  const [passwordMatch, setPasswordMatch] = useState(true);
 
-  const router = useRouter()
+  const router = useRouter();
+  const password = watch('password');
+  const confirmPassword = watch('confirmPassword');
 
   useEffect(() => {
-    setPasswordMatch(password === confirmPassword)
-  }, [password, confirmPassword])
+    setPasswordMatch(password === confirmPassword);
+  }, [password, confirmPassword]);
 
-  // Hàm submit form
   async function onSubmit(data: ChangePasswordProps) {
     if (!passwordMatch) {
-      toast.error("Mật khẩu xác nhận không khớp!")
-      return
+      toast.error('Mật khẩu xác nhận không khớp!');
+      return;
     }
-    setIsLoading(true)
 
+    setIsLoading(true);
     try {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
       const res = await fetch(`${API_URL}/users/${userId}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: "include",
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({
           oldPassword: data.oldPassword,
-          password: data.password
+          password: data.password,
         }),
-      })
+      });
 
+      const result = await res.json();
       if (!res.ok) {
-        const result = await res.json()
-        toast.error(result.message || 'Đổi mật khẩu thất bại')
+        toast.error(result.message || 'Đổi mật khẩu thất bại');
+      } else {
+        toast.success('Đổi mật khẩu thành công!');
+        router.refresh();
       }
-
-      toast.success('Đổi mật khẩu thành công!')
-      router.refresh()
-    } catch (err: any) {
-      toast.error(err.message || 'Lỗi không xác định')
+    } catch (error: any) {
+      toast.error(error.message || 'Lỗi không xác định');
+    } finally {
+      setIsLoading(false);
     }
   }
+
   return (
-    <div>
-      <div className="text-center border border-gray-200 pb-4">
-        <h2 className="text-4xl font-semibold scroll-m-20 tracking-tight lg:text-5xl">
-          {title}
-        </h2>
-        <p className="text-balance text-muted-foreground">{description}</p>
+    <div className="max-w-xl mx-auto space-y-8">
+      {/* Tiêu đề */}
+      <div className="text-center border-b pb-4">
+        <h2 className="text-3xl font-bold">{title}</h2>
       </div>
 
-      <div className='grid grid-cols-2'>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className='lg:col-span-1 p-10 col-span-full flex flex-col gap-5'
-        >
-          <TextInput
-            label='Mật khẩu hiện tại'
-            name='oldPassword'
-            placeholder='********'
-            type='password'
-            errors={errors}
-            register={register}
-          />
-          <TextInput
-            label='Mật khẩu mới'
-            name='password'
-            type='password'
-            placeholder='********'
-            errors={errors}
-            register={register}
-          />
-          {!passwordMatch && (
-            <p className="text-red-500 text-sm">Mật khẩu xác nhận không khớp</p>
-          )}
-          <TextInput
-            label='Xác nhận mật khẩu mới'
-            name='confirmPassword'
-            type='password'
-            placeholder='********'
-            errors={errors}
-            register={register}
-          />
+      {/* Form đổi mật khẩu */}
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+        <TextInput
+          label="Mật khẩu hiện tại"
+          name="oldPassword"
+          type="password"
+          placeholder="********"
+          register={register}
+          errors={errors}
+        />
+        <TextInput
+          label="Mật khẩu mới"
+          name="password"
+          type="password"
+          placeholder="********"
+          register={register}
+          errors={errors}
+        />
+        <TextInput
+          label="Xác nhận mật khẩu mới"
+          name="confirmPassword"
+          type="password"
+          placeholder="********"
+          register={register}
+          errors={errors}
+        />
+        {!passwordMatch && (
+          <p className="text-sm text-red-500">Mật khẩu xác nhận không khớp</p>
+        )}
 
-          <SubmitButton
-            title='Lưu mật khẩu'
-            loadingTitle="Đang cập nhật..."
-            isLoading={isLoading}
-          />
-        </form>
-      </div>
+        <SubmitButton
+          title="Lưu mật khẩu"
+          loadingTitle="Đang cập nhật..."
+          isLoading={isLoading}
+        />
+      </form>
     </div>
-  )
+  );
 }

@@ -1,119 +1,107 @@
-'use client'
-import React, { use, useEffect, useState } from 'react'
-import { useParams, useRouter, useSearchParams } from 'next/navigation'
-import OrderPage from './Orderpage'
-import Link from 'next/link'
-import { cn } from '@/lib/utils'
-import { Separator } from "../ui/separator"
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
-import Profile from './Profile'
-import ChangePassword from './ChangePassword'
-import { description } from '../Auth/Login'
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Separator } from "@/components/ui/separator";
+import Profile from "./Profile";
+import ChangePassword from "./ChangePassword";
+import OrderPage from "./Orderpage";
 
 export default function UserProfile() {
-  const params = useSearchParams()
-  const page = params.get('page') ?? 'profile'
-  const router = useRouter()
-  const userParams = useParams()
-  const userId = userParams.id?.toString()
+  const router = useRouter();
+  const params = useSearchParams();
+  const userParams = useParams();
+  const page = params.get("page") ?? "profile";
+  const userId = userParams.id?.toString();
   const [user, setUser] = useState<any>(null);
-  // Các bước/tab điều hướng trong trang cá nhân
+
   const steps = [
     {
       title: "Thông tin cá nhân",
       page: "profile",
-      description: "Thông tin cá nhân của bạn",
       component: <Profile title="Thông tin cá nhân" />,
     },
     {
       title: "Đổi mật khẩu",
       page: "changepassword",
       component: (
-        <ChangePassword
-          title="Đổi mật khẩu"
-          page="changepassword"
-          description=""
-          userId={userId}
-        />
+        <ChangePassword 
+        title="Đổi mật khẩu"
+        page="changepassword"
+        userId={userId}/>
       ),
     },
     {
       title: "Lịch sử đơn hàng",
-      page: "oder",
+      page: "order",
       component: (
-        <OrderPage title="Lịch sử đơn hàng" page="order" description="" />
+        <OrderPage title="Lịch sử đơn hàng" page="order"   />
       ),
     },
   ];
-  // Xác định tab hiện tại
+
   const currentStep = steps.find((step) => step.page === page);
+
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, [setUser])
-
-
+    if (storedUser) setUser(JSON.parse(storedUser));
+  }, []);
 
   return (
-    <section className="lg:px-16 md:px-8 px-4 container">
-      <div className="grid grid-cols-4 gap-5">
-        {/* Tiêu đề trang */}
-        <div className="col-span-full bg-slate-200 rounded-lg p-5">
-          <h1 className="text-4xl font-bold">Trang cá nhân</h1>
-          <div>
-            <span
-              onClick={() => router.push("/")}
-              className="hover:text-slate-800 cursor-pointer"
-            >
-              Trang chủ
-            </span>{" "}
-            /
-            <span className="hover:text-slate-800 cursor-pointer">
-              Bảng điều khiển
-            </span>
+    <section className="container py-10">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        {/* Header trang */}
+        <div className="col-span-full bg-muted rounded-xl p-6">
+          <h1 className="text-3xl font-bold mb-2">Trang cá nhân</h1>
+          <div className="text-sm text-muted-foreground space-x-1">
+            <span onClick={() => router.push("/")} className="cursor-pointer hover:underline">Trang chủ</span>/
+            <span className="cursor-default">Bảng điều khiển</span>
           </div>
         </div>
-        {/* Sidebar - điều hướng các mục */}
-        <div className="lg:col-span-1 col-span-full flex lg:flex-col gap-3 divide-gray-200 h-full dark:bg-slate-900">
-          <div className="flex items-center gap-3 px-4 py-3">
-            <Avatar className="w-12 h-12">
-              <AvatarImage src={user?.imgUrl ?? "/default-avatar.png"} alt={user?.name ?? "Avatar"} />
-              <AvatarFallback>{user?.name?.[0] ?? "U"}</AvatarFallback>
+
+        {/* Sidebar - Thanh điều hướng */}
+        <aside className="lg:col-span-1 bg-background rounded-xl border p-5 space-y-6">
+          {/* Thông tin người dùng */}
+          <div className="flex items-center gap-4">
+            <Avatar className="w-14 h-14">
+              <AvatarImage src={user?.imgUrl || "/default-avatar.png"} alt="Avatar" />
+              <AvatarFallback>{user?.name?.[0] || "U"}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
-              <span className="font-medium text-sm">{user?.name ?? "Khách"}</span>
-              <span className="text-xs text-gray-500">{user?.email}</span>
+              <span className="font-semibold">{user?.name || "Khách"}</span>
+              <span className="text-xs text-muted-foreground">{user?.email}</span>
             </div>
           </div>
 
-          {/* Tab điều hướng */}
-          {steps.map((step, i) => (
-            <div key={i} className="py-1">
+          <Separator />
+
+          {/* Các bước điều hướng */}
+          <nav className="flex flex-col space-y-2">
+            {steps.map((step, index) => (
               <Link
+                key={index}
                 href={`/dashboard/${userId}?page=${step.page}`}
                 className={cn(
-                  `block uppercase text-sm lg:col-span-full  rounded-lg col-span-1 py-3 px-4
-                  hover:bg-[#935027] hover:text-slate-100`,
-                  step.page === page
-                    ? "bg-[#5C3D2F] text-slate-100"
-                    : "text-black"
+                  "text-sm font-medium rounded-lg px-4 py-3 transition",
+                  page === step.page
+                    ? "bg-[#935027] text-primary-foreground"
+                    : "hover:bg-[#412017] hover:text-secondary-foreground hover:text-white "
                 )}
               >
                 {step.title}
               </Link>
-              <Separator orientation="vertical" className="lg:block hidden" />
-            </div>
-          ))}
-        </div>
+            ))}
+          </nav>
+        </aside>
 
-        {/* Nội dung hiển thị component tương ứng */}
-        <div className="lg:col-span-3 col-span-full border rounded-lg shadow-md">
+        {/* Nội dung chính */}
+        <main className="lg:col-span-3 bg-background rounded-xl border py-6 shadow-sm">
           {currentStep?.component}
-        </div>
+        </main>
       </div>
     </section>
   );
-
 }

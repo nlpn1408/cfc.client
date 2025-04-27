@@ -1,18 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
 
-import TextInput from "../FromInput/TextInput";
-import TextAreaInput from "../FromInput/TextAreaInput";
-import SubmitButton from "../FromInput/SubmitButton";
-import SelectionInput from "../FromInput/SelectionInput";
-import ImageInput from "../FromInput/ImageInput";
-
 import { UserProfile } from "@/types/types";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
+import TextInput from "@/components/FromInput/TextInput";
+import TextAreaInput from "@/components/FromInput/TextAreaInput";
+import SelectionInput from "@/components/FromInput/SelectionInput";
+import ImageInput from "@/components/FromInput/ImageInput";
+import SubmitButton from "@/components/FromInput/SubmitButton";
 
 export default function Profile({ title }: { title: string }) {
   const { id } = useParams();
@@ -29,7 +28,6 @@ export default function Profile({ title }: { title: string }) {
     formState: { errors },
   } = useForm<UserProfile>();
 
-  // Lấy user từ sessionStorage
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
@@ -43,6 +41,12 @@ export default function Profile({ title }: { title: string }) {
 
   const handleGenderChange = (_: string, value: string) => {
     setValue("gender", value);
+  };
+
+  const resetFormState = () => {
+    setIsEditing(false);
+    setPreviewAvatar(null);
+    setImageUrl(undefined);
   };
 
   const onSubmit = async (data: UserProfile) => {
@@ -59,44 +63,37 @@ export default function Profile({ title }: { title: string }) {
 
       if (response.ok) {
         const updatedUser = await response.json();
-        toast.success("Cập nhật thành công");
-        setUser(updatedUser);
         sessionStorage.setItem("user", JSON.stringify(updatedUser));
+        toast.success("Cập nhật thành công");
         resetFormState();
         window.location.reload();
       } else {
         throw new Error("Update failed");
       }
-    } catch (err) {
-      console.error("Lỗi cập nhật:", err);
+    } catch (error) {
+      console.error(error);
       toast.error("Cập nhật thất bại");
     } finally {
       setIsLoading(false);
     }
   };
 
-  const resetFormState = () => {
-    setIsEditing(false);
-    setPreviewAvatar(null);
-    setImageUrl(undefined);
-  };
-
   return (
-    <div>
-      <h2 className="text-3xl font-semibold text-center pt-2">
-        Thông tin cá nhân
-      </h2>
-      <form onSubmit={handleSubmit(onSubmit)} className="px-5" method="PUT">
-        <div className="grid grid-cols-3 gap-6">
-          {/* Form thông tin người dùng */}
-          <div className="col-span-2 grid grid-cols-2 gap-4 items-center">
+    <div className="space-y-6">
+      {/* Tiêu đề */}
+      <h2 className="text-2xl font-bold text-center">{title}</h2>
+
+      {/* Form */}
+      <form onSubmit={handleSubmit(onSubmit)} method="PUT" className="space-y-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Thông tin cá nhân */}
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
             <TextInput
               label="Họ và tên"
               name="name"
-              type="text"
               placeholder="Nhập họ và tên"
+              type="text"
               register={register}
-              className="md:col-span-1 col-span-full "
               errors={errors}
               disabled={!isEditing}
               defaultValue={user?.name}
@@ -104,20 +101,18 @@ export default function Profile({ title }: { title: string }) {
             <TextInput
               label="Email"
               name="email"
+              placeholder="john.doe@example.com"
               type="email"
-              className="md:col-span-1 col-span-full"
-              placeholder="Ex: john.doe@example.com"
               register={register}
               errors={errors}
-              disabled={!isEditing}
+              disabled
               defaultValue={user?.email}
             />
             <TextInput
               label="Số điện thoại"
               name="phone"
-              type="tel"
-              className="md:col-span-1 col-span-full"
               placeholder="Nhập số điện thoại"
+              type="tel"
               register={register}
               errors={errors}
               disabled={!isEditing}
@@ -125,13 +120,12 @@ export default function Profile({ title }: { title: string }) {
             />
             <SelectionInput
               label="Giới tính"
-              placeholder="Chọn giới tính"
               name="gender"
-              className="md:col-span-1 col-span-full"
+              placeholder="Chọn giới tính"
               options={[
-                { value: "MALE", label: "Nam" },
-                { value: "FEMALE", label: "Nữ" },
-                { value: "OTHER", label: "Khác" },
+                { label: "Nam", value: "MALE" },
+                { label: "Nữ", value: "FEMALE" },
+                { label: "Khác", value: "OTHER" },
               ]}
               register={register}
               setValue={handleGenderChange}
@@ -140,25 +134,25 @@ export default function Profile({ title }: { title: string }) {
             <TextAreaInput
               label="Địa chỉ"
               name="address"
-              placeholder="Chưa có địa chỉ"
+              placeholder="Nhập địa chỉ"
               register={register}
               errors={errors}
               disabled={!isEditing}
-              defaultValue={user?.address ?? ""}
+              defaultValue={user?.address || ""}
+              className="md:col-span-2"
             />
           </div>
-          {/* Ảnh đại diện */}
-          <div className="col-span-1 py-5">
+
+          {/* Avatar */}
+          <div className="flex flex-col items-center space-y-4">
             <img
               src={previewAvatar || user?.imgUrl || "/default-avatar.png"}
               alt="Avatar"
-              className="w-32 h-32 rounded-full border-4 border-gray-300 object-cover"
+              className="w-32 h-32 rounded-full object-cover border-4 border-gray-300"
             />
-
             {isEditing && (
               <ImageInput
-                label="Upload Image"
-                className="col-span-full md:col-span-2 lg:col-span-2"
+                label="Tải ảnh mới"
                 endpoint="imageUploader"
                 imageUrl={imageUrl}
                 setImageUrl={setImageUrl}
@@ -166,32 +160,26 @@ export default function Profile({ title }: { title: string }) {
             )}
           </div>
         </div>
-        {/* Nút lưu thay đổi */}
-        <div className="grid grid-cols-2 gap-3 my-3">
+
+        {/* Hành động */}
+        <div className="flex justify-center gap-4">
           {isEditing ? (
-            <div className="grid grid-cols-2 gap-3 col-span-full">
+            <>
               <Button
                 type="button"
+                variant="outline"
                 onClick={resetFormState}
-                className="bg-white text-red-600 hover:bg-red-700 shadow-md  hover:text-white px-6 py-3 rounded-lg text-lg"
               >
                 Huỷ
               </Button>
               <SubmitButton
                 title="Lưu thay đổi"
-                className="col-span-1"
                 isLoading={isLoading}
                 loadingTitle="Đang lưu..."
               />
-            </div>
+            </>
           ) : (
-            <button
-              type="button"
-              onClick={() => setIsEditing(true)}
-              className="bg-[#723E1E] hover:bg-[#935027] text-white px-6 py-3 rounded-lg text-lg"
-            >
-              Chỉnh sửa
-            </button>
+            <Button className="text-base dark:text-white bg-[#935027] hover:bg-[#412017]" onClick={() => setIsEditing(true)}>Chỉnh sửa thông tin</Button>
           )}
         </div>
       </form>

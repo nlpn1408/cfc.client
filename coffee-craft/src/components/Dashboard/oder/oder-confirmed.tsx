@@ -40,6 +40,7 @@ export default function OrderConfirmed() {
       setLoading(false);
     }
   };
+  
   const handleCancelOrder = async (orderId: string) => {
     const confirmed = window.confirm("Bạn có chắc chắn muốn hủy đơn hàng này?");
     if (!confirmed) return;

@@ -20,9 +20,6 @@ import OrderCancel from "./oder/order-cancel";
 export default function OrderPage({
   page,
   title,
-  description,
-  userId,
-  formId,
 }: UserPageProps) {
   const tabItems = [
     {

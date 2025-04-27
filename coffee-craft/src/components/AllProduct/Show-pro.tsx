@@ -5,6 +5,13 @@ import ProductCard from "@/components/ProductCard";
 import { Menu, X } from "lucide-react";
 import ReactPaginate from "react-paginate";
 
+export const filterPrice = [
+  { label: "0 - 100K", value: "0-100000" },
+  { label: "100K - 300K", value: "100000-300000" },
+  { label: "300K - 500K", value: "300000-500000" },
+  { label: "Trên 500K", value: "500000-100000000" },
+];
+
 export default function ShowPro() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [products, setProducts] = useState<Product[]>([]);
@@ -143,12 +150,7 @@ export default function ShowPro() {
             </button>
 
             {/* Các khoảng giá khác */}
-            {[
-              { label: "0 - 100K", value: "0-100000" },
-              { label: "100K - 300K", value: "100000-300000" },
-              { label: "300K - 500K", value: "300000-500000" },
-              { label: "Trên 500K", value: "500000-100000000" },
-            ].map((option) => (
+            {filterPrice.map((option) => (
               <button
                 key={option.value}
                 className={`block w-full py-2 px-4 text-left rounded-lg ${
