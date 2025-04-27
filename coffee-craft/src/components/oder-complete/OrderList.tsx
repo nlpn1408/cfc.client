@@ -19,8 +19,8 @@ const OrderList: React.FC<OrderListProps> = ({ orders, onReviewClick }) => {
           onClick={() => setSelectedOrder(order)}
           className="bg-white p-4 cursor-pointer border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
         >
-          <div className="flex justify-between items-center mb-2">
-            <div className="text-sm text-gray-600">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2">
+            <div className="text-sm text-gray-600 mb-2 sm:mb-0">
               Mã đơn hàng: <span className="font-medium">{order.id}</span>
             </div>
             <div className="text-sm text-gray-600">
@@ -36,8 +36,8 @@ const OrderList: React.FC<OrderListProps> = ({ orders, onReviewClick }) => {
             />
           ))}
 
-          <div className="flex justify-between items-center pt-4 mt-4 border-t">
-            <div className="text-gray-900 font-medium text-lg">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center pt-4 mt-4 border-t">
+            <div className="text-gray-900 font-medium text-lg mb-2 sm:mb-0">
               Tổng cộng: {Number(order.finalTotal).toLocaleString()}đ
             </div>
           </div>

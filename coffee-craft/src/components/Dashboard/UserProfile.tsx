@@ -28,18 +28,17 @@ export default function UserProfile() {
       title: "Đổi mật khẩu",
       page: "changepassword",
       component: (
-        <ChangePassword 
-        title="Đổi mật khẩu"
-        page="changepassword"
-        userId={userId}/>
+        <ChangePassword
+          title="Đổi mật khẩu"
+          page="changepassword"
+          userId={userId}
+        />
       ),
     },
     {
       title: "Lịch sử đơn hàng",
       page: "order",
-      component: (
-        <OrderPage title="Lịch sử đơn hàng" page="order"   />
-      ),
+      component: <OrderPage title="Lịch sử đơn hàng" page="order" />,
     },
   ];
 
@@ -57,8 +56,13 @@ export default function UserProfile() {
         <div className="col-span-full bg-muted rounded-xl p-6">
           <h1 className="text-3xl font-bold mb-2">Trang cá nhân</h1>
           <div className="text-sm text-muted-foreground space-x-1">
-            <span onClick={() => router.push("/")} className="cursor-pointer hover:underline">Trang chủ</span>/
-            <span className="cursor-default">Bảng điều khiển</span>
+            <span
+              onClick={() => router.push("/")}
+              className="cursor-pointer hover:underline"
+            >
+              Trang chủ
+            </span>
+            /<span className="cursor-default">Bảng điều khiển</span>
           </div>
         </div>
 
@@ -67,12 +71,17 @@ export default function UserProfile() {
           {/* Thông tin người dùng */}
           <div className="flex items-center gap-4">
             <Avatar className="w-14 h-14">
-              <AvatarImage src={user?.imgUrl || "/default-avatar.png"} alt="Avatar" />
+              <AvatarImage
+                src={user?.imgUrl || "/default-avatar.png"}
+                alt="Avatar"
+              />
               <AvatarFallback>{user?.name?.[0] || "U"}</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
               <span className="font-semibold">{user?.name || "Khách"}</span>
-              <span className="text-xs text-muted-foreground">{user?.email}</span>
+              <span className="text-xs text-muted-foreground">
+                {user?.email}
+              </span>
             </div>
           </div>
 

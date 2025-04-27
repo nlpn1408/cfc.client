@@ -101,7 +101,7 @@ export default function OrderConfirmed() {
               {order.orderItems.map((item, index) => (
                 <div
                   key={item.id || index}
-                  className="flex items-center gap-4 py-3 border-t first:border-t-0"
+                  className="flex flex-wrap gap-4 py-3 border-t first:border-t-0"
                 >
                   {item.product?.images?.[0]?.url ? (
                     <img
@@ -136,13 +136,13 @@ export default function OrderConfirmed() {
                 </div>
               ))}
 
-              <div className="flex justify-between items-center pt-4 mt-4 border-t">
+              <div className="flex flex-col sm:flex-row justify-between items-center pt-4 mt-4 border-t">
                 <div className="text-gray-900 font-medium text-lg">
                   Tổng cộng: {Number(order.finalTotal).toLocaleString()}đ
                 </div>
                 <button
                   onClick={() => handleCancelOrder(order.id)}
-                  className="px-4 py-2 text-sm border rounded hover:bg-gray-100"
+                  className="mt-3 sm:mt-0 px-4 py-2 text-sm border rounded hover:bg-gray-100"
                 >
                   Hủy đơn hàng
                 </button>

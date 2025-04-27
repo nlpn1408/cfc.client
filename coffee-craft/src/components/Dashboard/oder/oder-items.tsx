@@ -107,7 +107,7 @@ export default function OrderItems() {
             </div>
           ))}
 
-          <div className="flex justify-between pt-4 mt-4 border-t">
+          <div className="flex flex-col sm:flex-row justify-between pt-4 mt-4 border-t">
             <div className="text-lg font-medium">
               Tổng: {Number(order.finalTotal).toLocaleString()}đ
             </div>
@@ -116,7 +116,7 @@ export default function OrderItems() {
                 e.stopPropagation();
                 handleCancelOrder(order.id);
               }}
-              className="px-4 py-2 text-sm border rounded-md hover:bg-gray-100  "
+              className="mt-3 sm:mt-0 px-4 py-2 text-sm border rounded-md hover:bg-gray-100"
             >
               Hủy đơn
             </button>

@@ -21,7 +21,7 @@ export function MobileNav() {
   );
 
   return (
-    <Drawer open={open} onOpenChange={onOpenChange}>
+    <Drawer direction="left" open={open} onOpenChange={onOpenChange}>
       <DrawerTrigger asChild>
         <Button
           variant="ghost"
@@ -44,36 +44,33 @@ export function MobileNav() {
           <span className="sr-only">Toggle Menu</span>
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="h-[80svh] p-0">
+
+      <DrawerContent className="h-full w-3/4 max-w-xs p-6 rounded-none">
         <DrawerTitle className="sr-only">Navigation Menu</DrawerTitle>
-        <div className="overflow-auto p-6">
-          <div className="flex flex-col space-y-3">
-            {/* link content */}
-            <Link
-              href="/"
-              className="hover:text-gray-900 transition text-2xl font-bold"
-            >
-              Coffee<span className="text-[#E1991D]">Cart</span>
-            </Link>
-            <Link href="/" className="hover:text-gray-900 transition">
+        <div className="flex flex-col space-y-5">
+          {/* Logo */}
+          <Link
+            href="/"
+            className="text-2xl font-extrabold text-[#412017] hover:text-[#E1991D]"
+          >
+            Coffee<span className="text-[#E1991D]">Craft</span>
+          </Link>
+
+          {/* Links */}
+          <div className="flex flex-col space-y-4 text-base text-gray-700">
+            <Link href="/" className="hover:text-orange-600 transition">
               Trang Chủ
             </Link>
-            <Link
-              href="/products"
-              className="hover:text-gray-900 transition"
-            >
+            <Link href="/product" className="hover:text-orange-600 transition">
               Cửa Hàng
             </Link>
-            <Link href="/blog" className="hover:text-gray-900 transition">
+            <Link href="/blog" className="hover:text-orange-600 transition">
               Tin tức
             </Link>
-            <Link href="/contact" className="hover:text-gray-900 transition">
+            <Link href="/contact" className="hover:text-orange-600 transition">
               Liên hệ
             </Link>
           </div>
-          <div className="flex flex-col space-y-3">
-            
-            </div>
         </div>
       </DrawerContent>
     </Drawer>
