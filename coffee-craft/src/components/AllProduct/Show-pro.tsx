@@ -7,11 +7,10 @@ import ReactPaginate from "react-paginate";
 
 export default function ShowPro() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [priceRange, setPriceRange] = useState<string>(""); // ex: "0-100000"
+  const [priceRange, setPriceRange] = useState<string>("");
   const [rating, setRating] = useState<number | null>(null);
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -29,64 +28,77 @@ export default function ShowPro() {
     }
   };
 
-  // Lấy sản phẩm (lọc danh mục)
-  const fetchProducts = async (categoryId: string | null) => {
+  // Lấy sản phẩm có phân trang & bộ lọc
+  const fetchProducts = async () => {
     try {
-      const url = new URL(`${API_URL}/products`);
-      if (categoryId) url.searchParams.append("categoryId", categoryId);
+      let url = new URL(`${API_URL}/products`);
+
+      // Nếu không lọc, lấy theo phân trang thông thường
+      if (!priceRange && !rating) {
+        url.searchParams.append("page", (currentPage + 1).toString());
+        url.searchParams.append("limit", itemsPerPage.toString());
+      } else {
+        // Nếu có lọc, "giả vờ fetch tất cả dữ liệu"
+        url.searchParams.append("limit", "1000"); // Giới hạn lớn để lấy hết sản phẩm
+      }
+
+      if (selectedCategory) {
+        url.searchParams.append("categoryId", selectedCategory);
+      }
 
       const response = await fetch(url.toString());
       const result = await response.json();
-      if (Array.isArray(result.data)) return result.data;
+
+      if (Array.isArray(result.data)) {
+        let allProducts = result.data as Product[];
+
+        // Nếu có lọc (priceRange hoặc rating)
+        if (priceRange || rating) {
+          // Áp dụng lọc giá
+          if (priceRange) {
+            const [minPrice, maxPrice] = priceRange.split("-").map(Number);
+            allProducts = allProducts.filter(
+              (product) =>
+                Number(product.price) >= minPrice &&
+                Number(product.price) <= maxPrice
+            );
+          }
+
+          // Áp dụng lọc đánh giá
+          if (rating) {
+            // Giả sử người dùng chọn từ 1 sao đến 3 sao
+            allProducts = allProducts.filter(
+              (product) =>
+                Number(product.avgRating) >= rating &&
+                Number(product.avgRating) < rating + 1
+            );
+          }
+
+          // Phân trang ở FE sau khi lọc
+          const startIndex = currentPage * itemsPerPage;
+          const endIndex = startIndex + itemsPerPage;
+          const paginatedProducts = allProducts.slice(startIndex, endIndex);
+
+          setProducts(paginatedProducts);
+          setPageCount(Math.ceil(allProducts.length / itemsPerPage)); // Tổng số trang
+        } else {
+          // Không lọc, hiển thị dữ liệu từ server
+          setProducts(allProducts);
+          setPageCount(Math.ceil(result.total / itemsPerPage));
+        }
+      }
     } catch (error) {
       console.error("Lỗi khi tải sản phẩm:", error);
     }
-    return [];
   };
-
-  // Lọc và phân trang
-  const filterAndPaginateProducts = (all: Product[]) => {
-    let filtered = [...all];
-  
-    // Lọc theo khoảng giá
-    if (priceRange) {
-      const [minStr, maxStr] = priceRange.split("-");
-      const min = Number(minStr);
-      const max = Number(maxStr);
-      filtered = filtered.filter(
-        (p) => Number(p.price) >= min && Number(p.price) <= max
-      );
-    }
-  
-    // Lọc theo đánh giá (avgRating là number)
-    if (rating !== null) {
-      filtered = filtered.filter((p) => Math.floor(p.avgRating) >= rating);
-    }
-  
-    // Phân trang
-    const totalItems = filtered.length;
-    const start = currentPage * itemsPerPage;
-    const paginated = filtered.slice(start, start + itemsPerPage);
-  
-    setProducts(paginated);
-    setPageCount(Math.ceil(totalItems / itemsPerPage));
-  };  
 
   useEffect(() => {
     fetchCategories();
   }, []);
 
   useEffect(() => {
-    const fetchAndFilter = async () => {
-      const all = await fetchProducts(selectedCategory);
-      setAllProducts(all);
-    };
-    fetchAndFilter();
-  }, [selectedCategory]);
-
-  useEffect(() => {
-    filterAndPaginateProducts(allProducts);
-  }, [allProducts, currentPage, priceRange, rating]);
+    fetchProducts();
+  }, [selectedCategory, priceRange, rating, currentPage]);
 
   const handleCategoryClick = (categoryId: string | null) => {
     setSelectedCategory(categoryId);
@@ -109,7 +121,9 @@ export default function ShowPro() {
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
-        <div className={`${isOpen ? "block" : "hidden"} lg:block mt-4 space-y-4`}>
+        <div
+          className={`${isOpen ? "block" : "hidden"} lg:block mt-4 space-y-4`}
+        >
           {/* Danh mục */}
           <div>
             <h3 className="font-semibold mb-2">Danh mục</h3>
@@ -141,8 +155,24 @@ export default function ShowPro() {
           {/* Khoảng giá */}
           <div>
             <h3 className="font-semibold mb-2">Khoảng giá</h3>
+
+            {/* Nút "Tất cả" riêng biệt */}
+            <button
+              className={`block w-full py-2 px-4 text-left rounded-lg ${
+                priceRange === ""
+                  ? "bg-[#723E1E] text-white"
+                  : "hover:bg-[#935027] hover:text-white"
+              }`}
+              onClick={() => {
+                setPriceRange("");
+                setCurrentPage(0);
+              }}
+            >
+              Tất cả
+            </button>
+
+            {/* Các khoảng giá khác */}
             {[
-              { label: "Tất cả", value: "" },
               { label: "0 - 100K", value: "0-100000" },
               { label: "100K - 300K", value: "100000-300000" },
               { label: "300K - 500K", value: "300000-500000" },
@@ -168,22 +198,37 @@ export default function ShowPro() {
           {/* Đánh giá */}
           <div>
             <h3 className="font-semibold mb-2">Đánh giá</h3>
-            {[5, 4, 3, 2, 1].map((star) => (
-              <button
-                key={star}
-                className={`block w-full py-2 px-4 text-left rounded-lg ${
-                  rating === star
-                    ? "bg-[#723E1E] text-white"
-                    : "hover:bg-[#935027] hover:text-white"
-                }`}
-                onClick={() => {
-                  setRating(star);
-                  setCurrentPage(0);
-                }}
-              >
-                Từ {star} sao trở lên
-              </button>
-            ))}
+            <button
+              className="mt-4 w-full py-2 px-4 text-left rounded-lg hover:bg-[#935027] hover:text-white"
+              onClick={() => {
+                setRating(null); // Xóa bộ lọc sao
+                setCurrentPage(0); // Quay lại trang 1 khi xóa bộ lọc
+              }}
+            >
+              Tất cả
+            </button>
+            {/* Thanh trượt cho rating từ 1 đến 5 */}
+            <input
+              type="range"
+              min="1"
+              max="5"
+              step="1"
+              value={rating || 1} // Gán giá trị mặc định là 1 sao nếu chưa chọn rating
+              onChange={(e) => {
+                const newRating = Number(e.target.value);
+                setRating(newRating);
+                setCurrentPage(0); // Khi thay đổi rating, quay lại trang 1
+              }}
+              className="w-full h-2 bg-gray-200 rounded-lg focus:outline-none"
+            />
+
+            {/* Hiển thị giá trị rating đã chọn */}
+            <div className="flex justify-between mt-2 text-sm text-gray-700">
+              <span>1 sao</span>
+              <span>5 sao</span>
+            </div>
+
+            {/* Nút "Tất cả" để xóa bộ lọc sao */}
           </div>
         </div>
       </aside>
@@ -202,7 +247,9 @@ export default function ShowPro() {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center min-h-[400px] w-full bg-white border rounded-lg shadow-md">
-            <p className="text-gray-500 text-lg">Không tìm thấy sản phẩm phù hợp.</p>
+            <p className="text-gray-500 text-lg">
+              Không tìm thấy sản phẩm phù hợp.
+            </p>
           </div>
         )}
 
@@ -220,7 +267,7 @@ export default function ShowPro() {
           previousLinkClassName="px-4 py-2 text-gray-700 bg-white border rounded-md hover:bg-gray-100"
           nextLinkClassName="px-4 py-2 text-gray-700 bg-white border rounded-md hover:bg-gray-100"
           disabledClassName="opacity-50 cursor-not-allowed"
-          activeClassName="px-4 py-2 text-white bg-[#723E1E] rounded-md"
+          activeClassName="px-4 py-2 text-gray-400 bg-gray-400 rounded-md"
           forcePage={currentPage}
         />
       </section>
