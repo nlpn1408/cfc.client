@@ -31,9 +31,13 @@ export default function CheckoutPage() {
   return (
     <section className="container lg:px-16 md:px-8 px-4">
       <CartInitializer />
-      <div className="flex md:flex-row flex-col-reverse gap-6 bg-gray-100 min-h-screen">
-        <div className="flex-1 space-y-6 bg-white p-6 rounded-lg shadow flex flex-col gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="md:col-span-2 bg-white p-6 rounded shadow">
           <AddressForm user={user} onChange={setAddress} />
+        </div>
+        <div className="bg-white p-6 rounded shadow order-2 md:order-1">
+          <CartSummary />
+          <br />
           <PaymentMethod selected={paymentMethod} onChange={setPaymentMethod} />
           <SubmitBar
             user={user}
@@ -41,9 +45,6 @@ export default function CheckoutPage() {
             paymentMethod={paymentMethod}
             cartItems={cartItems}
           />
-        </div>
-        <div className="">
-        <CartSummary />
         </div>
       </div>
     </section>
