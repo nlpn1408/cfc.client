@@ -88,7 +88,7 @@ const AddressForm = ({ user, onChange }: Props) => {
           />
         </div>
 
-        <div className="flex flex-col col-span-2">
+        <div className="flex flex-col">
           <label className="text-sm font-medium text-gray-700 mb-1">
             Email
           </label>

@@ -1,9 +1,15 @@
 "use client";
+
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { applyVoucher, clearVoucher } from "@/redux/features/voucherSlice";
-import axios from "axios";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import toast from "react-hot-toast"; // Import toast từ react-hot-toast
+import { AlertTriangle } from "lucide-react";
+
+type Category = { id: string; name: string }; // Khai báo kiểu Category
 
 const CartSummary = () => {
   const dispatch = useDispatch();
@@ -13,7 +19,6 @@ const CartSummary = () => {
   );
 
   const [code, setCode] = useState("");
-  const [error, setError] = useState("");
 
   const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
   const subtotal = cartItems.reduce(
@@ -22,34 +27,65 @@ const CartSummary = () => {
   );
   const shippingFee: number = 0;
 
-  // 👉 Tính toán giảm giá
   const isVoucherValid =
-    selectedVoucher &&
-    subtotal >= Number(selectedVoucher.minimumOrderValue ?? 0);
+    selectedVoucher && subtotal >= (selectedVoucher.minimumOrderValue || 0);
 
-  const discount = isVoucherValid
+  const discount: number = isVoucherValid
     ? selectedVoucher.type === "PERCENT"
-      ? Math.min(
-          ((selectedVoucher.discountPercent ?? 0) / 100) * subtotal,
-          selectedVoucher.maxDiscount ?? Infinity
-        )
-      : Number(selectedVoucher.discountAmount ?? 0)
+      ? (selectedVoucher.discountPercent || 0) * (subtotal / 100)
+      : selectedVoucher.discountAmount || 0
     : 0;
 
   const finalTotal = subtotal - discount + shippingFee;
-
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const handleApplyVoucher = async () => {
     try {
-      const { data } = await axios.get(`${API_URL}/vouchers/code/${code}`);
+      const res = await fetch(`${API_URL}/vouchers/code/${code}`);
+      if (!res.ok) throw new Error(res.status.toString());
+
+      const data = await res.json();
+
+      const { applicableCategories = [], excludedProducts = [] } = data;
+
+      const hasExcluded = cartItems.some((item) =>
+        excludedProducts.some((p: any) => p.id === item.productId)
+      );
+
+      if (hasExcluded) {
+        return toast.error(
+          "Mã giảm giá không áp dụng cho sản phẩm trong giỏ hàng."
+        );
+      }
+
+      if (applicableCategories.length > 0) {
+        const hasApplicable = cartItems.some((item) =>
+          item.product.categories?.some((cat: Category) =>
+            applicableCategories.some((c: any) => c.id === cat.id)
+          )
+        );
+        if (!hasApplicable) {
+          return toast.custom(() => (
+            <div className="flex items-start gap-3 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg shadow-md max-w-sm">
+              <AlertTriangle className="w-5 h-5 mt-0.5 text-red-500" />
+              <div className="text-sm">
+                <p className="font-semibold">
+                  Mã giảm giá không áp dụng cho sản phẩm trong giỏ hàng.
+                </p>
+              </div>
+            </div>
+          ));
+        }
+      }
+
       dispatch(applyVoucher(data));
-      setError("");
+      toast.success("Áp dụng mã giảm giá thành công!");
     } catch (err: any) {
-      if (err.response?.status === 404) {
-        setError("Không tìm thấy mã giảm giá.");
+      const status = err.message;
+      if (status === "404") {
+        toast.error("Không tìm thấy mã giảm giá.");
       } else {
-        setError("Đã có lỗi xảy ra. Vui lòng thử lại sau.");
+        toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau.");
       }
     }
   };
@@ -57,7 +93,7 @@ const CartSummary = () => {
   const handleClearVoucher = () => {
     dispatch(clearVoucher());
     setCode("");
-    setError("");
+    toast.error("Đã xóa mã giảm giá.");
   };
 
   return (
@@ -71,12 +107,10 @@ const CartSummary = () => {
         {cartItems.map((item) => (
           <div
             key={`${item.productId}-${item.variant?.id || "default"}`}
-            className="flex justify-between items-start border-b pb-2 last:border-b-0 "
+            className="flex justify-between items-start border-b pb-2 last:border-b-0"
           >
             <div className="max-w-[75%]">
-              <p className="font-medium text-gray-800 leading-snug">
-                {item.product.name}
-              </p>
+              <p className="font-medium text-gray-800">{item.product.name}</p>
               {item.variant?.name && (
                 <p className="text-xs text-gray-500">
                   Loại xay: {item.variant.name}
@@ -93,7 +127,7 @@ const CartSummary = () => {
         ))}
       </div>
 
-      {/* Tổng đơn hàng */}
+      {/* Thông tin tổng cộng */}
       <div className="space-y-4 text-sm text-gray-700">
         <div className="flex justify-between">
           <span>Tổng số sản phẩm</span>
@@ -104,52 +138,33 @@ const CartSummary = () => {
           <span>{subtotal.toLocaleString("vi-VN")}₫</span>
         </div>
 
-        {/* Mã giảm giá */}
+        {/* Nhập mã giảm giá */}
         <div>
           <label className="block mb-2 text-sm font-medium text-gray-700">
             Mã giảm giá
           </label>
-          <div className="flex">
-            <input
-              type="text"
-              className="border rounded-s-sm px-3 py-2 text-sm w-full"
+          <div className="flex items-center gap-2">
+            <Input
               value={code}
               onChange={(e) => setCode(e.target.value)}
               placeholder="Nhập mã giảm giá"
             />
-            <button
+            <Button
               onClick={handleApplyVoucher}
-              className="bg-[#723E1E] hover:bg-[#935027] text-white px-4 rounded-e-sm"
+              variant="default"
+              className="bg-[#723E1E] hover:bg-[#935027]"
             >
               Áp dụng
-            </button>
+            </Button>
             {selectedVoucher && (
-              <button
-                onClick={handleClearVoucher}
-                className="text-red-500 text-sm"
-              >
+              <Button variant="destructive" onClick={handleClearVoucher}>
                 Xóa
-              </button>
+              </Button>
             )}
           </div>
-          {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
-          {selectedVoucher && (
-            <p className="text-green-600 text-sm mt-1">
-              Áp dụng: {selectedVoucher.code}
-            </p>
-          )}
-          {selectedVoucher && !isVoucherValid && (
-            <p className="text-yellow-500 text-sm mt-1">
-              Đơn hàng phải đạt tối thiểu{" "}
-              {Number(selectedVoucher.minimumOrderValue).toLocaleString(
-                "vi-VN"
-              )}
-              ₫ để áp dụng mã.
-            </p>
-          )}
         </div>
 
-        {/* Giảm giá và phí vận chuyển */}
+        {/* Phần giảm giá và vận chuyển */}
         {isVoucherValid && discount > 0 && (
           <div className="flex justify-between">
             <span>Giảm giá</span>
