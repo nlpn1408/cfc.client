@@ -2,14 +2,14 @@
 import React, { useState } from "react";
 import { Order } from "@/types/product";
 import OrderItem from "./OrderItem";
-import OrderDetailPopup from "../Dashboard/oder/oder-detail";
+import OrderDetailPopup from "../oder-detail";
 
 interface OrderListProps {
   orders: Order[];
   onReviewClick: (orderItemId: string) => void;
 }
 
-const OrderList: React.FC<OrderListProps> = ({ orders, onReviewClick }) => {
+export default function OrderList({ orders, onReviewClick }:OrderListProps) {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   return (
     <div className="space-y-6">
@@ -54,4 +54,3 @@ const OrderList: React.FC<OrderListProps> = ({ orders, onReviewClick }) => {
   );
 };
 
-export default OrderList;

@@ -1,5 +1,10 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 type Props = {
   user: { name: string; phone: string; email: string };
@@ -15,17 +20,16 @@ const AddressForm = ({ user, onChange }: Props) => {
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedWard, setSelectedWard] = useState("");
 
-  const [data, setData] = useState({
-    street: "",
-    note: "",
-  });
+  const [data, setData] = useState({ street: "", note: "" });
 
+  // Fetch danh sách tỉnh
   useEffect(() => {
     fetch("https://provinces.open-api.vn/api/p/")
       .then((res) => res.json())
       .then((data) => setProvinces(data));
   }, []);
 
+  // Fetch quận khi chọn tỉnh
   useEffect(() => {
     if (selectedProvince) {
       fetch(`https://provinces.open-api.vn/api/p/${selectedProvince}?depth=2`)
@@ -39,6 +43,7 @@ const AddressForm = ({ user, onChange }: Props) => {
     }
   }, [selectedProvince]);
 
+  // Fetch phường khi chọn quận
   useEffect(() => {
     if (selectedDistrict) {
       fetch(`https://provinces.open-api.vn/api/d/${selectedDistrict}?depth=2`)
@@ -50,132 +55,116 @@ const AddressForm = ({ user, onChange }: Props) => {
     }
   }, [selectedDistrict]);
 
+  // Trigger callback khi dữ liệu địa chỉ thay đổi
   useEffect(() => {
     onChange({
       ...data,
-      province:
-        provinces.find((p) => p.code === Number(selectedProvince))?.name || "",
-      district:
-        districts.find((d) => d.code === Number(selectedDistrict))?.name || "",
+      province: provinces.find((p) => p.code === Number(selectedProvince))?.name || "",
+      district: districts.find((d) => d.code === Number(selectedDistrict))?.name || "",
       ward: wards.find((w) => w.code === Number(selectedWard))?.name || "",
     });
   }, [data, selectedProvince, selectedDistrict, selectedWard]);
 
   return (
-    <div className="bg-white space-y-4">
-      <h2 className="text-xl font-semibold text-gray-800">Địa chỉ giao hàng</h2>
+    <div className="p-4 space-y-4 rounded-xl shadow-sm">
+      <h2 className="text-xl font-semibold ">Địa chỉ giao hàng</h2>
 
-      <div className="grid grid-cols-2 gap-4">
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700 mb-1">
-            Họ tên người nhận
-          </label>
-          <input
-            disabled
-            value={user.name}
-            className="px-4 py-2 rounded-md border border-gray-300 bg-gray-100 text-gray-700"
-          />
+      <div className="grid grid-cols-2 gap-4 ">
+        {/* Thông tin người nhận */}
+        <div className="space-y-1">
+          <Label htmlFor="name">Họ tên người nhận</Label>
+          <Input className="border dark:border-slate-100" id="name" disabled value={user.name} />
         </div>
 
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700 mb-1">
-            Số điện thoại
-          </label>
-          <input
-            disabled
-            value={user.phone}
-            className="px-4 py-2 rounded-md border border-gray-300 bg-gray-100 text-gray-700"
-          />
+        <div className="space-y-1">
+          <Label htmlFor="phone">Số điện thoại</Label>
+          <Input className="border dark:border-slate-100" id="phone" disabled value={user.phone} />
         </div>
 
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700 mb-1">
-            Email
-          </label>
-          <input
-            disabled
-            value={user.email}
-            className="px-4 py-2 rounded-md border border-gray-300 bg-gray-100 text-gray-700"
-          />
+        <div className="space-y-1 col-span-2">
+          <Label htmlFor="email">Email</Label>
+          <Input className="border dark:border-slate-100" id="email" disabled value={user.email} />
         </div>
 
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700 mb-1">
-            Tỉnh / Thành phố
-          </label>
-          <select
-            className="px-4 py-2 rounded-md border border-gray-300"
-            value={selectedProvince}
-            onChange={(e) => setSelectedProvince(e.target.value)}
-          >
-            <option value="">Chọn Tỉnh / Thành phố</option>
-            {provinces.map((province) => (
-              <option key={province.code} value={province.code}>
-                {province.name}
-              </option>
-            ))}
-          </select>
+        {/* Chọn tỉnh/thành phố */}
+        <div className="space-y-1">
+          <Label>Tỉnh / Thành phố</Label>
+          <Select  value={selectedProvince} onValueChange={setSelectedProvince}>
+            <SelectTrigger>
+              <SelectValue placeholder="Chọn Tỉnh / Thành phố" />
+            </SelectTrigger>
+            <SelectContent >
+              {provinces.map((p) => (
+                <SelectItem key={p.code} value={String(p.code)}>
+                  {p.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700 mb-1">
-            Quận / Huyện
-          </label>
-          <select
-            className="px-4 py-2 rounded-md border border-gray-300"
+        {/* Chọn quận/huyện */}
+        <div className="space-y-1">
+          <Label>Quận / Huyện</Label>
+          <Select
             value={selectedDistrict}
-            onChange={(e) => setSelectedDistrict(e.target.value)}
+            onValueChange={setSelectedDistrict}
             disabled={!selectedProvince}
           >
-            <option value="">Chọn Quận / Huyện</option>
-            {districts.map((district) => (
-              <option key={district.code} value={district.code}>
-                {district.name}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger>
+              <SelectValue placeholder="Chọn Quận / Huyện" />
+            </SelectTrigger>
+            <SelectContent>
+              {districts.map((d) => (
+                <SelectItem key={d.code} value={String(d.code)}>
+                  {d.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
-        <div className="flex flex-col">
-          <label className="text-sm font-medium text-gray-700 mb-1">
-            Phường / Xã
-          </label>
-          <select
-            className="px-4 py-2 rounded-md border border-gray-300"
+        {/* Chọn phường/xã */}
+        <div className="space-y-1 col-span-2">
+          <Label>Phường / Xã</Label>
+          <Select
             value={selectedWard}
-            onChange={(e) => setSelectedWard(e.target.value)}
+            onValueChange={setSelectedWard}
             disabled={!selectedDistrict}
           >
-            <option value="">Chọn Phường / Xã</option>
-            {wards.map((ward) => (
-              <option key={ward.code} value={ward.code}>
-                {ward.name}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger>
+              <SelectValue placeholder="Chọn Phường / Xã" />
+            </SelectTrigger>
+            <SelectContent>
+              {wards.map((w) => (
+                <SelectItem key={w.code} value={String(w.code)}>
+                  {w.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
-        <div className="flex flex-col col-span-2">
-          <label className="text-sm font-medium text-gray-700 mb-1">
-            Số nhà, tên đường
-          </label>
-          <input
+        {/* Số nhà, tên đường */}
+        <div className="space-y-1 col-span-2">
+          <Label htmlFor="street">Số nhà, tên đường</Label>
+          <Input className="border dark:border-slate-100"
+            id="street"
             placeholder="Số nhà, tên đường"
-            className="px-4 py-2 rounded-md border border-gray-300"
             value={data.street}
             onChange={(e) => setData({ ...data, street: e.target.value })}
           />
         </div>
 
-        <div className="flex flex-col col-span-2">
-          <label className="text-sm font-medium text-gray-700 mb-1">
-            Ghi chú
-          </label>
-          <textarea
+        {/* Ghi chú */}
+        <div className="space-y-1 col-span-2">
+          <Label htmlFor="note">Ghi chú</Label>
+          <Textarea
+            id="note"
             placeholder="Ghi chú"
-            className="px-4 py-2 rounded-md border border-gray-300 min-h-[100px]"
             value={data.note}
             onChange={(e) => setData({ ...data, note: e.target.value })}
+            className="min-h-[100px]"
           />
         </div>
       </div>

@@ -32,10 +32,10 @@ export default function CheckoutPage() {
     <section className="container lg:px-16 md:px-8 px-4">
       <CartInitializer />
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-2 bg-white p-6 rounded shadow">
+        <div className="md:col-span-2  p-6 rounded shadow">
           <AddressForm user={user} onChange={setAddress} />
         </div>
-        <div className="bg-white p-6 rounded shadow order-2 md:order-1">
+        <div className=" p-6 rounded shadow order-2 md:order-1">
           <CartSummary />
           <br />
           <PaymentMethod selected={paymentMethod} onChange={setPaymentMethod} />

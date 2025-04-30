@@ -83,7 +83,7 @@ const SubmitBar = ({ address, paymentMethod, cartItems, user }: Props) => {
         discountAmount: Number(discount),
         finalTotal: Number(finalTotal),
         note: address.note,
-        paymentMethod: paymentMethod === "cod" ? "COD" : "VNPAY",
+        paymentMethod: paymentMethod ,
         voucherCode: voucher?.code || undefined,
         orderItems: cartItems.map((item) => ({
           productId: item.productId,
@@ -119,12 +119,12 @@ const SubmitBar = ({ address, paymentMethod, cartItems, user }: Props) => {
 
   return (
     <div>
-      <button
+      <Button
         onClick={handleSubmit}
         className="w-full mt-4 bg-[#723E1E] hover:bg-[#935027] text-white py-3 rounded-full text-sm font-medium shadow transition"
       >
         Xác nhận đặt hàng
-      </button>
+      </Button>
     </div>
   );
 };

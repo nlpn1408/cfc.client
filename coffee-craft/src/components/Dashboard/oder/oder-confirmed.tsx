@@ -1,6 +1,5 @@
 "use client";
 import toast from "react-hot-toast";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React, { useState, useEffect } from "react";
 import { Order } from "@/types/product";
 import OrderDetailPopup from "./oder-detail";
@@ -11,6 +10,7 @@ export default function OrderConfirmed() {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+
   const fetchOrders = async () => {
     try {
       setLoading(true);
