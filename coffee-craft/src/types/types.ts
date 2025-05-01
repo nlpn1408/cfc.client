@@ -86,7 +86,6 @@ export type LoginInputProps = {
 export type UserPageProps = {
   page: string;
   title: string;
-  description: string;
   userId?: string;
   formId?: string;
 };

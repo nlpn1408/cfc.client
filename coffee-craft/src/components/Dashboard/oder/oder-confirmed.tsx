@@ -3,13 +3,14 @@ import toast from "react-hot-toast";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React, { useState, useEffect } from "react";
 import { Order } from "@/types/product";
+import OrderDetailPopup from "./oder-detail";
 
 export default function OrderConfirmed() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const fetchOrders = async () => {
     try {
       setLoading(true);
@@ -40,6 +41,7 @@ export default function OrderConfirmed() {
       setLoading(false);
     }
   };
+
   const handleCancelOrder = async (orderId: string) => {
     const confirmed = window.confirm("Bạn có chắc chắn muốn hủy đơn hàng này?");
     if (!confirmed) return;
@@ -82,7 +84,11 @@ export default function OrderConfirmed() {
       ) : (
         <div className="space-y-6">
           {orders.map((order) => (
-            <div key={order.id} className="bg-white p-4">
+            <div
+              key={order.id}
+              onClick={() => setSelectedOrder(order)}
+              className="bg-white p-4 cursor-pointer border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+            >
               <div className="flex justify-between items-center mb-2">
                 <div className="text-sm text-gray-600">
                   Mã đơn hàng: <span className="font-medium">{order.id}</span>
@@ -95,7 +101,7 @@ export default function OrderConfirmed() {
               {order.orderItems.map((item, index) => (
                 <div
                   key={item.id || index}
-                  className="flex items-center gap-4 py-3 border-t first:border-t-0"
+                  className="flex flex-wrap gap-4 py-3 border-t first:border-t-0"
                 >
                   {item.product?.images?.[0]?.url ? (
                     <img
@@ -130,13 +136,13 @@ export default function OrderConfirmed() {
                 </div>
               ))}
 
-              <div className="flex justify-between items-center pt-4 mt-4 border-t">
+              <div className="flex flex-col sm:flex-row justify-between items-center pt-4 mt-4 border-t">
                 <div className="text-gray-900 font-medium text-lg">
                   Tổng cộng: {Number(order.finalTotal).toLocaleString()}đ
                 </div>
                 <button
                   onClick={() => handleCancelOrder(order.id)}
-                  className="px-4 py-2 text-sm border rounded hover:bg-gray-100"
+                  className="mt-3 sm:mt-0 px-4 py-2 text-sm border rounded hover:bg-gray-100"
                 >
                   Hủy đơn hàng
                 </button>
@@ -144,6 +150,13 @@ export default function OrderConfirmed() {
             </div>
           ))}
         </div>
+      )}
+      {/* Hiển thị popup chi tiết */}
+      {selectedOrder && (
+        <OrderDetailPopup
+          order={selectedOrder}
+          onClose={() => setSelectedOrder(null)}
+        />
       )}
     </div>
   );

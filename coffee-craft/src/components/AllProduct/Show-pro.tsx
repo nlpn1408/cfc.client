@@ -5,13 +5,19 @@ import ProductCard from "@/components/ProductCard";
 import { Menu, X } from "lucide-react";
 import ReactPaginate from "react-paginate";
 
+export const filterPrice = [
+  { label: "0 - 100K", value: "0-100000" },
+  { label: "100K - 300K", value: "100000-300000" },
+  { label: "300K - 500K", value: "300000-500000" },
+  { label: "Trên 500K", value: "500000-100000000" },
+];
+
 export default function ShowPro() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [priceRange, setPriceRange] = useState<string>(""); // ex: "0-100000"
+  const [priceRange, setPriceRange] = useState<string>("");
   const [rating, setRating] = useState<number | null>(null);
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -29,64 +35,48 @@ export default function ShowPro() {
     }
   };
 
-  // Lấy sản phẩm (lọc danh mục)
-  const fetchProducts = async (categoryId: string | null) => {
+  // Lấy sản phẩm có phân trang & bộ lọc
+  const fetchProducts = async () => {
     try {
-      const url = new URL(`${API_URL}/products`);
-      if (categoryId) url.searchParams.append("categoryId", categoryId);
+      let url = new URL(`${API_URL}/products`);
+
+      // Thêm tham số lọc vào URL nếu có
+      if (selectedCategory) {
+        url.searchParams.append("categoryId", selectedCategory);
+      }
+
+      if (priceRange) {
+        const [minPrice, maxPrice] = priceRange.split("-").map(Number);
+        url.searchParams.append("minPrice", minPrice.toString());
+        url.searchParams.append("maxPrice", maxPrice.toString());
+      }
+
+      // Thêm tham số phân trang
+      url.searchParams.append("page", (currentPage + 1).toString());
+      url.searchParams.append("limit", "12"); // Giới hạn số lượng sản phẩm mỗi trang là 12
 
       const response = await fetch(url.toString());
       const result = await response.json();
-      if (Array.isArray(result.data)) return result.data;
+
+      // Kiểm tra dữ liệu trả về
+      console.log(result);
+
+      if (Array.isArray(result.data)) {
+        setProducts(result.data); // Cập nhật danh sách sản phẩm
+        setPageCount(Math.ceil(result.total / 12)); // Sử dụng 12 sản phẩm mỗi trang
+      }
     } catch (error) {
       console.error("Lỗi khi tải sản phẩm:", error);
     }
-    return [];
   };
-
-  // Lọc và phân trang
-  const filterAndPaginateProducts = (all: Product[]) => {
-    let filtered = [...all];
-  
-    // Lọc theo khoảng giá
-    if (priceRange) {
-      const [minStr, maxStr] = priceRange.split("-");
-      const min = Number(minStr);
-      const max = Number(maxStr);
-      filtered = filtered.filter(
-        (p) => Number(p.price) >= min && Number(p.price) <= max
-      );
-    }
-  
-    // Lọc theo đánh giá (avgRating là number)
-    if (rating !== null) {
-      filtered = filtered.filter((p) => Math.floor(p.avgRating) >= rating);
-    }
-  
-    // Phân trang
-    const totalItems = filtered.length;
-    const start = currentPage * itemsPerPage;
-    const paginated = filtered.slice(start, start + itemsPerPage);
-  
-    setProducts(paginated);
-    setPageCount(Math.ceil(totalItems / itemsPerPage));
-  };  
 
   useEffect(() => {
     fetchCategories();
   }, []);
 
   useEffect(() => {
-    const fetchAndFilter = async () => {
-      const all = await fetchProducts(selectedCategory);
-      setAllProducts(all);
-    };
-    fetchAndFilter();
-  }, [selectedCategory]);
-
-  useEffect(() => {
-    filterAndPaginateProducts(allProducts);
-  }, [allProducts, currentPage, priceRange, rating]);
+    fetchProducts();
+  }, [selectedCategory, priceRange, rating, currentPage]);
 
   const handleCategoryClick = (categoryId: string | null) => {
     setSelectedCategory(categoryId);
@@ -109,7 +99,9 @@ export default function ShowPro() {
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
-        <div className={`${isOpen ? "block" : "hidden"} lg:block mt-4 space-y-4`}>
+        <div
+          className={`${isOpen ? "block" : "hidden"} lg:block mt-4 space-y-4`}
+        >
           {/* Danh mục */}
           <div>
             <h3 className="font-semibold mb-2">Danh mục</h3>
@@ -141,13 +133,24 @@ export default function ShowPro() {
           {/* Khoảng giá */}
           <div>
             <h3 className="font-semibold mb-2">Khoảng giá</h3>
-            {[
-              { label: "Tất cả", value: "" },
-              { label: "0 - 100K", value: "0-100000" },
-              { label: "100K - 300K", value: "100000-300000" },
-              { label: "300K - 500K", value: "300000-500000" },
-              { label: "Trên 500K", value: "500000-100000000" },
-            ].map((option) => (
+
+            {/* Nút "Tất cả" riêng biệt */}
+            <button
+              className={`block w-full py-2 px-4 text-left rounded-lg ${
+                priceRange === ""
+                  ? "bg-[#723E1E] text-white"
+                  : "hover:bg-[#935027] hover:text-white"
+              }`}
+              onClick={() => {
+                setPriceRange("");
+                setCurrentPage(0);
+              }}
+            >
+              Tất cả
+            </button>
+
+            {/* Các khoảng giá khác */}
+            {filterPrice.map((option) => (
               <button
                 key={option.value}
                 className={`block w-full py-2 px-4 text-left rounded-lg ${
@@ -161,27 +164,6 @@ export default function ShowPro() {
                 }}
               >
                 {option.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Đánh giá */}
-          <div>
-            <h3 className="font-semibold mb-2">Đánh giá</h3>
-            {[5, 4, 3, 2, 1].map((star) => (
-              <button
-                key={star}
-                className={`block w-full py-2 px-4 text-left rounded-lg ${
-                  rating === star
-                    ? "bg-[#723E1E] text-white"
-                    : "hover:bg-[#935027] hover:text-white"
-                }`}
-                onClick={() => {
-                  setRating(star);
-                  setCurrentPage(0);
-                }}
-              >
-                Từ {star} sao trở lên
               </button>
             ))}
           </div>
@@ -202,7 +184,9 @@ export default function ShowPro() {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center min-h-[400px] w-full bg-white border rounded-lg shadow-md">
-            <p className="text-gray-500 text-lg">Không tìm thấy sản phẩm phù hợp.</p>
+            <p className="text-gray-500 text-lg">
+              Không tìm thấy sản phẩm phù hợp.
+            </p>
           </div>
         )}
 
@@ -220,7 +204,7 @@ export default function ShowPro() {
           previousLinkClassName="px-4 py-2 text-gray-700 bg-white border rounded-md hover:bg-gray-100"
           nextLinkClassName="px-4 py-2 text-gray-700 bg-white border rounded-md hover:bg-gray-100"
           disabledClassName="opacity-50 cursor-not-allowed"
-          activeClassName="px-4 py-2 text-white bg-[#723E1E] rounded-md"
+          activeClassName="px-4 py-2 text-gray-400 bg-gray-400 rounded-md"
           forcePage={currentPage}
         />
       </section>

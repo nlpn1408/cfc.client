@@ -121,7 +121,14 @@ export interface Order {
     receiverPhone: string;
     address: string;
   };
-  voucherId: string | null;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+  };
+  voucher:{
+    code:string
+  }
   note?: string;
 }
 export interface User {

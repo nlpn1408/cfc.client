@@ -1,67 +1,53 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React, { useState, useEffect } from "react";
 import { Order } from "@/types/product";
 import toast from "react-hot-toast";
+import OrderDetailPopup from "./oder-detail";
 
 export default function OrderItems() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [orders, setOrders] = useState<Order[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_URL}/orders/myorders`, {
+      const res = await fetch(`${API_URL}/orders/myorders`, {
         method: "GET",
-        credentials: "include", // Gửi cookie nếu đang dùng session auth
-        headers: {
-          "Content-Type": "application/json",
-        },
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
       });
+      if (!res.ok) throw new Error("Không thể lấy đơn hàng.");
 
-      if (!response.ok) {
-        throw new Error("Không thể lấy dữ liệu đơn hàng.");
-      }
-
-      const result = await response.json();
-
-      // Lọc các đơn hàng có trạng thái "PENDING"
-      const pendingOrders = result.filter(
+      const data = await res.json();
+      const pendingOrders = data.filter(
         (order: Order) => order.status === "PENDING"
       );
-
       setOrders(pendingOrders);
     } catch (err: any) {
-      console.error("Lỗi khi tải đơn hàng:", err);
       setError(err.message || "Đã xảy ra lỗi.");
     } finally {
       setLoading(false);
     }
   };
+
   const handleCancelOrder = async (orderId: string) => {
-    const confirmed = window.confirm("Bạn có chắc chắn muốn hủy đơn hàng này?");
-    if (!confirmed) return;
+    if (!window.confirm("Bạn có chắc chắn muốn hủy đơn hàng này?")) return;
 
     try {
-      const response = await fetch(`${API_URL}/orders/${orderId}/cancel`, {
+      const res = await fetch(`${API_URL}/orders/${orderId}/cancel`, {
         method: "PUT",
         credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
       });
+      if (!res.ok) throw new Error("Không thể hủy đơn hàng.");
 
-      if (!response.ok) {
-        throw new Error("Không thể hủy đơn hàng.");
-      }
-
-      toast.success("Hủy đơn hàng thành công");
+      toast.success("Đã hủy đơn hàng.");
       fetchOrders();
     } catch (err: any) {
-      console.error("Lỗi khi hủy đơn hàng:", err);
       toast.error(err.message || "Đã xảy ra lỗi khi hủy đơn hàng.");
     }
   };
@@ -70,82 +56,80 @@ export default function OrderItems() {
     fetchOrders();
   }, []);
 
+  if (loading) return <p className="text-center text-gray-500">Đang tải...</p>;
+  if (error) return <p className="text-center text-red-500">{error}</p>;
+  if (orders.length === 0)
+    return <p className="text-center text-gray-500">Không có đơn hàng nào.</p>;
   return (
-    <div className="w-full">
-      {loading ? (
-        <p className="text-center text-gray-500">Đang tải...</p>
-      ) : error ? (
-        <p className="text-center text-red-500">{error}</p>
-      ) : orders.length === 0 ? (
-        <p className="text-center text-gray-500">
-          Không có đơn hàng nào đang chờ xử lý.
-        </p>
-      ) : (
-        <div className="space-y-6">
-          {orders.map((order) => (
-            <div key={order.id} className="bg-white p-4">
-              <div className="flex justify-between items-center mb-2">
-                <div className="text-sm text-gray-600">
-                  Mã đơn hàng: <span className="font-medium">{order.id}</span>
+    <div className="w-full space-y-6">
+      {orders.map((order) => (
+        <div
+          key={order.id}
+          className="bg-white p-4 cursor-pointer border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
+          onClick={() => setSelectedOrder(order)}
+        >
+          <div className="flex justify-between mb-2">
+            <div>
+              Mã: <span className="font-medium">{order.id}</span>
+            </div>
+            <div>
+              Ngày đặt: {new Date(order.createdAt).toLocaleDateString()}
+            </div>
+          </div>
+
+          {order.orderItems.map((item, index) => (
+            <div
+              key={item.id || index}
+              className="flex gap-4 py-3 border-t first:border-t-0"
+            >
+              {item.product?.images?.[0]?.url ? (
+                <img
+                  src={item.product.images[0].url}
+                  alt={item.product.name}
+                  className="w-16 h-16 object-cover rounded"
+                />
+              ) : (
+                <div className="w-16 h-16 bg-gray-200 flex items-center justify-center text-xs text-gray-500">
+                  Không có ảnh
                 </div>
-                <div className="text-sm text-gray-600">
-                  Ngày đặt: {new Date(order.createdAt).toLocaleDateString()}
-                </div>
+              )}
+              <div className="flex-1">
+                <p className="font-medium">
+                  {item.product?.name || "Sản phẩm không xác định"}
+                </p>
+                <p className="text-sm text-gray-600">
+                  Số lượng: {item.quantity}
+                </p>
               </div>
-
-              {order.orderItems.map((item, index) => (
-                <div
-                  key={item.id || index}
-                  className="flex items-center gap-4 py-3 border-t first:border-t-0"
-                >
-                  {item.product?.images?.[0]?.url ? (
-                    <img
-                      src={item.product.images[0].url}
-                      alt={item.product.name}
-                      className="w-16 h-16 object-cover rounded-md"
-                    />
-                  ) : (
-                    <div className="w-16 h-16 bg-gray-200 rounded-md flex items-center justify-center text-xs text-gray-500">
-                      Không có ảnh
-                    </div>
-                  )}
-                  <div className="flex-1">
-                    <p className="font-medium text-gray-900">
-                      {item.product?.name || "Sản phẩm không xác định"}
-                    </p>
-                    <p className="text-sm text-gray-600">
-                      Mã SP: {item.product?.sku || "N/A"}
-                    </p>
-                    {item.productVariant?.name && (
-                      <p className="text-sm text-gray-600">
-                        Loại sản phẩm: {item.productVariant.name}
-                      </p>
-                    )}
-
-                    <p className="text-sm text-gray-600">
-                      Số lượng: {item.quantity}
-                    </p>
-                  </div>
-                  <p className="text-gray-900 font-semibold">
-                    {Number(item.priceAtOrder).toLocaleString()}đ
-                  </p>
-                </div>
-              ))}
-
-              <div className="flex justify-between items-center pt-4 mt-4 border-t">
-                <div className="text-gray-900 font-medium text-lg">
-                  Tổng cộng: {Number(order.finalTotal).toLocaleString()}đ
-                </div>
-                <button
-                  onClick={() => handleCancelOrder(order.id)}
-                  className="px-4 py-2 text-sm border rounded hover:bg-gray-100"
-                >
-                  Hủy đơn hàng
-                </button>
+              <div className="font-semibold">
+                {Number(item.priceAtOrder).toLocaleString()}đ
               </div>
             </div>
           ))}
+
+          <div className="flex flex-col sm:flex-row justify-between pt-4 mt-4 border-t">
+            <div className="text-lg font-medium">
+              Tổng: {Number(order.finalTotal).toLocaleString()}đ
+            </div>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                handleCancelOrder(order.id);
+              }}
+              className="mt-3 sm:mt-0 px-4 py-2 text-sm border rounded-md hover:bg-gray-100"
+            >
+              Hủy đơn
+            </button>
+          </div>
         </div>
+      ))}
+
+      {/* Hiển thị popup chi tiết */}
+      {selectedOrder && (
+        <OrderDetailPopup
+          order={selectedOrder}
+          onClose={() => setSelectedOrder(null)}
+        />
       )}
     </div>
   );

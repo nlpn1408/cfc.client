@@ -121,7 +121,7 @@ const SubmitBar = ({ address, paymentMethod, cartItems, user }: Props) => {
     <div>
       <button
         onClick={handleSubmit}
-        className="w-full bg-[#723E1E] hover:bg-[#935027] text-white py-3 rounded-[8px] text-sm font-medium transition duration-200 shadow"
+        className="w-full mt-4 bg-[#723E1E] hover:bg-[#935027] text-white py-3 rounded-full text-sm font-medium shadow transition"
       >
         Xác nhận đặt hàng
       </button>

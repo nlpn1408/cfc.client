@@ -56,10 +56,10 @@ export default function ProductReviews({
             {getVisibleReviews().map((review) => (
               <div
                 key={review.id}
-                className="p-4 flex gap-4 border-b pb-3 mb-3"
+                className="p-4 flex gap-4 border-b pb-3 mb-3 flex-wrap sm:flex-nowrap"
               >
                 <img
-                  src={review.user.imgUrl}
+                  src={review.user.imgUrl || undefined} // Kiểm tra imgUrl có hợp lệ không, nếu không thì không hiển thị ảnh
                   alt={review.user.name}
                   className="w-12 h-12 rounded-full object-cover"
                 />
