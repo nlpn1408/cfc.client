@@ -40,7 +40,7 @@ export default function Hero() {
         {/* Banner chính */}
         <div className="col-span-full lg:col-span-4 flex py-5 px-5 items-end space-y-4 relative bg-[url(/hero/hero1.png)] h-[500px] bg-cover bg-left bg-no-repeat rounded-lg shadow-lg">
           <Link
-            href="/shop"
+            href="/product"
             className="flex text-end text-3xl font-bold text-[#412017] hover:text-orange-700 transition-all">
             Mua ngay <ArrowRight size={40} />
           </Link>
