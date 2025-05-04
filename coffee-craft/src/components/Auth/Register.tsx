@@ -157,9 +157,6 @@ export default function Register() {
                             isLoading={isLoading}
                             loadingTitle="Đang đăng ký vui lòng chờ..."
                         />
-                        <Button variant="outline" className="w-full">
-                            Đăng nhập bằng Google
-                        </Button>
                     </form>
                     <div className="mt-4 text-center text-sm">
                         Bạn đã có tài khoản? {" "}
