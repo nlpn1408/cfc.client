@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Product, Category } from "@/types/product";
 import ProductCard from "@/components/ProductCard";
 import { Menu, X } from "lucide-react";
@@ -14,15 +15,32 @@ export const filterPrice = [
 
 export default function ShowPro() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [priceRange, setPriceRange] = useState<string>("");
-  const [rating, setRating] = useState<number | null>(null);
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const itemsPerPage = 12;
+
+  // Cập nhật URL params
+  const updateURLParams = (key: string, value: string | null) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value) {
+      params.set(key, value);
+    } else {
+      params.delete(key);
+    }
+    // Reset page về 1 nếu thay đổi bộ lọc
+    if (key !== "page") {
+      params.set("page", "1");
+    }
+    router.push(`?${params.toString()}`);
+  };
 
   // Lấy danh mục
   const fetchCategories = async () => {
@@ -35,12 +53,12 @@ export default function ShowPro() {
     }
   };
 
-  // Lấy sản phẩm có phân trang & bộ lọc
+  // Lấy sản phẩm
   const fetchProducts = async () => {
     try {
       let url = new URL(`${API_URL}/products`);
 
-      // Thêm tham số lọc vào URL nếu có
+      // Lấy giá trị từ state hiện tại
       if (selectedCategory) {
         url.searchParams.append("categoryId", selectedCategory);
       }
@@ -51,24 +69,31 @@ export default function ShowPro() {
         url.searchParams.append("maxPrice", maxPrice.toString());
       }
 
-      // Thêm tham số phân trang
       url.searchParams.append("page", (currentPage + 1).toString());
-      url.searchParams.append("limit", "12"); // Giới hạn số lượng sản phẩm mỗi trang là 12
+      url.searchParams.append("limit", itemsPerPage.toString());
 
       const response = await fetch(url.toString());
       const result = await response.json();
 
-      // Kiểm tra dữ liệu trả về
-      console.log(result);
-
       if (Array.isArray(result.data)) {
-        setProducts(result.data); // Cập nhật danh sách sản phẩm
-        setPageCount(Math.ceil(result.total / 12)); // Sử dụng 12 sản phẩm mỗi trang
+        setProducts(result.data);
+        setPageCount(Math.ceil(result.total / itemsPerPage));
       }
     } catch (error) {
       console.error("Lỗi khi tải sản phẩm:", error);
     }
   };
+
+  // Đồng bộ state với URL khi load
+  useEffect(() => {
+    const categoryId = searchParams.get("categoryId");
+    const price = searchParams.get("price");
+    const page = parseInt(searchParams.get("page") || "1", 10);
+
+    setSelectedCategory(categoryId);
+    setPriceRange(price || "");
+    setCurrentPage(page - 1);
+  }, [searchParams]);
 
   useEffect(() => {
     fetchCategories();
@@ -76,15 +101,24 @@ export default function ShowPro() {
 
   useEffect(() => {
     fetchProducts();
-  }, [selectedCategory, priceRange, rating, currentPage]);
+  }, [selectedCategory, priceRange, currentPage]);
 
   const handleCategoryClick = (categoryId: string | null) => {
     setSelectedCategory(categoryId);
     setCurrentPage(0);
+    updateURLParams("categoryId", categoryId);
+  };
+
+  const handlePriceRangeChange = (range: string) => {
+    setPriceRange(range);
+    setCurrentPage(0);
+    updateURLParams("price", range || null);
   };
 
   const handlePageClick = (event: any) => {
-    setCurrentPage(event.selected);
+    const selected = event.selected;
+    setCurrentPage(selected);
+    updateURLParams("page", (selected + 1).toString());
   };
 
   return (
@@ -133,23 +167,16 @@ export default function ShowPro() {
           {/* Khoảng giá */}
           <div>
             <h3 className="font-semibold mb-2">Khoảng giá</h3>
-
-            {/* Nút "Tất cả" riêng biệt */}
             <button
               className={`block w-full py-2 px-4 text-left rounded-lg ${
                 priceRange === ""
                   ? "bg-[#723E1E] text-white"
                   : "hover:bg-[#935027] hover:text-white"
               }`}
-              onClick={() => {
-                setPriceRange("");
-                setCurrentPage(0);
-              }}
+              onClick={() => handlePriceRangeChange("")}
             >
               Tất cả
             </button>
-
-            {/* Các khoảng giá khác */}
             {filterPrice.map((option) => (
               <button
                 key={option.value}
@@ -158,10 +185,7 @@ export default function ShowPro() {
                     ? "bg-[#723E1E] text-white"
                     : "hover:bg-[#935027] hover:text-white"
                 }`}
-                onClick={() => {
-                  setPriceRange(option.value);
-                  setCurrentPage(0);
-                }}
+                onClick={() => handlePriceRangeChange(option.value)}
               >
                 {option.label}
               </button>
@@ -204,7 +228,7 @@ export default function ShowPro() {
           previousLinkClassName="px-4 py-2 text-gray-700 bg-white border rounded-md hover:bg-gray-100"
           nextLinkClassName="px-4 py-2 text-gray-700 bg-white border rounded-md hover:bg-gray-100"
           disabledClassName="opacity-50 cursor-not-allowed"
-          activeClassName="px-4 py-2 text-gray-400 bg-gray-400 rounded-md"
+          activeClassName="px-4 py-2 text-gray-400 bg-[#723E1E] rounded-md"
           forcePage={currentPage}
         />
       </section>
