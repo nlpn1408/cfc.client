@@ -19,7 +19,7 @@ export const HeroData = [
     id: 2,
     title: "Bán chạy nhất",
     image: "/product/product2.png",
-    link: "/shop",
+    link: "#2",
     description:
       "Trải nghiệm hương vị cà phê được khách hàng yêu thích nhất trong tháng.",
   },
@@ -27,7 +27,7 @@ export const HeroData = [
     id: 3,
     title: "Phụ kiện pha chế",
     image: "/product/product3.png",
-    link: "#2",
+    link: "#3",
     description:
       "Từ máy pha đến dụng cụ thủ công, giúp bạn pha chế tách cà phê hoàn hảo.",
   },
@@ -40,7 +40,7 @@ export default function Hero() {
         {/* Banner chính */}
         <div className="col-span-full lg:col-span-4 flex py-5 px-5 items-end space-y-4 relative bg-[url(/hero/hero1.png)] h-[500px] bg-cover bg-left bg-no-repeat rounded-lg shadow-lg">
           <Link
-            href="/shop"
+            href="/product"
             className="flex text-end text-3xl font-bold text-[#412017] hover:text-orange-700 transition-all">
             Mua ngay <ArrowRight size={40} />
           </Link>
@@ -73,7 +73,7 @@ export default function Hero() {
 
           {/* Banner phụ */}
           <Link
-            href="/shop"
+            href="/blog"
             className="col-span-full md:col-span-2  hover:scale-105 transition-all duration-300 ease-in-out bg-[url(/hero/hero2.png)] h-[240px] bg-left bg-no-repeat rounded-lg shadow-lg">
             <div className="grid grid-cols-3 gap-5">
               <div className="xl:col-span-2 md:col-span-2 gap-5 flex flex-col justify-around text-white xl:px-5 md:px-2 py-2">

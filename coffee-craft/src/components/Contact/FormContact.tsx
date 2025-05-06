@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form";
 import TextInput from "../FromInput/TextInput";
 import TextAreaInput from "../FromInput/TextAreaInput";
 import SubmitButton from "../FromInput/SubmitButton";
-import Image from "next/image";
 import toast from "react-hot-toast";
 
 export default function FormContact() {

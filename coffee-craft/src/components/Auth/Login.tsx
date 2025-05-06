@@ -122,9 +122,6 @@ export default function Login() {
               loadingTitle="Đang đăng nhập vui lòng chờ..."
               isLoading={isLoading}
             />
-            <Button variant="outline" className="w-full">
-              Login with Google
-            </Button>
           </form>
           <div className="mt-4 text-center text-sm">
             Bạn chưa có tài khoản?{" "}

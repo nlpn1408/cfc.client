@@ -11,8 +11,8 @@ const PaymentMethod = ({ selected, onChange }: Props) => {
         <input
           type="radio"
           name="payment"
-          value="cod"
-          checked={selected === "cod"}
+          value="COD"
+          checked={selected === "COD"}
           onChange={(e) => onChange(e.target.value)}
         />
         Thanh toán khi nhận hàng (COD)
@@ -21,8 +21,8 @@ const PaymentMethod = ({ selected, onChange }: Props) => {
         <input
           type="radio"
           name="payment"
-          value="bank"
-          checked={selected === "bank"}
+          value="CREDIT_CARD"
+          checked={selected === "CREDIT_CARD"}
           onChange={(e) => onChange(e.target.value)}
         />
         Chuyển khoản ngân hàng

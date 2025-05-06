@@ -1,7 +1,7 @@
 // components/OrderComplete.tsx
 import React, { useState, useEffect } from "react";
-import OrderList from "@/components/oder-complete/OrderList";
-import ReviewPopup from "@/components/oder-complete/ReviewPopup";
+import OrderList from "@/components/Dashboard/oder/ReviewProduct/OrderList";
+import ReviewPopup from "@/components/Dashboard/oder/ReviewProduct/ReviewPopup";
 import { Order } from "@/types/product";
 import toast from "react-hot-toast";
 

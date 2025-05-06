@@ -13,6 +13,16 @@ import CategoryProducts from "../../components/Home/CategoryProducts";
 const metadata = [
   {
     id: "1",
+    title: "Cà phê mới",
+    description:
+      "Những loại cà phê được khách hàng yêu thích nhất. Hãy thử ngay những hương vị tuyệt hảo được tuyển chọn từ các nông trại cà phê hàng đầu.",
+    buttonText: "Mua ngay",
+    buttonLink: "/product",
+    image: "bg-[url(/banner/banner1.png)] lg:py-10",
+    category: "Dụng cụ pha cà phê",
+  },
+  {
+    id: "2",
     title: "Cà phê Việt Nam",
     description:
       "Khám phá những hạt cà phê tươi ngon nhất từ những vùng trồng cà phê danh tiếng. Hương vị đậm đà, chất lượng thượng hạng dành cho những tín đồ yêu cà phê thực thụ.",
@@ -22,7 +32,7 @@ const metadata = [
     category: "Cà phê",
   },
   {
-    id: "2",
+    id: "3",
     title: "Dụng cụ cà phê",
     description:
       "Những loại cà phê được khách hàng yêu thích nhất. Hãy thử ngay những hương vị tuyệt hảo được tuyển chọn từ các nông trại cà phê hàng đầu.",

@@ -2,21 +2,18 @@
 import React, { useState } from "react";
 import { Order } from "@/types/product";
 import OrderItem from "./OrderItem";
-import OrderDetailPopup from "../Dashboard/oder/oder-detail";
 
 interface OrderListProps {
   orders: Order[];
   onReviewClick: (orderItemId: string) => void;
 }
 
-const OrderList: React.FC<OrderListProps> = ({ orders, onReviewClick }) => {
-  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+export default function OrderList({ orders, onReviewClick }:OrderListProps) {
   return (
     <div className="space-y-6">
       {orders.map((order) => (
         <div
           key={order.id}
-          onClick={() => setSelectedOrder(order)}
           className="bg-white p-4 cursor-pointer border border-gray-300 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300"
         >
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-2">
@@ -43,15 +40,7 @@ const OrderList: React.FC<OrderListProps> = ({ orders, onReviewClick }) => {
           </div>
         </div>
       ))}
-      {/* Hiển thị popup chi tiết */}
-      {selectedOrder && (
-        <OrderDetailPopup
-          order={selectedOrder}
-          onClose={() => setSelectedOrder(null)}
-        />
-      )}
     </div>
   );
 };
 
-export default OrderList;
