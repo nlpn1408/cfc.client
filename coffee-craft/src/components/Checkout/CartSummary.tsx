@@ -98,9 +98,7 @@ export default function CartSummary() {
 
   return (
     <div className=" py-6 rounded-lg shadow dark:text-slate-100">
-      <h2 className="text-xl font-semibold  mb-6">
-        Thông tin đơn hàng
-      </h2>
+      <h2 className="text-xl font-semibold  mb-6">Thông tin đơn hàng</h2>
 
       {/* Danh sách sản phẩm */}
       <div className="space-y-4 text-sm  mb-4 max-h-64 overflow-y-auto pr-2">
@@ -140,9 +138,7 @@ export default function CartSummary() {
 
         {/* Nhập mã giảm giá */}
         <div>
-          <label className="block mb-2 text-sm font-medium ">
-            Mã giảm giá
-          </label>
+          <label className="block mb-2 text-sm font-medium ">Mã giảm giá</label>
           <div className="flex items-center gap-2">
             <Input
               className="border border-slate-300"
