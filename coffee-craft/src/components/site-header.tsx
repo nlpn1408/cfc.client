@@ -76,10 +76,8 @@ export default function SiteHeader() {
 
           {/* Login */}
           {!user ? (
-            <Link href="/login" >
-              <Button
-                className="bg-[#723E1E] text-white hover:bg-[#935027] dark:text-[#723E1E] dark:hover:text-white dark:bg-white dark:hover:bg-[#935027]"
-              >
+            <Link href="/login">
+              <Button className="bg-[#723E1E] text-white hover:bg-[#935027] dark:text-[#723E1E] dark:hover:text-white dark:bg-white dark:hover:bg-[#935027]">
                 Đăng nhập <LogInIcon className="lg:block hidden" size={16} />
               </Button>
             </Link>
@@ -115,10 +113,10 @@ export default function SiteHeader() {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <Link href={`/dashboard/${user.id}?page=profile`}>
-                  <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                  <DropdownMenuItem>Thông tin cá nhân</DropdownMenuItem>
                 </Link>
                 <Link href="/contact">
-                  <DropdownMenuItem>Support</DropdownMenuItem>
+                  <DropdownMenuItem>Hỗ trợ</DropdownMenuItem>
                 </Link>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => handleLogout()}>
