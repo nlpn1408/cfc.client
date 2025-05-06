@@ -4,6 +4,17 @@ import React, { useState, useEffect } from "react";
 import { Order } from "@/types/product";
 import toast from "react-hot-toast";
 import OrderDetailPopup from "./oder-detail";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+  AlertDialogTitle,
+  AlertDialogDescription,
+} from "@/components/ui/alert-dialog";
 
 export default function OrderItems() {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -11,6 +22,7 @@ export default function OrderItems() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [orderToCancel, setOrderToCancel] = useState<Order | null>(null);
 
   const fetchOrders = async () => {
     try {
@@ -35,8 +47,6 @@ export default function OrderItems() {
   };
 
   const handleCancelOrder = async (orderId: string) => {
-    if (!window.confirm("Bạn có chắc chắn muốn hủy đơn hàng này?")) return;
-
     try {
       const res = await fetch(`${API_URL}/orders/${orderId}/cancel`, {
         method: "PUT",
@@ -46,6 +56,7 @@ export default function OrderItems() {
       if (!res.ok) throw new Error("Không thể hủy đơn hàng.");
 
       toast.success("Đã hủy đơn hàng.");
+      setOrderToCancel(null); // đóng dialog
       fetchOrders();
     } catch (err: any) {
       toast.error(err.message || "Đã xảy ra lỗi khi hủy đơn hàng.");
@@ -60,6 +71,7 @@ export default function OrderItems() {
   if (error) return <p className="text-center text-red-500">{error}</p>;
   if (orders.length === 0)
     return <p className="text-center text-gray-500">Không có đơn hàng nào.</p>;
+
   return (
     <div className="w-full space-y-6">
       {orders.map((order) => (
@@ -111,20 +123,46 @@ export default function OrderItems() {
             <div className="text-lg font-medium">
               Tổng: {Number(order.finalTotal).toLocaleString()}đ
             </div>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleCancelOrder(order.id);
-              }}
-              className="mt-3 sm:mt-0 px-4 py-2 text-sm border rounded-md hover:bg-gray-100"
-            >
-              Hủy đơn
-            </button>
+
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setOrderToCancel(order);
+                  }}
+                  className="mt-3 sm:mt-0 px-4 py-2 text-sm border rounded-md hover:bg-gray-100"
+                >
+                  Hủy đơn
+                </button>
+              </AlertDialogTrigger>
+
+              <AlertDialogContent onClick={(e) => e.stopPropagation()}>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Xác nhận hủy đơn hàng?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Bạn có chắc chắn muốn hủy đơn hàng chứa{" "}
+                    <b>{order.orderItems[0]?.product?.name || "sản phẩm"}</b>?
+                    Thao tác này không thể hoàn tác.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel onClick={() => setOrderToCancel(null)}>
+                    Đóng
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    onClick={() => handleCancelOrder(order.id)}
+                  >
+                    Hủy đơn
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
         </div>
       ))}
 
-      {/* Hiển thị popup chi tiết */}
+      {/* Popup xem chi tiết đơn hàng */}
       {selectedOrder && (
         <OrderDetailPopup
           order={selectedOrder}

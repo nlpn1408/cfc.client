@@ -10,14 +10,14 @@ interface ReviewPopupProps {
   onClose: () => void;
 }
 
-const ReviewPopup: React.FC<ReviewPopupProps> = ({
+export default function ReviewPopup({
   rating,
   comment,
   onRatingChange,
   onCommentChange,
   onSubmit,
   onClose,
-}) => {
+}: ReviewPopupProps) {
   return (
     <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white p-6 rounded-md shadow-lg w-96">
@@ -32,6 +32,8 @@ const ReviewPopup: React.FC<ReviewPopupProps> = ({
                 key={star}
                 onClick={() => onRatingChange(star)}
                 className={`text-2xl ${rating && rating >= star ? "text-yellow-500" : "text-gray-400"} transition-colors`}
+                title={`Rate ${star} stars`}
+                aria-label={`Rate ${star} stars`}
               >
                 ★
               </button>
@@ -41,12 +43,19 @@ const ReviewPopup: React.FC<ReviewPopupProps> = ({
 
         {/* Review Comment */}
         <div>
-          <label className="block text-sm text-gray-600">Nhận xét:</label>
+          <label
+            htmlFor="review-comment"
+            className="block text-sm text-gray-600"
+          >
+            Nhận xét:
+          </label>
           <textarea
+            id="review-comment"
             value={comment}
             onChange={(e) => onCommentChange(e.target.value)}
             className="w-full p-2 border rounded-md mb-4"
             rows={4}
+            placeholder="Nhập nhận xét của bạn"
           />
         </div>
 
@@ -68,6 +77,4 @@ const ReviewPopup: React.FC<ReviewPopupProps> = ({
       </div>
     </div>
   );
-};
-
-export default ReviewPopup;
+}

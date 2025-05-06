@@ -7,7 +7,7 @@ interface OrderItemProps {
   onReviewClick: (orderItemId: string) => void;
 }
 
-const OrderItem: React.FC<OrderItemProps> = ({ item, onReviewClick }) => {
+export default function OrderItem ({ item, onReviewClick }:OrderItemProps)  {
   return (
     <div className="flex items-center gap-4 py-3 border-t first:border-t-0">
       {item.product?.images?.[0]?.url ? (
@@ -48,4 +48,4 @@ const OrderItem: React.FC<OrderItemProps> = ({ item, onReviewClick }) => {
   );
 };
 
-export default OrderItem;
+;

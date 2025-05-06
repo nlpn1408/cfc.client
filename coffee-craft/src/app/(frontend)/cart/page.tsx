@@ -115,12 +115,12 @@ const Cart = () => {
                     />
                     <div className="flex-1 w-full">
                       <div className="flex justify-between items-start">
-                        <h3 className="text-base md:text-lg font-medium text-gray-800">
+                        <h3 className="text-base md:text-lg font-medium text-gray-800 dark:text-slate-50">
                           {item.product.name}
                         </h3>
                         <button
                           onClick={() => handleRemoveItem(item.productId)}
-                          className="text-sm text-[#723E1E] hover:text-[#935027] hover:underline"
+                          className="text-base text-[#723E1E] hover:text-[#935027] hover:underline"
                         >
                           Xóa
                         </button>
