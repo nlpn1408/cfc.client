@@ -68,8 +68,8 @@ export default function NewProducts() {
         <Carousel className="flex justify-center relative">
           <CarouselContent className="flex items-center">
             {products.map((product) => {
-              const isNew = isNewProduct(product.createdAt);
-
+              // const isNew = isNewProduct(product.createdAt);
+              const isNew = true;
               return (
                 <CarouselItem
                   key={product.id}
